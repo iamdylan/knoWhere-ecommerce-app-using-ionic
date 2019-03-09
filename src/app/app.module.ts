@@ -7,15 +7,15 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
+import { MenuPage } from './menu/menu.page';
+import { HomePage } from './home/home.page';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, MenuPage, HomePage],
+  entryComponents: [AppComponent, MenuPage, HomePage],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
-    AppRoutingModule
+    IonicModule.forRoot()
   ],
   providers: [
     StatusBar,
