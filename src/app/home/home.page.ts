@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 
 import * as WC from 'woocommerce-api';
 
@@ -9,7 +9,7 @@ import * as WC from 'woocommerce-api';
 })
 export class HomePage {
   WooCommerce: any;
-  products: any[];
+  products: any;
 
   slideOpts = {
     effect: 'flip',
@@ -21,24 +21,43 @@ export class HomePage {
     speed: 1500,
     pagination: {
       el: '.swiper-pagination',
-      clickable: true,
-    }
+      clickable: true,    }
   };
 
-  constructor(){
+  slideOpts2 = {
+    effect: 'flip',
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+    loop: true,
+    speed: 1500,
+    pagination: {
+      clickable: true,    }
+  };
+
+  constructor(private ref: ChangeDetectorRef){
     this.WooCommerce =  WC({
       url: "http://localhost/dashboard/wordpress",
       consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
       consumerSecret: "cs_300fb32ce0875c45a2520ff860d1282a8891f113",
       wpAPI: true,
-      version: 'wc/v1'
+      version: 'wc/v3'
     });
 
     this.WooCommerce.getAsync("products").then( (data) => {
-      console.log(JSON.parse(data.body));
-      this.products = JSON.parse(data.body).products;
+      this.products = JSON.parse(data.body);
+      this.ref.detectChanges();
+      console.log(this.products);
     }, (err) => {
       console.log(err)
     })
+    
   }
+
+  
+    
+
+
+  
 }
