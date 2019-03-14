@@ -1,4 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
+import {  ToastController } from '@ionic/angular'
 
 import * as WC from 'woocommerce-api';
 
@@ -38,7 +39,7 @@ export class HomePage {
       clickable: true    }
   };
 
-  constructor(private ref: ChangeDetectorRef){
+  constructor(private ref: ChangeDetectorRef, public toastCtrl: ToastController){
     this.page = 2;
 
     this.WooCommerce =  WC({
@@ -49,7 +50,7 @@ export class HomePage {
       version: 'wc/v3'
     });
 
-    this.loadMoreProducts();
+    this.loadMoreProducts(null);
 
     this.WooCommerce.getAsync("products").then( (data) => {
       this.products = JSON.parse(data.body);
@@ -61,16 +62,43 @@ export class HomePage {
     
   }
 
-  loadMoreProducts(){
+  loadMoreProducts(event){
+    console.log(event);
+    if(event == null)
+    {
+      this.page = 2;
+      this.moreProducts = [];
+    }
+    else
+      this.page++;
+
     this.WooCommerce.getAsync("products?page=" + this.page).then( (data) => {
       console.log(JSON.parse(data.body));
-      this.moreProducts = JSON.parse(data.body);
+      this.moreProducts = this.moreProducts.concat(JSON.parse(data.body));
+
+      if(event != null)
+      {
+        event.target.complete();
+      }
+
+      if(JSON.parse(data.body).length < 10){
+        event.target.enable=false;
+
+        this.toast();
+      }
     }, (err) => {
       console.log(err)
     })
   }
     
+  async toast(){
+    let tc= await this.toastCtrl.create({
+          message: "No more products!",
+          duration: 5000
+        });
 
+    tc.present();
+  }
 
   
 }
