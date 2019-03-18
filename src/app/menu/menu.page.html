@@ -5,9 +5,15 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
-    <ion-list>
-        <ion-item *ngFor="let category of categories" text-wrap>
+  <ion-content class="card-background-page">
+    <ion-card>
+      <img src="./assets/images/shopping.jpg" />
+      <div class="card-title" slot="end">KNOWHERE &nbsp;&nbsp;&nbsp;</div>
+      <div class="card-subtitle">Know Where to Shop &nbsp;</div>
+    </ion-card>
+
+    <ion-list >
+        <ion-item *ngFor="let category of categories" [routerLink]="['products/', category.id]" routerLinkActive="active" routerDirection= "forward">
           <ion-icon [name]="category.icon" slot="start" ></ion-icon>
           <h2> {{ category.name }} </h2>
           <p> {{ category.description }}</p>
@@ -16,4 +22,5 @@
   </ion-content>
 </ion-menu>
 
-<ion-nav id="content" [root]="homePage"></ion-nav>
+<ion-router-outlet id="content"></ion-router-outlet>
+

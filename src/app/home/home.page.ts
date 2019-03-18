@@ -50,7 +50,6 @@ export class HomePage {
       version: 'wc/v3'
     });
 
-    this.loadMoreProducts(null);
 
     this.WooCommerce.getAsync("products").then( (data) => {
       this.products = JSON.parse(data.body);
@@ -59,7 +58,9 @@ export class HomePage {
     }, (err) => {
       console.log(err)
     })
-    
+
+    this.loadMoreProducts(null);
+
   }
 
   loadMoreProducts(event){

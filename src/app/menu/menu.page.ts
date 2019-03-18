@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HomePage } from '../home/home.page';
 import * as WC from 'woocommerce-api';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-menu',
@@ -12,7 +13,7 @@ export class MenuPage implements OnInit {
   WooCommerce: any;
   categories: any[];
 
-  constructor() { 
+  constructor(public menuCtrl: MenuController) { 
     this.homePage = HomePage;
     this.categories = [];
 
@@ -65,6 +66,10 @@ export class MenuPage implements OnInit {
     })
 
     
+  }
+
+  closeSideMenu() {
+    this.menuCtrl.close();
   }
 
   ngOnInit() {
