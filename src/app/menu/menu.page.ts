@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HomePage } from '../home/home.page';
 import * as WC from 'woocommerce-api';
 import { MenuController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { CategoryService } from '../category.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,12 +11,12 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['./menu.page.scss'],
 })
 export class MenuPage implements OnInit {
-  homePage: any;
   WooCommerce: any;
   categories: any[];
+  public rootPage: any = HomePage;
+  
 
-  constructor(public menuCtrl: MenuController) { 
-    this.homePage = HomePage;
+  constructor(public menuCtrl: MenuController, public router: Router, public categoryService: CategoryService) { 
     this.categories = [];
 
     this.WooCommerce =  WC({
@@ -65,10 +67,11 @@ export class MenuPage implements OnInit {
       console.log(err)
     })
 
-    
   }
 
-  closeSideMenu() {
+  openCategoryPage(cat){
+    this.categoryService.setDestn(cat);
+    this.router.navigate(['/products/' + cat]);
     this.menuCtrl.close();
   }
 
