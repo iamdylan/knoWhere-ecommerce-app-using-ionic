@@ -1,21 +1,23 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
 import * as WC from 'woocommerce-api';
 import { ActivatedRoute, Params } from '@angular/router';
-import { CategoryService } from '../category.service';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-products-by-category',
   templateUrl: './products-by-category.page.html',
   styleUrls: ['./products-by-category.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class ProductsByCategoryPage implements OnInit {
   WooCommerce: any;
-  products: Observable<Array<any>>;
+  products: Array<any>;
   cat: number;
+  page: number;
 
-  constructor( public categoryService: CategoryService, private cdr: ChangeDetectorRef) {
-    this.cat = this.categoryService.getDestn();    
+  constructor( private route: ActivatedRoute, private cdr: ChangeDetectorRef, private ngZone: NgZone) {
+    this.page = 1;
+    this.products = [];
 
     this.WooCommerce =  WC({
       url: "http://localhost/dashboard/wordpress",
@@ -25,31 +27,42 @@ export class ProductsByCategoryPage implements OnInit {
       version: 'wc/v3'
     });
       
-    this.products =  this.WooCommerce.getAsync("products?category=" + this.cat).then((data) => {
-      console.log(data);
-      return JSON.parse(data.body);
-      console.log(this.products);
-      }, (err) => {
-        console.log(err);
+    this.route.params.subscribe((params: Params)=>{
+      this.cat = params['category'];
+      console.log(this.cat);
     });
 
+    this.ngZone.run(() => { this.WooCommerce.getAsync("products?category=" + this.cat).then((data) => {
+          this.products =  JSON.parse(data.body);
+          // console.log(this.products);
+          // this.cdr.detectChanges();
+          }, (err) => {
+            console.log(err);
+        });setTimeout(() =>this.cdr.detectChanges(), 2);});
+
+    
+
+ 
+  }
+
+  loadMoreProducts(event) {
+    this.page++;
+    console.log("Getting page " + this.page);
+    this.WooCommerce.getAsync("products?category=" + this.cat + "&page=" + this.page).then((data) => {
+      let temp = (JSON.parse(data.body));
+      this.products = this.products.concat(JSON.parse(data.body));
+      console.log(this.products);
+      event.target.complete();
+
+      if (temp.length < 10)
+        event.target.enable=false;
+
+    })
+  }
+
+  ngOnInit() {
+    
     
   }
-    
-    setChanged() {
-      this.cdr.markForCheck();
-      
-    }
 
-    ngOnInit() {
-      this.products =  this.WooCommerce.getAsync("products?category=" + this.cat).then((data) => {
-        console.log(data);
-        return JSON.parse(data.body);
-        console.log(this.products);
-        }, (err) => {
-          console.log(err);
-      });
-      
-      setTimeout(() => this.setChanged(), 0);
-    }
 }

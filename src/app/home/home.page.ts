@@ -10,7 +10,7 @@ import * as WC from 'woocommerce-api';
 })
 export class HomePage {
   WooCommerce: any;
-  products: any;
+  popProducts: any;
   moreProducts: any[];
   page: number;
 
@@ -52,9 +52,9 @@ export class HomePage {
 
 
     this.WooCommerce.getAsync("products").then( (data) => {
-      this.products = JSON.parse(data.body);
-      this.ref.detectChanges();
-      console.log(this.products);
+      this.popProducts = JSON.parse(data.body);
+      // this.ref.detectChanges();
+      console.log(this.popProducts);
     }, (err) => {
       console.log(err)
     })

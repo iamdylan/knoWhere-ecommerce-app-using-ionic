@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    
+    <ion-buttons>
       <ion-menu-button slot="start"></ion-menu-button>
-    
+    </ion-buttons>
     <ion-title>
       Home
     </ion-title>
@@ -21,7 +21,7 @@
   <ion-grid>
     <ion-row>
       <ion-slides [options]="slideOpts2" >
-        <ion-slide *ngFor="let product of products">
+        <ion-slide *ngFor="let product of popProducts">
           <ion-card no-padding> 
             <img [src]="product.images[0].src" />
             <h1 padding center> {{ product.name }} </h1>
@@ -51,7 +51,7 @@
   </ion-list>
 
   <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
-      <ion-infinite-scroll-content></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
   
 </ion-content>

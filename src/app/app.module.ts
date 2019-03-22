@@ -11,7 +11,6 @@ import { MenuPage } from './menu/menu.page';
 import { HomePage } from './home/home.page';
 import { AppRoutingModule } from './app-routing.module';
 import { ProductsByCategoryModule } from './products-by-category/products-by-category.module';
-import { CategoryService } from './category.service';
 
 @NgModule({
   declarations: [AppComponent, MenuPage, HomePage],
@@ -25,7 +24,6 @@ import { CategoryService } from './category.service';
   providers: [
     StatusBar,
     SplashScreen,
-    CategoryService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
