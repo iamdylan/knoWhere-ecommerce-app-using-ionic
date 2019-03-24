@@ -13,11 +13,13 @@
     </ion-card>
 
     <ion-list >
-        <ion-item *ngFor="let category of categories"  [routerLink]="'/products/' + category.id">
+      <ion-menu-toggle auto-hide="false" *ngFor="let category of categories">
+        <ion-item [routerDirection]="'forward'" [routerLink]="['/products/' + category.id]">
           <ion-icon [name]="category.icon" slot="start"></ion-icon>
-          <h2> {{ category.name }} </h2>
+          <ion-label> {{ category.name }} </ion-label>
           <p> {{ category.description }} </p>
         </ion-item>
+      </ion-menu-toggle>
     </ion-list>
   </ion-content>
 </ion-menu>

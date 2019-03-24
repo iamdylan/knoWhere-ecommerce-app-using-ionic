@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import * as WC from 'woocommerce-api';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ChangeDetectionStrategy } from '@angular/core';
@@ -15,7 +15,7 @@ export class ProductsByCategoryPage implements OnInit {
   cat: number;
   page: number;
 
-  constructor( private route: ActivatedRoute, private cdr: ChangeDetectorRef, private ngZone: NgZone) {
+  constructor( private route: ActivatedRoute, private ngZone: NgZone) {
     this.page = 1;
     this.products = [];
 
@@ -32,17 +32,11 @@ export class ProductsByCategoryPage implements OnInit {
       console.log(this.cat);
     });
 
-    this.ngZone.run(() => { this.WooCommerce.getAsync("products?category=" + this.cat).then((data) => {
-          this.products =  JSON.parse(data.body);
-          // console.log(this.products);
-          // this.cdr.detectChanges();
+    this.WooCommerce.getAsync("products?category=" + this.cat).then((data) => {
+          this.ngZone.run(() => { this.products =  JSON.parse(data.body);});
           }, (err) => {
             console.log(err);
-        });setTimeout(() =>this.cdr.detectChanges(), 2);});
-
-    
-
- 
+        });
   }
 
   loadMoreProducts(event) {
@@ -60,9 +54,6 @@ export class ProductsByCategoryPage implements OnInit {
     })
   }
 
-  ngOnInit() {
-    
-    
-  }
+  ngOnInit() {}
 
 }
