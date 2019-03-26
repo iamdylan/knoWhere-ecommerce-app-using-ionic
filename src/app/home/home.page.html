@@ -33,21 +33,23 @@
   </ion-grid>
 
   <ion-list>
-    <ion-item *ngFor="let product of moreProducts" text-wrap>
-      <ion-thumbnail slot="start">
-        <img [src]="product.images[0].src" />
-      </ion-thumbnail>
-      
-      
-      <p>{{ product.name }}
-        <span >{{product.short_description.substr(3, 50) + '...'}}</span>
-        <span [innerHTML]="product.price_html"></span>
-      </p>
+    <ion-menu-toggle auto-hide="false" *ngFor="let product of moreProducts">
+      <ion-item [routerDirection]="'forward'" [routerLink]="['/product-details/' + product.name]">
+        <ion-thumbnail slot="start">
+          <img [src]="product.images[0].src" />
+        </ion-thumbnail>
+        
+        <p><ion-label class="custom-label-style">{{ product.name }}</ion-label>
+          {{product.short_description.substr(3, 50) + '...'}}<br>
+          <span class="custom-price-style" [innerHTML]="product.price_html"></span>
+        </p>
 
-      <button ion-button icon clear slot="end">
-        <ion-icon name="arrow-forward"></ion-icon>
-      </button>
-    </ion-item>
+        <button ion-button icon clear slot="end">
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+        
+      </ion-item>
+    </ion-menu-toggle>
   </ion-list>
 
   <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">

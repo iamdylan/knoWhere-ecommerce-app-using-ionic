@@ -14,9 +14,9 @@
         <ion-img [src]="product?.images[0].src"></ion-img>
       </ion-thumbnail>
 
-      <p>{{ product?.name }}
-        <span [innerHTML]="product?.short_description.substr(0, 50) + '...'"></span>
-        <span [innerHTML]="product?.price_html"></span>
+      <p><ion-label class="custom-label-style">{{ product?.name }}</ion-label>
+        {{product?.short_description.substr(3, 50) + '...'}}<br>
+        <span class="custom-price-style" [innerHTML]="product?.price_html"></span>
       </p>
 
       <button ion-button icon clear slot="end">
