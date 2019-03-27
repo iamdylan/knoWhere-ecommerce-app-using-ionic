@@ -9,13 +9,13 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let product of products">
+    <ion-item *ngFor="let product of products" [routerDirection]="'forward'" [routerLink]="['/product-details/' + product.id]">
       <ion-thumbnail slot="start">
         <ion-img [src]="product?.images[0].src"></ion-img>
       </ion-thumbnail>
 
       <p><ion-label class="custom-label-style">{{ product?.name }}</ion-label>
-        {{product?.short_description.substr(3, 50) + '...'}}<br>
+        <span class="custom-desc">{{product?.short_description.substr(3, 50) + '...'}}</span><br>
         <span class="custom-price-style" [innerHTML]="product?.price_html"></span>
       </p>
 

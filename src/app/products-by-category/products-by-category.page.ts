@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, Input } from '@angular/core';
 import * as WC from 'woocommerce-api';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ChangeDetectionStrategy } from '@angular/core';
@@ -14,7 +14,7 @@ export class ProductsByCategoryPage implements OnInit {
   products: Array<any>;
   cat: number;
   page: number;
-
+  
   constructor( private route: ActivatedRoute, private ngZone: NgZone) {
     this.page = 1;
     this.products = [];
