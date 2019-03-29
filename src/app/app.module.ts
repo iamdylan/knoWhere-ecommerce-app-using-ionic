@@ -12,6 +12,7 @@ import { HomePage } from './home/home.page';
 import { AppRoutingModule } from './app-routing.module';
 import { ProductsByCategoryModule } from './products-by-category/products-by-category.module';
 import { ProductDetailsPage } from './product-details/product-details.page';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [AppComponent, MenuPage, HomePage, ProductDetailsPage],
@@ -20,7 +21,8 @@ import { ProductDetailsPage } from './product-details/product-details.page';
     BrowserModule,
     IonicModule.forRoot(),
     ProductsByCategoryModule,
-    AppRoutingModule
+    AppRoutingModule,
+    IonicStorageModule.forRoot()
   ],
   providers: [
     StatusBar,
