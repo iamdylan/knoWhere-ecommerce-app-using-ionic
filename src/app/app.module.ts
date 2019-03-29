@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy, RouterModule } from '@angular/router';
+import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -13,10 +13,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { ProductsByCategoryModule } from './products-by-category/products-by-category.module';
 import { ProductDetailsPage } from './product-details/product-details.page';
 import { IonicStorageModule } from '@ionic/storage';
+import { CartPage } from './cart/cart.page';
 
 @NgModule({
-  declarations: [AppComponent, MenuPage, HomePage, ProductDetailsPage],
-  entryComponents: [AppComponent, MenuPage, HomePage],
+  declarations: [AppComponent, MenuPage, HomePage, ProductDetailsPage, CartPage],
+  entryComponents: [AppComponent, MenuPage, HomePage, CartPage],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
