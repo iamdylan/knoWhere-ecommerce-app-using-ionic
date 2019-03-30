@@ -8,8 +8,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-fab right top edge (click)="openCart()">
-    <button ion-fab color="danger"><ion-icon name="cart"></ion-icon></button>
+  <ion-fab horizontal="end" vertical="top" edge slot="fixed" (click)="openCart()">
+    <ion-fab-button color="danger"><ion-icon name="cart"></ion-icon></ion-fab-button>
   </ion-fab>
   
   <ion-card>
@@ -44,10 +44,10 @@
 
       <ion-grid>
         <ion-row *ngFor="let att of productInfo.attributes">
-          <ion-col col-4>
+          <ion-col size="4">
             {{ att.name}}
           </ion-col>
-          <ion-col col-8>
+          <ion-col size="8">
             <span *ngFor="let option of att.options"> {{ option }}</span>
           </ion-col>
         </ion-row>
@@ -64,7 +64,7 @@
 
       <ion-grid>
         <ion-row *ngFor="let review of reviews">
-          <ion-col col-4>
+          <ion-col size="4">
             <b>{{ review.reviewer_name }}</b><br/>
             <span *ngIf="review.rating >= 1">
               <ion-icon style="color: #d4af37" small name="star"></ion-icon>
@@ -83,7 +83,7 @@
             </span>
 
           </ion-col>
-          <ion-col col-8>
+          <ion-col size="8">
             {{  review.review }}
           </ion-col>
 

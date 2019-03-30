@@ -65,7 +65,11 @@ export class ProductDetailsPage{
     
   }//Constructor close
 
-  addToCart(product) {
+  async addToCart(prod) {
+    let product = await prod;
+    if(product.price == null){
+      return console.log('Could not add item to cart.');
+    }
     this.storage.get("cart").then((data) => {
       if (data == null || data.length == 0) {
         data = [];
@@ -115,7 +119,6 @@ export class ProductDetailsPage{
   }//toast close
 
   async openCart(){
-
     const modal = await this.modalCtrl.create({component: CartPage});
     return await modal.present();
   }

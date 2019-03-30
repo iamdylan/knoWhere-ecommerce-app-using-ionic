@@ -1,9 +1,79 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>cart</ion-title>
+    <ion-title>My Cart</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+
+<ion-content>
+  <ion-card [hidden]="!showEmptyCartMessage">
+    <ion-grid>
+      <ion-row>
+        <ion-col>There are no products in your cart!</ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+
+  <!-- <ion-list>
+    <ion-item > -->
+      <ion-grid>
+        <ion-row *ngFor="let item of cartItems; let i = index">
+            <ion-col size="2"  align-self-center><ion-thumbnail> 
+              <img [src]="item.product.images[0].src"/>
+            </ion-thumbnail></ion-col>
+          <ion-col size="4"  align-self-center>
+            <b>{{ item.product.name }}</b>
+          </ion-col>
+          <ion-col size="2" align-self-center style="text-align: center">
+            <b>{{ item.qty }}</b>
+          </ion-col>
+          <ion-col size="2"  align-self-center style="text-align: center">
+            <b>${{ item.product.price }}</b>
+          </ion-col>
+          <ion-col size="2"  align-self-center style="text-align: left">
+            <ion-button clear="true" color="danger" style="height: 30px; width: 10px; --border-radius: 100%;
+            --vertical-align: middle;" (click)="removeFromCart(item, i)">
+              <ion-icon name="close-circle" style="position: absolute"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    <!-- </ion-item>
+  </ion-list> -->
+
+
+    <ion-card>
+      <ion-grid>
+        <ion-row>
+
+          <ion-col col-4>
+            <h5><b>TOTAL</b></h5>
+          </ion-col>
+          <ion-col col-3>
+
+          </ion-col>
+          <ion-col col-3 style="text-align: right">
+            <h5><b> ${{ total }} </b></h5>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+    </ion-card>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button color="danger" fill="outline" expand="block" (click)="closeModal()">Back</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button color="danger" expand="block" (click)="checkOut()">Checkout</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
