@@ -1,4 +1,4 @@
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormBuilder, ReactiveFormsModule  } from '@angular/forms';
 import { MbscModule } from '@mobiscroll/angular-lite';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,12 +16,14 @@ import { ProductsByCategoryModule } from './products-by-category/products-by-cat
 import { ProductDetailsPage } from './product-details/product-details.page';
 import { IonicStorageModule } from '@ionic/storage';
 import { CartPage } from './cart/cart.page';
+import { emailValidator } from './validator/email'
 
 @NgModule({
   declarations: [AppComponent, MenuPage, HomePage, ProductDetailsPage, CartPage],
   entryComponents: [AppComponent, MenuPage, HomePage, CartPage],
   imports: [ 
-    FormsModule, 
+    FormsModule,
+    ReactiveFormsModule,
     MbscModule,
     BrowserModule,
     IonicModule.forRoot(),
@@ -32,7 +34,9 @@ import { CartPage } from './cart/cart.page';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    emailValidator,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    FormBuilder
   ],
   bootstrap: [AppComponent]
 })
