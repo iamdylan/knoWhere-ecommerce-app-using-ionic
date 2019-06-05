@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
 
+import * as WC from 'woocommerce-api';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  WooCommerce: any;
+  products: any[];
+
   slideOpts = {
     effect: 'flip',
     autoplay: {
@@ -19,4 +24,21 @@ export class HomePage {
       clickable: true,
     }
   };
+
+  constructor(){
+    this.WooCommerce =  WC({
+      url: "http://localhost/dashboard/wordpress",
+      consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
+      consumerSecret: "cs_300fb32ce0875c45a2520ff860d1282a8891f113",
+      wpAPI: true,
+      version: 'wc/v1'
+    });
+
+    this.WooCommerce.getAsync("products").then( (data) => {
+      console.log(JSON.parse(data.body));
+      this.products = JSON.parse(data.body).products;
+    }, (err) => {
+      console.log(err)
+    })
+  }
 }
