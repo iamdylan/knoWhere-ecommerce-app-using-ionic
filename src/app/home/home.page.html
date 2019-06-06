@@ -11,7 +11,7 @@
 
 <ion-content>
   <ion-card>
-    <ion-slides autoplay="3000" [options]="slideOpts" pager="true">
+    <ion-slides [options]="slideOpts" pager="true">
       <ion-slide *ngFor="let number of [1,2,3,4]">
         <img src="./assets/images/{{number}}.jpg" />
       </ion-slide>
@@ -20,13 +20,12 @@
 
   <ion-grid>
     <ion-row>
-      <ion-slides>
+      <ion-slides [options]="slideOpts2" >
         <ion-slide *ngFor="let product of products">
-          <ion-card no-padding>
-            <img [src]="product.featured_src" />
-            <h1> {{ product.title }} </h1>
+          <ion-card no-padding> 
+            <img [src]="product.images[0].src" />
+            <h1> {{ product.name }} </h1>
             <p> {{ product.short_description }}
-
           </ion-card>
         </ion-slide>
       </ion-slides>
