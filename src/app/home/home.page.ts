@@ -10,6 +10,8 @@ import * as WC from 'woocommerce-api';
 export class HomePage {
   WooCommerce: any;
   products: any;
+  moreProducts: any[];
+  page: number;
 
   slideOpts = {
     effect: 'flip',
@@ -21,7 +23,7 @@ export class HomePage {
     speed: 1500,
     pagination: {
       el: '.swiper-pagination',
-      clickable: true,    }
+      clickable: true    }
   };
 
   slideOpts2 = {
@@ -33,10 +35,12 @@ export class HomePage {
     loop: true,
     speed: 1500,
     pagination: {
-      clickable: true,    }
+      clickable: true    }
   };
 
   constructor(private ref: ChangeDetectorRef){
+    this.page = 2;
+
     this.WooCommerce =  WC({
       url: "http://localhost/dashboard/wordpress",
       consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
@@ -44,6 +48,8 @@ export class HomePage {
       wpAPI: true,
       version: 'wc/v3'
     });
+
+    this.loadMoreProducts();
 
     this.WooCommerce.getAsync("products").then( (data) => {
       this.products = JSON.parse(data.body);
@@ -55,7 +61,14 @@ export class HomePage {
     
   }
 
-  
+  loadMoreProducts(){
+    this.WooCommerce.getAsync("products?page=" + this.page).then( (data) => {
+      console.log(JSON.parse(data.body));
+      this.moreProducts = JSON.parse(data.body);
+    }, (err) => {
+      console.log(err)
+    })
+  }
     
 
 
