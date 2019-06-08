@@ -34,13 +34,12 @@
 
   <ion-list>
     <ion-item *ngFor="let product of moreProducts" text-wrap>
-      <ion-thumbnail item-left>
+      <ion-thumbnail slot="start">
         <img [src]="product.images[0].src" />
       </ion-thumbnail>
 
-      <h6> {{ product.name }} </h6>
 
-      <p>
+      <p>{{ product.name }}
         <span [innerHTML]="product.short_description.substr(0, 50) + '...'"></span>
         <span [innerHTML]="product.price_html"></span>
       </p>
@@ -50,5 +49,9 @@
       </button>
     </ion-item>
   </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   
 </ion-content>
