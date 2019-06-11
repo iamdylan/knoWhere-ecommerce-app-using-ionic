@@ -31,10 +31,33 @@ export class MenuPage implements OnInit {
 
       for( let i = 1; i < temp.length; i ++){
         if(temp[i].parent == 0){
+
+          if(temp[i].slug == "clothing"){
+            temp[i].icon = "shirt";
+          }
+          if(temp[i].slug == "music"){
+            temp[i].icon = "musical-notes";
+          }
+          if(temp[i].slug == "posters"){
+            temp[i].icon = "images";
+          }
+          if(temp[i].slug == "accessories"){
+            temp[i].icon = "watch";
+          }
+          if(temp[i].slug == "decor"){
+            temp[i].icon = "rose";
+          }
+          if(temp[i].slug == "hoodies"){
+            temp[i].icon = "snow";
+          }
+
           this.categories.push(temp[i]);
         }
       }
       if(temp[0].parent == 0){
+        if(temp[0].slug == "uncategorized"){
+            temp[0].icon = "basket";
+          }
         this.categories.push(temp[0]);
       }
     }, (err)=> {

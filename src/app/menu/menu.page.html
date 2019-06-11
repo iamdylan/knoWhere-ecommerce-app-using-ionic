@@ -8,9 +8,10 @@
   <ion-content>
     <ion-list>
         <ion-item *ngFor="let category of categories" text-wrap>
-            <h2> {{ category.name }} </h2>
-            <p> {{ category.description }}</p>
-          </ion-item>
+          <ion-icon [name]="category.icon" slot="start" ></ion-icon>
+          <h2> {{ category.name }} </h2>
+          <p> {{ category.description }}</p>
+        </ion-item>
     </ion-list>
   </ion-content>
 </ion-menu>
