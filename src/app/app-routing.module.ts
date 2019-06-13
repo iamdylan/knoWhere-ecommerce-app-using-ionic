@@ -4,12 +4,13 @@ import { ProductsByCategoryPage } from './products-by-category/products-by-categ
 import { HomePage } from './home/home.page';
 
 const routes: Routes = [
-  { path: '', component: HomePage },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomePage },
   { path: 'products/:category', component: ProductsByCategoryPage }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [ RouterModule.forRoot(routes) ],
   exports: [ RouterModule ]
 })
 export class AppRoutingModule {

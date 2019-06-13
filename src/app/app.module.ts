@@ -10,19 +10,22 @@ import { AppComponent } from './app.component';
 import { MenuPage } from './menu/menu.page';
 import { HomePage } from './home/home.page';
 import { AppRoutingModule } from './app-routing.module';
-import { ProductsByCategoryPage } from './products-by-category/products-by-category.page';
+import { ProductsByCategoryModule } from './products-by-category/products-by-category.module';
+import { CategoryService } from './category.service';
 
 @NgModule({
-  declarations: [AppComponent, MenuPage, HomePage, ProductsByCategoryPage],
+  declarations: [AppComponent, MenuPage, HomePage],
   entryComponents: [AppComponent, MenuPage, HomePage],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    ProductsByCategoryModule,
     AppRoutingModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    CategoryService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
