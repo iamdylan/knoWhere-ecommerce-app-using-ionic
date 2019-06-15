@@ -3,7 +3,6 @@ import { HomePage } from '../home/home.page';
 import * as WC from 'woocommerce-api';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { CategoryService } from '../category.service';
 
 @Component({
   selector: 'app-menu',
@@ -16,7 +15,7 @@ export class MenuPage implements OnInit {
   public rootPage: any = HomePage;
   
 
-  constructor(public menuCtrl: MenuController, public router: Router, public categoryService: CategoryService) { 
+  constructor(public menuCtrl: MenuController, public router: Router) { 
     this.categories = [];
 
     this.WooCommerce =  WC({
@@ -69,11 +68,11 @@ export class MenuPage implements OnInit {
 
   }
 
-  openCategoryPage(cat){
-    this.categoryService.setDestn(cat);
-    this.router.navigate(['/products/' + cat]);
-    this.menuCtrl.close();
-  }
+  // openCategoryPage(cat){
+  //   this.categoryService.setDestn(cat);
+  //   this.router.navigate(['/products/' + cat]);
+  //   this.menuCtrl.close();
+  // }
 
   ngOnInit() {
   }
