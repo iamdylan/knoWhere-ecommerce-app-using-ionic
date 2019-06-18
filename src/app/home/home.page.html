@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons>
-      <ion-menu-button slot="start"></ion-menu-button>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
       Home
@@ -37,14 +37,14 @@
       <ion-thumbnail slot="start">
         <img [src]="product.images[0].src" />
       </ion-thumbnail>
-
-
+      
+      
       <p>{{ product.name }}
-        <span [innerHTML]="product.short_description.substr(0, 50) + '...'"></span>
+        <span >{{product.short_description.substr(3, 50) + '...'}}</span>
         <span [innerHTML]="product.price_html"></span>
       </p>
 
-      <button ion-button icon clear item-right>
+      <button ion-button icon clear slot="end">
         <ion-icon name="arrow-forward"></ion-icon>
       </button>
     </ion-item>

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import {  ToastController } from '@ionic/angular'
 
 import * as WC from 'woocommerce-api';
@@ -39,7 +39,7 @@ export class HomePage {
       clickable: true    }
   };
 
-  constructor(private ref: ChangeDetectorRef, public toastCtrl: ToastController){
+  constructor(public toastCtrl: ToastController, private ngZone: NgZone){
     this.page = 2;
 
     this.WooCommerce =  WC({
@@ -50,17 +50,14 @@ export class HomePage {
       version: 'wc/v3'
     });
 
-
     this.WooCommerce.getAsync("products").then( (data) => {
-      this.popProducts = JSON.parse(data.body);
-      // this.ref.detectChanges();
+      this.ngZone.run(() => {this.popProducts = JSON.parse(data.body);});
       console.log(this.popProducts);
     }, (err) => {
       console.log(err)
     })
 
     this.loadMoreProducts(null);
-
   }
 
   loadMoreProducts(event){
@@ -75,7 +72,7 @@ export class HomePage {
 
     this.WooCommerce.getAsync("products?page=" + this.page).then( (data) => {
       console.log(JSON.parse(data.body));
-      this.moreProducts = this.moreProducts.concat(JSON.parse(data.body));
+      this.ngZone.run(() => {this.moreProducts = this.moreProducts.concat(JSON.parse(data.body));});
 
       if(event != null)
       {
@@ -101,5 +98,4 @@ export class HomePage {
     tc.present();
   }
 
-  
 }
