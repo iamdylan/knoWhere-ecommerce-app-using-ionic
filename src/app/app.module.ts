@@ -11,9 +11,10 @@ import { MenuPage } from './menu/menu.page';
 import { HomePage } from './home/home.page';
 import { AppRoutingModule } from './app-routing.module';
 import { ProductsByCategoryModule } from './products-by-category/products-by-category.module';
+import { ProductDetailsPage } from './product-details/product-details.page';
 
 @NgModule({
-  declarations: [AppComponent, MenuPage, HomePage],
+  declarations: [AppComponent, MenuPage, HomePage, ProductDetailsPage],
   entryComponents: [AppComponent, MenuPage, HomePage],
   imports: [
     BrowserModule,
