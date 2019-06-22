@@ -20,12 +20,12 @@
 
   <ion-grid>
     <ion-row>
-      <ion-slides [options]="slideOpts2" >
-        <ion-slide *ngFor="let product of popProducts">
+      <ion-slides [options]="slideOpts2">
+        <ion-slide *ngFor="let product of popProducts" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
           <ion-card no-padding> 
             <img [src]="product.images[0].src" />
-            <h1 padding center> {{ product.name }} </h1>
-            <p center padding [innerHTML]="product.short_description"></p>
+            <h1 center> {{ product.name }} </h1>
+            <p center [innerHTML]="product.short_description"></p>
           </ion-card>
         </ion-slide>
       </ion-slides>
@@ -33,14 +33,13 @@
   </ion-grid>
 
   <ion-list>
-    <ion-menu-toggle auto-hide="false" *ngFor="let product of moreProducts">
-      <ion-item [routerDirection]="'forward'" [routerLink]="['/product-details/' + product.name]">
+      <ion-item *ngFor="let product of moreProducts" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
         <ion-thumbnail slot="start">
           <img [src]="product.images[0].src" />
         </ion-thumbnail>
         
         <p><ion-label class="custom-label-style">{{ product.name }}</ion-label>
-          {{product.short_description.substr(3, 50) + '...'}}<br>
+          <span class="custom-desc">{{product.short_description.substr(3, 50) + '...'}}</span><br>
           <span class="custom-price-style" [innerHTML]="product.price_html"></span>
         </p>
 
@@ -49,7 +48,6 @@
         </button>
         
       </ion-item>
-    </ion-menu-toggle>
   </ion-list>
 
   <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">

@@ -1,38 +1,31 @@
 <ion-header>
-
   <ion-toolbar>
-    <ion-title> {{ product.name }} </ion-title>
+    <ion-title> {{ productInfo.name }} </ion-title>
   </ion-toolbar>
-
 </ion-header>
 
-
 <ion-content>
+  <ion-card>
+    <ion-slides [options]="slideOpts" pager="true">
+      <ion-slide *ngFor="let image of productInfo.images">
+        <img [src]="image.src" />
+      </ion-slide>
+    </ion-slides>
 
-<ion-card>
-  <ion-slides autoplay="3000">
-    <ion-slide *ngFor="let image of product.images">
-      <img [src]="image.src" />
-    </ion-slide>
-  </ion-slides>
+    <ion-card-content>
+      <ion-card-title>
+        {{ productInfo.name }} &nbsp;
+        <ion-chip *ngFor="let cat of productInfo.categories" style="margin-left: 5px;">
+          <ion-label color="danger"> {{ cat.name }} </ion-label>
+        </ion-chip>
+      </ion-card-title>
 
-  <ion-card-content>
-    <ion-card-title>
-      {{ product.name }} &nbsp;
-      <ion-chip *ngFor="let cat of product.categories" style="margin-left: 5px;">
-        <ion-label color="danger"> {{ cat }} </ion-label>
-      </ion-chip>
-    </ion-card-title>
+      <p [innerHTML]="productInfo.description"></p>
 
-    <p [innerHTML]="product.description"></p>
+      <ion-button expand="block" fill="outline" color="danger">
+        <ion-icon slot="start" name="basket"></ion-icon> Add to Cart
+      </ion-button>
 
-    <button ion-button icon-left block outline color="danger">
-      <ion-icon name="basket"></ion-icon> Add to Cart
-    </button>
-
-  </ion-card-content>
-
-
-</ion-card>
-
+    </ion-card-content>
+  </ion-card>
 </ion-content>
