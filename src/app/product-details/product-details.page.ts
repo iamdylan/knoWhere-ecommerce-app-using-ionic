@@ -1,9 +1,10 @@
 import { Component, NgZone } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import * as WC from 'woocommerce-api';
+import { CartPage } from '../cart/cart.page';
 
 import { Storage } from '@ionic/storage';
-import { ToastController } from '@ionic/angular';
+import { ToastController, ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-product-details',
@@ -28,7 +29,9 @@ export class ProductDetailsPage{
       clickable: true    }
   };
 
-  constructor(private route: ActivatedRoute, private ngZone: NgZone, public storage: Storage, public toastCtrl: ToastController) {
+  constructor(private route: ActivatedRoute, private ngZone: NgZone, public storage: Storage, 
+    public toastCtrl: ToastController, public modalCtrl: ModalController) {
+
     this.productInfo = [];
     this.reviews = [];
     this.productInfo.attributes = [];
@@ -110,4 +113,10 @@ export class ProductDetailsPage{
 
   tc.present();
   }//toast close
+
+  async openCart(){
+
+    const modal = await this.modalCtrl.create({component: CartPage});
+    return await modal.present();
+  }
 }//class close
