@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Sign Up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <mbsc-form [options]="formSettings">
+    <mbsc-form-group>
+        <mbsc-form-group-title>Personal Details</mbsc-form-group-title>
+        <mbsc-input [(ngModel)]="firstname" placeholder="First Name">First Name</mbsc-input>
+        <mbsc-input [(ngModel)]="lastname" placeholder="Last Name">Last Name</mbsc-input>
+        <mbsc-input [(ngModel)]="email" placeholder="Email Address">Email</mbsc-input>
+        <mbsc-input [(ngModel)]="username" placeholder="User Name">User Name</mbsc-input>
+        <mbsc-input name="password" [(ngModel)]="password" #pass="ngModel" type="password" placeholder="Password" minlength="6" required 
+        icon="lock2" password-toggle="true" [error]="pass.invalid && templSubmitted" [errorMessage]="getErrorMessage('password', 'templ')">Password</mbsc-input>
+    </mbsc-form-group>
+    <mbsc-form-group>
+        <mbsc-form-group-title>Billing Details</mbsc-form-group-title>
+        
+    </mbsc-form-group>
+</mbsc-form>
+</ion-content>
