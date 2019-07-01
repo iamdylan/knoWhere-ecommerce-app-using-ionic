@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule   } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-import { MbscModule } from '@mobiscroll/angular-lite';
+
 
 import { IonicModule } from '@ionic/angular';
 
 import { SignupPage } from './signup.page';
+import { MbscModule } from '@mobiscroll/angular-lite';
 
 const routes: Routes = [
   {
@@ -17,10 +18,11 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    MbscModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
+    MbscModule,
     RouterModule.forChild(routes)
   ],
   declarations: [SignupPage]
