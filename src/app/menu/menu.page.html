@@ -8,16 +8,24 @@
   <ion-content class="card-background-page">
     <ion-card>
       <ion-img src="./assets/images/shopping.jpg" ></ion-img>
-      <div class="card-title" slot="end">KNOWHERE &nbsp;&nbsp;&nbsp;</div>
+      <div class="card-title" slot="end">knoWhere &nbsp;&nbsp;&nbsp;</div>
       <div class="card-subtitle">Know Where to Shop &nbsp;</div>
     </ion-card>
 
-    <ion-list >
+    <ion-list class="categories">
       <ion-menu-toggle auto-hide="false" *ngFor="let category of categories">
         <ion-item [routerDirection]="'forward'" [routerLink]="['/products/' + category.id]">
           <ion-icon [name]="category.icon" slot="start"></ion-icon>
           <ion-label> {{ category.name }} </ion-label>
           <p> {{ category.description }} </p>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle auto-hide="false">
+      <ion-item [routerDirection]="'forward'" [routerLink]="['/signup']">
+          <ion-icon name="clipboard" slot="start"></ion-icon>
+          <ion-label> Sign Up </ion-label>
+          <p> For a new account </p>
         </ion-item>
       </ion-menu-toggle>
     </ion-list>

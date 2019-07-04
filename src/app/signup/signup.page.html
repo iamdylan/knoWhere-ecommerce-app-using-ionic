@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Sign Up</ion-title>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    <ion-title>
+      Sign Up
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -9,59 +14,74 @@
     <form novalidate [formGroup]="reactForm">
       <mbsc-form-group>
           <mbsc-form-group-title><b>Personal Details</b></mbsc-form-group-title>
-          <mbsc-input name="firstname" formControlName="firstname" placeholder="First Name" [error]="getErrorState('firstname')" [errorMessage]="getErrorMessage('firstname')">First Name</mbsc-input>
-          <mbsc-input name="lastname" formControlName="lastname" placeholder="Last Name" [error]="getErrorState('lastname')" [errorMessage]="getErrorMessage('lastname')">Last Name</mbsc-input>
-          <mbsc-input name="email" formControlName="email" type="email" placeholder="Email" [error]="getErrorState('email')" [errorMessage]="getErrorMessage('email')">Email</mbsc-input>
-          <ion-item *ngIf="emailValidator?.goodToGo">
-          <span class="mbsc-err-msg">Email already exists</span>
-          </ion-item>
-          <mbsc-input name="username" formControlName="username" placeholder="Username" [error]="getErrorState('username')" [errorMessage]="getErrorMessage('username')">User Name</mbsc-input>
-          <mbsc-input name="password" formControlName="password" type="password" placeholder="Password" password-toggle="true" [error]="getErrorState('password')" [errorMessage]="getErrorMessage('password')">Password</mbsc-input>
+          <mbsc-form-group-content>
+            <mbsc-input name="firstname" formControlName="first_name" placeholder="First Name" [error]="getErrorState('first_name')" [errorMessage]="getErrorMessage('first_name')"></mbsc-input>
+            <mbsc-input name="lastname" formControlName="last_name" placeholder="Last Name" [error]="getErrorState('last_name')" [errorMessage]="getErrorMessage('last_name')"></mbsc-input>
+            <mbsc-input name="email" formControlName="email" placeholder="Email" [error]="getErrorState('email')" [errorMessage]="getErrorMessage('email')" (input)="emailValidation()"></mbsc-input>
+            <ion-item *ngIf="emailGood">
+            <span class="mbsc-err-msg">Email already registered</span>
+            </ion-item>
+            <mbsc-input name="username" formControlName="username" placeholder="Username" [error]="getErrorState('username')" [errorMessage]="getErrorMessage('username')" (input)="userValidation()"></mbsc-input>
+            <ion-item *ngIf="userGood">
+            <span class="mbsc-err-msg">Username already exists</span>
+            </ion-item>
+            <mbsc-input name="password" formControlName="password" type="password" placeholder="Password" password-toggle="true" [error]="getErrorState('password')" [errorMessage]="getErrorMessage('password')" (input)="confPass()"></mbsc-input>
+            <mbsc-input name="conf_password" formControlName="conf_password" type="password" placeholder="Confirm Password" password-toggle="true" [error]="getErrorState('conf_password')" [errorMessage]="getErrorMessage('password')" (input)="confPass()"></mbsc-input>
+            <ion-item *ngIf="passMatch && reactForm.value.conf_password.length > 0">
+              <span class="mbsc-err-msg">Passwords do not match</span>
+            </ion-item>
+        </mbsc-form-group-content>
       </mbsc-form-group>
 
-      <mbsc-form-group>
+      <mbsc-form-group formGroupName="billing">
           <mbsc-form-group-title><b>Billing Details</b></mbsc-form-group-title>
-          <mbsc-input name="fullname" formControlName="fullname" placeholder="Full Name" [error]="getErrorState('fullname')" [errorMessage]="getErrorMessage('fullname')">Full Name</mbsc-input>
-          <mbsc-input name="addressl1" formControlName="addressl1" placeholder="Address Line 1" [error]="getErrorState('addressl1')" [errorMessage]="getErrorMessage('addressl1')">Address Line 1</mbsc-input>
-          <mbsc-input name="addressl2" formControlName="addressl2" placeholder="Address Line 2" [error]="getErrorState('addressl2')" [errorMessage]="getErrorMessage('addressl2')">Address Line 2</mbsc-input>
-          <mbsc-dropdown name="country" formControlName="country" [error]="getErrorState('country')" [errorMessage]="getErrorMessage('country')">
-              <option value="">-Country-</option>
-              <option value="india">India</option>
-              <option value="usa">USA</option>
-              <option value="usa">UK</option>
-              <option value="usa">AUS</option>
-          </mbsc-dropdown>
-          <mbsc-input name="state" formControlName="state" placeholder="State" [error]="getErrorState('state')" [errorMessage]="getErrorMessage('state')">State</mbsc-input>
-          <mbsc-input name="city" formControlName="city" placeholder="City" [error]="getErrorState('city')" [errorMessage]="getErrorMessage('city')">City</mbsc-input>
-          <mbsc-input name="postalcode" formControlName="postalcode" placeholder="Postal Code" [error]="getErrorState('postalcode')" [errorMessage]="getErrorMessage('postalcode')">Postal Code</mbsc-input>
-          <mbsc-input name="phone" formControlName="phone" placeholder="Phone No." [error]="getErrorState('phone')" [errorMessage]="getErrorMessage('phone')">Phone No.</mbsc-input>
-          <mbsc-switch color="primary" (change)="setBillingToShipping()"> Billing Details same as Shipping Details?
-              <!-- <span class="mbsc-desc">This is description for Switch</span> -->
-          </mbsc-switch>
+          <mbsc-form-group-content>
+            <mbsc-input name="first_name" formControlName="first_name" placeholder="First Name" [error]="getErrorState('billing.first_name')" [errorMessage]="getErrorMessage('first_name')"></mbsc-input>
+            <mbsc-input name="last_name" formControlName="last_name" placeholder="Last Name" [error]="getErrorState('billing.last_name')" [errorMessage]="getErrorMessage('last_name')"></mbsc-input>
+            <mbsc-input name="email" formControlName="email" placeholder="Email" [error]="getErrorState('email')" [errorMessage]="getErrorMessage('email')"></mbsc-input>
+            <mbsc-input name="address_1" formControlName="address_1" placeholder="Address Line 1" [error]="getErrorState('billing.address_1')" [errorMessage]="getErrorMessage('address_1')"></mbsc-input>
+            <mbsc-input name="address_2" formControlName="address_2" placeholder="Address Line 2" [error]="getErrorState('billing.address_2')" [errorMessage]="getErrorMessage('address_2')"></mbsc-input>
+            <mbsc-dropdown name="country" formControlName="country" [error]="getErrorState('billing.country')" [errorMessage]="getErrorMessage('country')">
+                <option value="" disabled selected hidden>Country</option>
+                <option value="India">India</option>
+                <option value="USA">United States of America</option>
+                <option value="UK">United Kingdom</option>
+                <option value="AUS">Australia</option>
+            </mbsc-dropdown>
+            <mbsc-input name="state" formControlName="state" placeholder="State" [error]="getErrorState('billing.state')" [errorMessage]="getErrorMessage('state')"></mbsc-input>
+            <mbsc-input name="city" formControlName="city" placeholder="City" [error]="getErrorState('billing.city')" [errorMessage]="getErrorMessage('city')"></mbsc-input>
+            <mbsc-input name="postcode" formControlName="postcode" placeholder="Postal Code" [error]="getErrorState('billing.postcode')" [errorMessage]="getErrorMessage('postcode')"></mbsc-input>
+            <mbsc-input name="phone" formControlName="phone" placeholder="Phone No." [error]="getErrorState('billing.phone')" [errorMessage]="getErrorMessage('phone')"></mbsc-input>
+            <mbsc-switch color="primary" (change)="setBillingToShipping()"> Billing Details same as Shipping Details?
+                <!-- <span class="mbsc-desc">This is description for Switch</span> -->
+            </mbsc-switch>
+          </mbsc-form-group-content>
         </mbsc-form-group>
 
-        <mbsc-form-group *ngIf="!billing_shipping_same">
+        <mbsc-form-group formGroupName="shipping" *ngIf="!billing_shipping_same">
             <mbsc-form-group-title><b>Shipping Details</b></mbsc-form-group-title>
-            <mbsc-input name="fullname" formControlName="fullname" placeholder="Full Name" [error]="getErrorState('fullname')" [errorMessage]="getErrorMessage('fullname')">Full Name</mbsc-input>
-            <mbsc-input name="addressl1" formControlName="addressl1" placeholder="Address Line 1" [error]="getErrorState('addressl1')" [errorMessage]="getErrorMessage('addressl1')">Address Line 1</mbsc-input>
-            <mbsc-input name="addressl2" formControlName="addressl2" placeholder="Address Line 2" [error]="getErrorState('addressl2')" [errorMessage]="getErrorMessage('addressl2')">Address Line 2</mbsc-input>
-            <mbsc-dropdown name="country" formControlName="country" [error]="getErrorState('country')" [errorMessage]="getErrorMessage('country')">
-                <option value="">-Country-</option>
-                <option value="india">India</option>
-                <option value="usa">USA</option>
-                <option value="usa">UK</option>
-                <option value="usa">AUS</option>
-            </mbsc-dropdown>
-            <mbsc-input name="state" formControlName="state" placeholder="State" [error]="getErrorState('state')" [errorMessage]="getErrorMessage('state')">State</mbsc-input>
-            <mbsc-input name="city" formControlName="city" placeholder="City" [error]="getErrorState('city')" [errorMessage]="getErrorMessage('city')">City</mbsc-input>
-            <mbsc-input name="postalcode" formControlName="postalcode" placeholder="Postal Code" [error]="getErrorState('postalcode')" [errorMessage]="getErrorMessage('postalcode')">Postal Code</mbsc-input>
-            <mbsc-input name="phone" formControlName="phone" placeholder="Phone No." [error]="getErrorState('phone')" [errorMessage]="getErrorMessage('phone')">Phone No.</mbsc-input>
+            <mbsc-form-group-content>
+              <mbsc-input name="first_name" formControlName="first_name" placeholder="First Name" [error]="getErrorState('shipping.first_name')" [errorMessage]="getErrorMessage('first_name')"></mbsc-input>
+              <mbsc-input name="last_name" formControlName="last_name" placeholder="Last Name" [error]="getErrorState('shipping.last_name')" [errorMessage]="getErrorMessage('last_name')"></mbsc-input>
+              <mbsc-input name="address_1" formControlName="address_1" placeholder="Address Line 1" [error]="getErrorState('shipping.address_1')" [errorMessage]="getErrorMessage('address_1')"></mbsc-input>
+              <mbsc-input name="address_2" formControlName="address_2" placeholder="Address Line 2" [error]="getErrorState('shipping.address_2')" [errorMessage]="getErrorMessage('address_2')"></mbsc-input>
+              <mbsc-dropdown name="country" formControlName="country" [error]="getErrorState('shipping.country')" [errorMessage]="getErrorMessage('country')">
+                  <option value="" disabled selected hidden>Country</option>
+                  <option value="india">India</option>
+                  <option value="usa">USA</option>
+                  <option value="usa">UK</option>
+                  <option value="usa">AUS</option>
+              </mbsc-dropdown>
+              <mbsc-input name="state" formControlName="state" placeholder="State" [error]="getErrorState('shipping.state')" [errorMessage]="getErrorMessage('state')"></mbsc-input>
+              <mbsc-input name="city" formControlName="city" placeholder="City" [error]="getErrorState('shipping.city')" [errorMessage]="getErrorMessage('city')"></mbsc-input>
+              <mbsc-input name="postcode" formControlName="postcode" placeholder="Postal Code" [error]="getErrorState('shipping.postcode')" [errorMessage]="getErrorMessage('postcode')"></mbsc-input>
+            </mbsc-form-group-content>
           </mbsc-form-group>
     </form>
   </mbsc-form>
 
   <ion-footer>
-    <ion-button expand="block" color="danger"  (click)="registerReact()" [disabled]="reactForm.invalid">Sign Up</ion-button>
+    <ion-button expand="block" color="danger"  (click)="signup()" [disabled]="!reactForm.valid || !passMatch">Sign Up</ion-button>
   </ion-footer>
   <!-- <mbsc-popup [options]="popupSettings" #thanks="mobiscroll">
     <h3>Thank you for registering</h3>

@@ -51,10 +51,10 @@ export class HomePage {
     });
 
     this.WooCommerce.getAsync("products").then( (data) => {
-      this.ngZone.run(() => {this.popProducts = JSON.parse(data.body);});
+      this.ngZone.run(() => {this.popProducts = (JSON.parse(data.body));});
       console.log(this.popProducts);
     }, (err) => {
-      console.log(err)
+      console.log(err);
     })
 
     this.loadMoreProducts(null);

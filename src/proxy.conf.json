@@ -1,6 +1,3 @@
 {
-    "/wp-json/wc/v3": {
-      "target": "http://localhost/dashboard/wordpress",
-      "secure": false
-    }
+    
   }
