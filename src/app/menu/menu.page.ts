@@ -27,52 +27,46 @@ export class MenuPage implements OnInit {
     });
 
     this.WooCommerce.getAsync("products/categories").then((data) => {
-      console.log(JSON.parse(data.body));
-
       let temp: any[] = JSON.parse(data.body);
 
-      for( let i = 1; i < temp.length; i ++){
+      for( let i = 0; i < temp.length; i++){
         if(temp[i].parent == 0){
 
           if(temp[i].slug == "clothing"){
             temp[i].icon = "shirt";
+            this.categories.push(temp[i]);
           }
-          if(temp[i].slug == "music"){
+          else if(temp[i].slug == "music"){
             temp[i].icon = "musical-notes";
+            this.categories.push(temp[i]);
           }
-          if(temp[i].slug == "posters"){
+          else if(temp[i].slug == "posters"){
             temp[i].icon = "images";
+            this.categories.push(temp[i]);
           }
-          if(temp[i].slug == "accessories"){
+          else if(temp[i].slug == "accessories"){
             temp[i].icon = "watch";
+            this.categories.push(temp[i]);
           }
-          if(temp[i].slug == "decor"){
+          else if(temp[i].slug == "decor"){
             temp[i].icon = "rose";
+            this.categories.push(temp[i]);
           }
-          if(temp[i].slug == "hoodies"){
+          else if(temp[i].slug == "hoodies"){
             temp[i].icon = "snow";
+            this.categories.push(temp[i]);
           }
-
-          this.categories.push(temp[i]);
+          else if(temp[i].slug == "uncategorized"){
+            temp[i].icon = "basket";
+            this.categories.push(temp[i]);
+          }
         }
-      }
-      if(temp[0].parent == 0){
-        if(temp[0].slug == "uncategorized"){
-            temp[0].icon = "basket";
-          }
-        this.categories.push(temp[0]);
       }
     }, (err)=> {
       console.log(err)
     })
 
   }
-
-  // openCategoryPage(cat){
-  //   this.categoryService.setDestn(cat);
-  //   this.router.navigate(['/products/' + cat]);
-  //   this.menuCtrl.close();
-  // }
 
   ngOnInit() {
   }
