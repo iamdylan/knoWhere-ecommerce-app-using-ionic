@@ -3,8 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { MbscFormOptions } from '@mobiscroll/angular-lite/src/js/forms.angular';
 import * as WC from 'woocommerce-api';
 import { AlertController, ToastController } from '@ionic/angular';
-import { NG_FORM_SELECTOR_WARNING } from '@angular/forms/src/directives';
-
+import { PasswordValidator } from '../validators/pass.validator';
 
 @Component({
   selector: 'app-signup',
@@ -14,8 +13,11 @@ import { NG_FORM_SELECTOR_WARNING } from '@angular/forms/src/directives';
 })
 export class SignupPage implements OnInit {
   formSettings: MbscFormOptions = {
-    theme: 'ios'
+    theme: 'mobiscroll'
 };
+
+reactForm: FormGroup;
+
 billing_shipping_same: boolean;
 billing_address: any;
 shipping_address: any;
@@ -34,36 +36,7 @@ constructor(public fb: FormBuilder, private ngZone: NgZone, public toastCtrl: To
 
 }
 
-reactForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(2)]],
-      first_name: ['', [Validators.required, Validators.minLength(2)]],
-      last_name: ['', [Validators.required, Validators.minLength(1)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      conf_password: ['', [Validators.required, Validators.minLength(6)]],
-      billing: this.fb.group({
-        first_name: ['', [Validators.required, Validators.minLength(3)]],
-        last_name: ['', [Validators.required, Validators.minLength(3)]],
-        email: ['', [Validators.required, Validators.email]],
-        address_1: ['', [Validators.required, Validators.minLength(5)]],
-        address_2: ['', [Validators.required, Validators.minLength(2)]],
-        country: ['', Validators.required],
-        state: ['', [Validators.required, Validators.minLength(2)]],
-        city: ['', [Validators.required, Validators.minLength(3)]],
-        postcode: ['', [Validators.required, Validators.minLength(4)]],
-        phone: ['', [Validators.required, Validators.minLength(10)]],
-      }),
-      shipping: this.fb.group({
-        first_name: ['', [Validators.required, Validators.minLength(3)]],
-        last_name: ['', [Validators.required, Validators.minLength(3)]],
-        address_1: ['', [Validators.required, Validators.minLength(5)]],
-        address_2: ['', [Validators.required, Validators.minLength(2)]],
-        country: ['', Validators.required],
-        state: ['', [Validators.required, Validators.minLength(2)]],
-        city: ['', [Validators.required, Validators.minLength(3)]],
-        postcode: ['', [Validators.required, Validators.minLength(4)]],
-      })
-    });
+  
 
 reactSubmitted: boolean = false;
 
@@ -111,11 +84,13 @@ errorMessages = {
     },
     email: {
         required: 'Email address required',
-        email: 'Invalid email address'
+        email: 'Invalid email address',
+        exists: 'Email already registered'
     },
     password: {
         required: 'Password required',
-        minlength: 'At least 6 characters required'
+        minlength: 'At least 6 characters required',
+        validPassword: 'Passwords do not match'
     },
     bill_first_name: {
         required: 'Full Name required',
@@ -330,6 +305,45 @@ signup(){
   }
 
   ngOnInit() {
+    this.reactForm = this.fb.group({
+      username: ['', [Validators.required , Validators.minLength(2)]],
+      first_name: ['', [Validators.required, Validators.minLength(2)]],
+      last_name: ['', [Validators.required, Validators.minLength(1)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      conf_password: ['', [Validators.required, Validators.minLength(6), (formGroup: FormGroup) => {
+        return PasswordValidator.validPassword(formGroup);
+     }]],
+      billing: this.fb.group({
+        first_name: ['', [Validators.required, Validators.minLength(3)]],
+        last_name: ['', [Validators.required, Validators.minLength(3)]],
+        email: ['', [Validators.required, Validators.email]],
+        address_1: ['', [Validators.required, Validators.minLength(5)]],
+        address_2: ['', [Validators.required, Validators.minLength(2)]],
+        country: ['', Validators.required],
+        state: ['', [Validators.required, Validators.minLength(2)]],
+        city: ['', [Validators.required, Validators.minLength(3)]],
+        postcode: ['', [Validators.required, Validators.minLength(4)]],
+        phone: ['', [Validators.required, Validators.minLength(10)]],
+      }),
+      shipping: this.fb.group({
+        first_name: ['', [Validators.required, Validators.minLength(3)]],
+        last_name: ['', [Validators.required, Validators.minLength(3)]],
+        address_1: ['', [Validators.required, Validators.minLength(5)]],
+        address_2: ['', [Validators.required, Validators.minLength(2)]],
+        country: ['', Validators.required],
+        state: ['', [Validators.required, Validators.minLength(2)]],
+        city: ['', [Validators.required, Validators.minLength(3)]],
+        postcode: ['', [Validators.required, Validators.minLength(4)]],
+      })
+    });
+
+    console.log(this.reactForm.controls);
   }
 
+  get first_name() { return this.reactForm.get('first_name'); }
+  get last_name() { return this.reactForm.get('last_name'); }
+  get email() { return this.reactForm.get('email'); }
+  get password() { return this.reactForm.get('password'); }
+  get conf_password() { return this.reactForm.get('conf_password'); }
 }
