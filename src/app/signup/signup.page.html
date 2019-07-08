@@ -26,10 +26,7 @@
               <span class="mbsc-err-msg">Username already exists</span>
             </ion-item> -->
             <mbsc-input formControlName="password" type="password" label-style="floating" password-toggle="true" [error]="reactForm.controls['password'].touched && reactForm.controls['password'].invalid" [errorMessage]="getErrorMessage('password')" >Password</mbsc-input>
-            <mbsc-input formControlName="conf_password" type="password" label-style="floating" password-toggle="true" [error]="reactForm.controls['conf_password'].touched && reactForm.controls['conf_password'].invalid" [errorMessage]="getErrorMessage('password')" >Confirm Password</mbsc-input>
-            <!-- <div *ngIf="passMatch && reactForm.value.conf_password.length > 0" class="mbsc-err-msg">
-              <h6>Passwords do not match</h6>
-            </div> -->
+            <mbsc-input formControlName="conf_password" type="password" label-style="floating" password-toggle="true" [error]="reactForm.controls['conf_password'].dirty && reactForm.hasError('noMatch')" [errorMessage]="getErrorMessage('password')" >Confirm Password</mbsc-input>
         </mbsc-form-group-content>
       </mbsc-form-group>
 
@@ -81,7 +78,7 @@
   </mbsc-form>
 
   <ion-footer>
-    <ion-button expand="block" color="danger"  (click)="signup()" [disabled]="!reactForm.valid || !passMatch">Sign Up</ion-button>
+    <ion-button expand="block" color="danger"  (click)="signup()" [disabled]="!reactForm.valid">Sign Up</ion-button>
   </ion-footer>
   <!-- <mbsc-popup [options]="popupSettings" #thanks="mobiscroll">
     <h3>Thank you for registering</h3>
