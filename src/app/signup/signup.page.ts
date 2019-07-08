@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, NgZone, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { MbscFormOptions } from '@mobiscroll/angular-lite/src/js/forms.angular';
 import * as WC from 'woocommerce-api';
 import { AlertController, ToastController } from '@ionic/angular';
 import { PasswordValidator } from '../validators/pass.validator';
+
 
 @Component({
   selector: 'app-signup',
@@ -23,20 +24,15 @@ billing_address: any;
 shipping_address: any;
 emailGood: boolean;
 userGood: boolean;
-passMatch: boolean;
-passValid: boolean;
+
 
 constructor(public fb: FormBuilder, private ngZone: NgZone, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+ 
     this.billing_shipping_same = false;
     this.billing_address = {};
     this.shipping_address = {};
-    this.passMatch = false;
-    this.passValid = true;
-
 
 }
-
-  
 
 reactSubmitted: boolean = false;
 
@@ -61,11 +57,16 @@ getErrorMessage(field: string) {
       if (ctrl && ctrl.errors) {
           for (let err in ctrl.errors) {
               if (!message && ctrl.errors[err]) {
-                  message = this.errorMessages[field][err];
+                  return message = this.errorMessages[field][err];
               }
           }
       }
+      else if(formCtrl.hasError('noMatch')){
+        return message = this.errorMessages['conf_password']['noMatch'];
+      }
     }
+
+
     return message;
 }
 
@@ -90,7 +91,11 @@ errorMessages = {
     password: {
         required: 'Password required',
         minlength: 'At least 6 characters required',
-        validPassword: 'Passwords do not match'
+    },
+    conf_password: {
+      required: 'Password required',
+      minlength: 'At least 6 characters required',
+      noMatch: 'Passwords do not match'
     },
     bill_first_name: {
         required: 'Full Name required',
@@ -227,19 +232,6 @@ userValidation=()=>{
     });
 }
 
-confPass=()=>{
-  if (this.reactForm.value.password == this.reactForm.value.conf_password && this.reactForm.value.password !== ""){
-    this.ngZone.run(() => {
-      this.passMatch = false;
-    });
-  }
-  else{
-    this.ngZone.run(() => {
-      this.passMatch = true;
-    });
-  }
-}
-
 signup(){
     let WooCommerce =  WC({
         url: "http://localhost/dashboard/wordpress",
@@ -311,9 +303,7 @@ signup(){
       last_name: ['', [Validators.required, Validators.minLength(1)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      conf_password: ['', [Validators.required, Validators.minLength(6), (formGroup: FormGroup) => {
-        return PasswordValidator.validPassword(formGroup);
-     }]],
+      conf_password: ['', [Validators.required, Validators.minLength(6)]],
       billing: this.fb.group({
         first_name: ['', [Validators.required, Validators.minLength(3)]],
         last_name: ['', [Validators.required, Validators.minLength(3)]],
@@ -336,7 +326,8 @@ signup(){
         city: ['', [Validators.required, Validators.minLength(3)]],
         postcode: ['', [Validators.required, Validators.minLength(4)]],
       })
-    });
+    }, {validator: PasswordValidator.validPassword}
+    );
 
     console.log(this.reactForm.controls);
   }
