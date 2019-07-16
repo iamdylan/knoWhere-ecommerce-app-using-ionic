@@ -17,7 +17,7 @@
           <mbsc-form-group-content>
             <mbsc-input formControlName="first_name" label-style="floating" [error]="reactForm.controls['first_name'].touched && reactForm.controls['first_name'].invalid " [errorMessage]="getErrorMessage('first_name')">First Name</mbsc-input>
             <mbsc-input formControlName="last_name" label-style="floating" [error]="reactForm.controls['last_name'].touched && reactForm.controls['last_name'].invalid" [errorMessage]="getErrorMessage('last_name')">Last Name</mbsc-input>
-            <mbsc-input formControlName="email" label-style="floating" [error]="reactForm.controls['email'].touched && reactForm.controls['email'].invalid" [errorMessage]="getErrorMessage('email')" >Email</mbsc-input>
+            <mbsc-input formControlName="email" label-style="floating" [error]="reactForm.controls['email'].hasError('match') && !reactForm.controls['email'].hasError('email') && reactForm.controls['email'].dirty" [errorMessage]="getErrorMessage('email')" >Email</mbsc-input>
             <!-- <ion-item *ngIf="emailGood">
               <span class="mbsc-err-msg">Email already registered</span>
             </ion-item> -->

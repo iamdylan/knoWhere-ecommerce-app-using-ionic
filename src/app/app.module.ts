@@ -16,6 +16,7 @@ import { ProductsByCategoryModule } from './products-by-category/products-by-cat
 import { ProductDetailsPage } from './product-details/product-details.page';
 import { IonicStorageModule } from '@ionic/storage';
 import { CartPage } from './cart/cart.page';
+import { EmailValidator } from './validators/email.validator';
 
 @NgModule({
   declarations: [AppComponent, MenuPage, HomePage, ProductDetailsPage, CartPage],
@@ -34,7 +35,8 @@ import { CartPage } from './cart/cart.page';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    FormBuilder
+    FormBuilder,
+    EmailValidator
   ],
   bootstrap: [AppComponent]
 })
