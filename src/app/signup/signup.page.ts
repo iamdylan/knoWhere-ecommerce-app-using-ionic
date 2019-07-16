@@ -4,6 +4,9 @@ import { MbscFormOptions } from '@mobiscroll/angular-lite/src/js/forms.angular';
 import * as WC from 'woocommerce-api';
 import { AlertController, ToastController } from '@ionic/angular';
 import { PasswordValidator } from '../validators/pass.validator';
+import 'rxjs/add/operator/map';
+import { EmailValidator } from '../validators/email.validator';
+
 
 
 @Component({
@@ -26,7 +29,7 @@ emailGood: boolean;
 userGood: boolean;
 
 
-constructor(public fb: FormBuilder, private ngZone: NgZone, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+constructor(public fb: FormBuilder, private ngZone: NgZone, public toastCtrl: ToastController, public alertCtrl: AlertController, public emailValidator: EmailValidator) {
  
     this.billing_shipping_same = false;
     this.billing_address = {};
@@ -86,7 +89,7 @@ errorMessages = {
     email: {
         required: 'Email address required',
         email: 'Invalid email address',
-        exists: 'Email already registered'
+        match: 'Email already registered'
     },
     password: {
         required: 'Password required',
@@ -232,6 +235,18 @@ userValidation=()=>{
     });
 }
 
+// validateEmail(fc: FormControl) {
+//   var pattern = new RegExp(/^(("[\w-+\s]+")|([\w-+]+(?:\.[\w-+]+)*)|("[\w-+\s]+")([\w-+]+(?:\.[\w-+]+)*))(@((?:[\w-+]+\.)*\w[\w-+]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][\d]\.|1[\d]{2}\.|[\d]{1,2}\.))((25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\.){2}(25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\]?$)/i);
+//   console.log('email validator')
+
+//   // if (pattern.test(fc.value) && fc.value !== ""){
+//     return this.emailValidate.validEmail(fc.value).map(res => {
+//       return res ? null : { match: true };
+//     });
+//   // }
+// }
+  
+
 signup(){
     let WooCommerce =  WC({
         url: "http://localhost/dashboard/wordpress",
@@ -301,7 +316,7 @@ signup(){
       username: ['', [Validators.required , Validators.minLength(2)]],
       first_name: ['', [Validators.required, Validators.minLength(2)]],
       last_name: ['', [Validators.required, Validators.minLength(1)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email], this.emailValidator.checkEmail.bind(this.emailValidator)],
       password: ['', [Validators.required, Validators.minLength(6)]],
       conf_password: ['', [Validators.required, Validators.minLength(6)]],
       billing: this.fb.group({
