@@ -17,6 +17,7 @@ import { ProductDetailsPage } from './product-details/product-details.page';
 import { IonicStorageModule } from '@ionic/storage';
 import { CartPage } from './cart/cart.page';
 import { EmailValidator } from './validators/email.validator';
+import { UserValidator } from './validators/username.validator';
 
 @NgModule({
   declarations: [AppComponent, MenuPage, HomePage, ProductDetailsPage, CartPage],
@@ -36,7 +37,8 @@ import { EmailValidator } from './validators/email.validator';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     FormBuilder,
-    EmailValidator
+    EmailValidator,
+    UserValidator
   ],
   bootstrap: [AppComponent]
 })

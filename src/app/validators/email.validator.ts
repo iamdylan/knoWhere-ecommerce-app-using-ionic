@@ -26,8 +26,10 @@ export class EmailValidator {
                         });
                                     
                     WooCommerce.get("customers/?email=" + fc.value, function(err, data, res) {
-                        console.log(JSON.parse(data.body));
-                        console.log(JSON.parse(data.body).length);
+                        
+                        // console.log(JSON.parse(data.body));
+                        // console.log(JSON.parse(data.body).length);
+
                         if(JSON.parse(data.body).length){
                             resolve({'match': true});
                         }else{
@@ -40,18 +42,6 @@ export class EmailValidator {
             }
         });
     }
-
-        //  console.log(valid)
-        //     if(valid == false){
-        //         console.log(fc)
-        //         return {
-        //             match: true
-        //         };
-        //     }
-            
-        //     console.log(fc)
-        //     return null;
-    
 }
 
    
