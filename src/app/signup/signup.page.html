@@ -18,13 +18,7 @@
             <mbsc-input formControlName="first_name" label-style="floating" [error]="reactForm.controls['first_name'].touched && reactForm.controls['first_name'].invalid " [errorMessage]="getErrorMessage('first_name')">First Name</mbsc-input>
             <mbsc-input formControlName="last_name" label-style="floating" [error]="reactForm.controls['last_name'].touched && reactForm.controls['last_name'].invalid" [errorMessage]="getErrorMessage('last_name')">Last Name</mbsc-input>
             <mbsc-input formControlName="email" label-style="floating" [error]="(reactForm.controls['email'].touched || reactForm.controls['email'].dirty) && reactForm.controls['email'].invalid" [errorMessage]="getErrorMessage('email')" >Email</mbsc-input>
-            <!-- <ion-item *ngIf="emailGood">
-              <span class="mbsc-err-msg">Email already registered</span>
-            </ion-item> -->
             <mbsc-input formControlName="username" label-style="floating" [error]="(reactForm.controls['username'].touched || reactForm.controls['username'].dirty) && reactForm.controls['username'].invalid" [errorMessage]="getErrorMessage('username')" >Username</mbsc-input>
-            <!-- <ion-item *ngIf="userGood">
-              <span class="mbsc-err-msg">Username already exists</span>
-            </ion-item> -->
             <mbsc-input formControlName="password" type="password" label-style="floating" password-toggle="true" [error]="(reactForm.controls['password'].touched || reactForm.controls['password'].dirty) && reactForm.controls['password'].invalid" [errorMessage]="getErrorMessage('password')" >Password</mbsc-input>
             <mbsc-input formControlName="conf_password" type="password" label-style="floating" password-toggle="true" [error]="(reactForm.controls['conf_password'].touched || reactForm.controls['conf_password'].dirty) && reactForm.hasError('noMatch')" [errorMessage]="getErrorMessage('conf_password')" >Confirm Password</mbsc-input>
         </mbsc-form-group-content>
