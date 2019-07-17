@@ -6,8 +6,7 @@ import { AlertController, ToastController } from '@ionic/angular';
 import { PasswordValidator } from '../validators/pass.validator';
 import 'rxjs/add/operator/map';
 import { EmailValidator } from '../validators/email.validator';
-
-
+import { UserValidator } from '../validators/username.validator';
 
 @Component({
   selector: 'app-signup',
@@ -25,11 +24,10 @@ reactForm: FormGroup;
 billing_shipping_same: boolean;
 billing_address: any;
 shipping_address: any;
-emailGood: boolean;
 userGood: boolean;
 
 
-constructor(public fb: FormBuilder, private ngZone: NgZone, public toastCtrl: ToastController, public alertCtrl: AlertController, public emailValidator: EmailValidator) {
+constructor(public fb: FormBuilder, private ngZone: NgZone, public toastCtrl: ToastController, public alertCtrl: AlertController, public emailValidator: EmailValidator, public userValidator: UserValidator) {
  
     this.billing_shipping_same = false;
     this.billing_address = {};
@@ -69,14 +67,14 @@ getErrorMessage(field: string) {
       }
     }
 
-
     return message;
 }
 
 errorMessages = {
     username: {
         required: 'Username required',
-        minlength: 'Has to be at least 2 characters'
+        minlength: 'Has to be at least 2 characters',
+        match: 'Username taken'
     },
     first_name: {
         required: 'First name required',
@@ -97,7 +95,6 @@ errorMessages = {
     },
     conf_password: {
       required: 'Password required',
-      minlength: 'At least 6 characters required',
       noMatch: 'Passwords do not match'
     },
     bill_first_name: {
@@ -173,39 +170,6 @@ setBillingToShipping(){
   }
 }
 
-emailValidation=()=>{
-  console.log("running")
-  let WooCommerce =  WC({
-      url: "http://localhost/dashboard/wordpress",
-      consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
-      consumerSecret: "cs_300fb32ce0875c45a2520ff860d1282a8891f113",
-      wpAPI: true,
-      version: 'wc/v3'
-    });
-
-    WooCommerce.getAsync("customers/?email=" + this.reactForm.value.email).then((data) => {
-      // console.log(ctrl.value)
-      // console.log(JSON.parse(data.body));
-      // console.log(JSON.parse(data.body).length);
-       
-      if(JSON.parse(data.body).length == undefined || JSON.parse(data.body).length == 0){
-          // console.log('good to go');
-          this.ngZone.run(() => {
-             this.emailGood = false;
-          });
-          return true;
-      }
-      else{
-          // console.log('exists');
-          this.ngZone.run(() => {
-             this.emailGood = true;
-          });
-          // console.log(this.emailGood);
-          return false;
-      }
-    });
-}
-
 userValidation=()=>{
   console.log("user running")
   let WooCommerce =  WC({
@@ -234,19 +198,7 @@ userValidation=()=>{
       })
     });
 }
-
-// validateEmail(fc: FormControl) {
-//   var pattern = new RegExp(/^(("[\w-+\s]+")|([\w-+]+(?:\.[\w-+]+)*)|("[\w-+\s]+")([\w-+]+(?:\.[\w-+]+)*))(@((?:[\w-+]+\.)*\w[\w-+]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][\d]\.|1[\d]{2}\.|[\d]{1,2}\.))((25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\.){2}(25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\]?$)/i);
-//   console.log('email validator')
-
-//   // if (pattern.test(fc.value) && fc.value !== ""){
-//     return this.emailValidate.validEmail(fc.value).map(res => {
-//       return res ? null : { match: true };
-//     });
-//   // }
-// }
   
-
 signup(){
     let WooCommerce =  WC({
         url: "http://localhost/dashboard/wordpress",
@@ -313,12 +265,12 @@ signup(){
 
   ngOnInit() {
     this.reactForm = this.fb.group({
-      username: ['', [Validators.required , Validators.minLength(2)]],
+      username: ['', [Validators.required , Validators.minLength(2)], this.userValidator.checkUser.bind(this.userValidator)],
       first_name: ['', [Validators.required, Validators.minLength(2)]],
       last_name: ['', [Validators.required, Validators.minLength(1)]],
       email: ['', [Validators.required, Validators.email], this.emailValidator.checkEmail.bind(this.emailValidator)],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      conf_password: ['', [Validators.required, Validators.minLength(6)]],
+      conf_password: ['', [Validators.required]],
       billing: this.fb.group({
         first_name: ['', [Validators.required, Validators.minLength(3)]],
         last_name: ['', [Validators.required, Validators.minLength(3)]],
