@@ -18,10 +18,12 @@ import { IonicStorageModule } from '@ionic/storage';
 import { CartPage } from './cart/cart.page';
 import { EmailValidator } from './validators/email.validator';
 import { UserValidator } from './validators/username.validator';
+import { LoginPage } from './login/login.page';
+import { ProductsByCategoryPage } from './products-by-category/products-by-category.page';
 
 @NgModule({
   declarations: [AppComponent, MenuPage, HomePage, ProductDetailsPage, CartPage],
-  entryComponents: [AppComponent, MenuPage, HomePage, CartPage],
+  entryComponents: [AppComponent, MenuPage, HomePage, ProductsByCategoryPage, ProductDetailsPage, CartPage],
   imports: [ 
     FormsModule,
     ReactiveFormsModule,

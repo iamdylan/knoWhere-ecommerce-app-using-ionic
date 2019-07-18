@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, NgZone, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { MbscFormOptions } from '@mobiscroll/angular-lite/src/js/forms.angular';
 import * as WC from 'woocommerce-api';
 import { AlertController, ToastController } from '@ionic/angular';
@@ -266,8 +266,6 @@ signup(){
       })
     }, {validator: PasswordValidator.validPassword}
     );
-
-    console.log(this.reactForm.controls);
   }
 
   get first_name() { return this.reactForm.get('first_name'); }
