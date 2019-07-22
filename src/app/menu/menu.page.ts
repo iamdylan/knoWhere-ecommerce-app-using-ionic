@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HomePage } from '../home/home.page';
 import * as WC from 'woocommerce-api';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-menu',
@@ -12,10 +12,11 @@ import { Router } from '@angular/router';
 export class MenuPage implements OnInit {
   WooCommerce: any;
   categories: any[];
-  public rootPage: any = HomePage;
+  loggedIn: boolean;
+  user: any;
   
 
-  constructor(public menuCtrl: MenuController, public router: Router) { 
+  constructor(public menuCtrl: MenuController, public router: Router, public storage: Storage) { 
     this.categories = [];
 
     this.WooCommerce =  WC({
@@ -66,6 +67,33 @@ export class MenuPage implements OnInit {
       console.log(err)
     })
 
+  }
+
+  ionViewDidEnter() {
+
+    console.log('menu entered')
+    
+        if( this.storage.get("userLoginInfo") != null){
+
+          console.log("User logged in...");
+          this.user = this.storage.get("userLoginInfo.user");
+          console.log(this.user);
+          this.loggedIn = true;
+        }
+        else {
+          console.log("No user found.");
+          this.user = {};
+          this.loggedIn = false;
+        }
+
+  }
+
+  logOut(){
+    
+      this.storage.remove("userLoginInfo").then( () => {
+        this.user = {};
+        this.loggedIn = false;
+      })
   }
 
   ngOnInit() {

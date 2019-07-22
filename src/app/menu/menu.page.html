@@ -14,20 +14,42 @@
 
     <ion-list class="navi">
       <ion-menu-toggle auto-hide="false">
-        <ion-item [routerDirection]="'forward'" [routerLink]="['/home']">
+        <ion-item [routerDirection]="'root'" [routerLink]="['/home']"  routerLinkActive="active">
           <ion-icon name="home" slot="start"></ion-icon>
           <ion-label> Home </ion-label>
         </ion-item>
-        <ion-item [routerDirection]="'forward'" [routerLink]="['/signup']">
+        <ion-item [routerDirection]="'forward'" [routerLink]="['/signup']"  routerLinkActive="active" *ngIf="!loggedIn">
           <ion-icon name="clipboard" slot="start"></ion-icon>
           <ion-label> Sign Up </ion-label>
         </ion-item>
+        <ion-item [routerDirection]="'forward'" [routerLink]="['/login']"   routerLinkActive="active" *ngIf="!loggedIn">
+          <ion-icon name="clipboard" slot="start"></ion-icon>
+          <ion-label> Log In </ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="loggedIn">
+            <ion-icon name="contact" slot="start" large></ion-icon>
+            <h2>{{ (this.user.firstname == '' ? this.user.username : this.user.firstname) || "" }}</h2>
+            <p>Welcome</p>
+          </ion-item>
+    
+          <ion-item *ngIf="loggedIn" [routerDirection]="'root'" [routerLink]="['/cart']" menuClose>
+            <ion-icon name="cart" slot="start" large></ion-icon>
+            <h2>Your Cart</h2>
+            <p>Check items in your cart</p>
+          </ion-item>
+    
+          <ion-item *ngIf="loggedIn" (click)="logOut" menuClose>
+            <ion-icon name="log-out" slot="start" large></ion-icon>
+            <h2>Logout</h2>
+            <p>of your Account</p>
+          </ion-item>
       </ion-menu-toggle>
     </ion-list>
 
     <ion-list class="categories">
       <ion-menu-toggle auto-hide="false" *ngFor="let category of categories">
-        <ion-item [routerDirection]="'forward'" [routerLink]="['/products/' + category.id]">
+        <ion-item [routerDirection]="'forward'" [routerLink]="['/products/' + category.id]"  routerLinkActive="active">
           <ion-icon [name]="category.icon" slot="start"></ion-icon>
           <ion-label> {{ category.name }} </ion-label>
           <p> {{ category.description }} </p>

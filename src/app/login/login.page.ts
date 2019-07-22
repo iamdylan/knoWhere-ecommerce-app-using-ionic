@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MbscFormOptions } from '@mobiscroll/angular-lite/src/js/forms.angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { mobiscroll } from '@mobiscroll/angular-lite';
+import { Http } from '@angular/http';
+import { ToastController, AlertController, Events } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,9 +14,10 @@ import { mobiscroll } from '@mobiscroll/angular-lite';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder, public http: Http, private router: Router, public toastCtrl: ToastController, public storage: Storage, public alertCtrl: AlertController, public events: Events) {
+
     this.loginForm = fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required, Validators.minLength(6)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
@@ -28,9 +33,63 @@ export class LoginPage implements OnInit {
 
   errorMessages = {
     required: '{$1} required',
-    minlength: 'At least 6 characters required',
-    email: 'Invalid email address'
+    minlength: 'At least 6 characters required'
   };
+
+
+  logIn(){
+
+    this.http.get("http://localhost/dashboard/wordpress/api/auth/generate_auth_cookie/?insecure=cool&username=" + this.loginForm.value.username + "&password=" + this.loginForm.value.password)
+    .subscribe( (res) => {
+    console.log(res.json());
+
+    let response = res.json();
+
+    if(response.error){
+      this.markFieldsDirty();
+      this.toast(response);
+      return;
+    }
+
+    this.storage.set("userLoginInfo", response).then( (data) =>{
+      console.log(data, response)
+      this.presentAlert();
+    })
+   
+  });
+
+
+  }
+
+  async toast(response){
+    let tc= await this.toastCtrl.create({
+          message: response.error,
+          duration: 5000,
+          showCloseButton: true,
+          color: "dark"
+        });
+
+    tc.present();
+  }
+
+  async presentAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Login Successful',
+      message: 'You are logged in successfully.',
+      buttons: [
+        {
+          text: 'OK',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('routing')
+            this.router.navigateByUrl('/home');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
   markFieldsDirty() {
     const controls = this.loginForm.controls;
@@ -41,20 +100,20 @@ export class LoginPage implements OnInit {
     }
   }
 
-  logIn() {
-    this.attemptedSubmit = true;
-    if (this.loginForm.valid) {
-      mobiscroll.toast({
-        message: 'Logged In!',
-        callback: () => {
-          this.loginForm.reset();
-          this.attemptedSubmit = false;
-        }
-      });
-    } else {
-      this.markFieldsDirty();
-    }
-  }
+  // logIn() {
+  //   this.attemptedSubmit = true;
+  //   if (this.loginForm.valid) {
+  //     mobiscroll.toast({
+  //       message: 'Logged In!',
+  //       callback: () => {
+  //         this.loginForm.reset();
+  //         this.attemptedSubmit = false;
+  //       }
+  //     });
+  //   } else {
+  //     this.markFieldsDirty();
+  //   }
+  // }
 
   errorFor(fieldName: string) {
     const field = this.loginForm.controls[fieldName];

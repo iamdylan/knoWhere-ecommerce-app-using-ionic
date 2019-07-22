@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+      </ion-buttons>
     <ion-title>login</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,22 +12,23 @@
     <form [formGroup]="loginForm" novalidate>
       <div class="md-logo micons icon-mbsc-logo"></div>
       <mbsc-form-group inset>
-        <mbsc-input formControlName="email" name="Email" placeholder="Email"
-          [error]="loginForm.controls['email'].invalid && loginForm.controls['email'].dirty"
-          [errorMessage]="errorFor('email')">
+        <mbsc-input formControlName="username" name="username" placeholder="Username"
+          [error]="loginForm.controls['username'].invalid && loginForm.controls['username'].dirty"
+          [errorMessage]="errorFor('username')">
         </mbsc-input>
-        <mbsc-input formControlName="password" name="password" type="text" placeholder="Password" password-toggle="true"
+        <mbsc-input formControlName="password" name="password" type="password" placeholder="Password" password-toggle="true"
           icon="none" icon-align="right"
           [error]="loginForm.controls['password'].invalid && loginForm.controls['password'].dirty"
           [errorMessage]="errorFor('password')"></mbsc-input>
       </mbsc-form-group>
       <mbsc-form-group inset class="mbsc-padding mbsc-align-center">
-        <a href="#" >Don't have an account yet? Sign up.</a>
+        <a [routerDirection]="'root'" [routerLink]="['/signup']">Don't have an account yet? Sign up.</a>
         <br><br>
-        <a href="#">Forgot password?</a>
+
       </mbsc-form-group>
       <mbsc-form-group inset class="mbsc-padding">
-        <mbsc-button block *ngIf="isLogin" [disabled]="loginForm.invalid && attemptedSubmit" (click)="logIn()">Sign in
+        <mbsc-button block [disabled]="loginForm.invalid && attemptedSubmit" (click)="logIn()">Sign in
+        </mbsc-button>
       </mbsc-form-group>
     </form>
   </mbsc-form>

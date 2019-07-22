@@ -72,6 +72,8 @@
   </mbsc-form>
 
   <ion-footer>
+      <a [routerDirection]="'root'" [routerLink]="['/login']">Already have an account?</a>
+      <br><br>
     <ion-button expand="block" color="danger"  (click)="signup()" [disabled]="!reactForm.valid">Sign Up</ion-button>
   </ion-footer>
   <!-- <mbsc-popup [options]="popupSettings" #thanks="mobiscroll">

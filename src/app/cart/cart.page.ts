@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { ModalController } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-cart',
@@ -12,7 +13,7 @@ export class CartPage implements OnInit {
   total: any;
   showEmptyCartMessage: boolean = false;
 
-  constructor(public storage: Storage, public modalCtrl: ModalController) { 
+  constructor(public storage: Storage, public modalCtrl: ModalController, private location: Location) { 
     this.total = 0.0;
     
     this.storage.ready().then(()=>{
@@ -20,7 +21,7 @@ export class CartPage implements OnInit {
         this.cartItems = data;
         console.log(this.cartItems);
 
-        if(this.cartItems.length > 0){
+        if(this.cartItems != null && this.cartItems.length > 0){
           this.cartItems.forEach( (item, index)=> {
             this.total = this.total + (item.product.price * item.qty)
           })
@@ -45,8 +46,8 @@ export class CartPage implements OnInit {
     }
   }
 
-  closeModal(){
-    this.modalCtrl.dismiss();
+  closeCart(){
+    this.location.back();
   }
 
   checkOut(){
