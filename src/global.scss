@@ -9,3 +9,27 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+
+.mbsc-ios.mbsc-form {
+    background:#48507b !important;
+    min-height: 100%;
+}
+
+.mbsc-ios.mbsc-form a{
+    color: rgba(0, 255, 255, 0.800);
+}
+
+.mbsc-input-wrap{
+    padding-right: 0 !important;
+}
+
+.mbsc-err-msg {
+    font-size: .80em !important;
+    min-width: 100%;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding-left: .2em;
+    height: 1.7em;
+}
+@import "~@mobiscroll/angular-lite/dist/css/mobiscroll.css";

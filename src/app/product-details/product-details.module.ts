@@ -1,21 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { ProductsByCategoryPage } from './products-by-category.page';
+import { ProductDetailsPage } from './product-details.page';
 import { IonicModule } from '@ionic/angular';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: ProductsByCategoryPage
-  }
+    {
+      path: '',
+      component: ProductDetailsPage
+    }
 ];
 
 @NgModule({
-  declarations: [ProductsByCategoryPage],
+  declarations: [ProductDetailsPage],
   imports: [
     IonicModule,
     CommonModule,
-    RouterModule.forChild(routes)  ]
+    RouterModule.forChild(routes)
+  ]
 })
-export class ProductsByCategoryModule { }
+export class ProductDetailsModule { }

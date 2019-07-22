@@ -15,15 +15,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { ProductsByCategoryModule } from './products-by-category/products-by-category.module';
 import { ProductDetailsPage } from './product-details/product-details.page';
 import { IonicStorageModule } from '@ionic/storage';
-import { CartPage } from './cart/cart.page';
 import { EmailValidator } from './validators/email.validator';
 import { UserValidator } from './validators/username.validator';
-import { LoginPage } from './login/login.page';
 import { ProductsByCategoryPage } from './products-by-category/products-by-category.page';
+import { HttpModule } from '@angular/http';
+import { NeedAuthGuard } from './login/auth.guard';
+import { HomePageModule } from './home/home.module';
+import { ProductDetailsModule } from './product-details/product-details.module';
 
 @NgModule({
-  declarations: [AppComponent, MenuPage, HomePage, ProductDetailsPage, CartPage],
-  entryComponents: [AppComponent, MenuPage, HomePage, ProductsByCategoryPage, ProductDetailsPage, CartPage],
+  declarations: [AppComponent, MenuPage],
+  entryComponents: [AppComponent, MenuPage, HomePage, ProductsByCategoryPage, ProductDetailsPage],
   imports: [ 
     FormsModule,
     ReactiveFormsModule,
@@ -31,7 +33,10 @@ import { ProductsByCategoryPage } from './products-by-category/products-by-categ
     BrowserModule,
     IonicModule.forRoot(),
     ProductsByCategoryModule,
+    ProductDetailsModule,
+    HomePageModule,
     AppRoutingModule,
+    HttpModule,
     IonicStorageModule.forRoot()
   ],
   providers: [
@@ -40,7 +45,8 @@ import { ProductsByCategoryPage } from './products-by-category/products-by-categ
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     FormBuilder,
     EmailValidator,
-    UserValidator
+    UserValidator,
+    NeedAuthGuard
   ],
   bootstrap: [AppComponent]
 })

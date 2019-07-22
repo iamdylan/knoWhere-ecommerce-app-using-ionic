@@ -8,7 +8,7 @@
   <ion-card [hidden]="!showEmptyCartMessage">
     <ion-grid>
       <ion-row>
-        <ion-col>There are no products in your cart!</ion-col>
+        <ion-col style="text-align: center">Cart Empty!</ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
@@ -41,7 +41,7 @@
   </ion-list> -->
 
 
-    <ion-card>
+    <ion-card [hidden]="showEmptyCartMessage">
       <ion-grid>
         <ion-row>
 
@@ -66,7 +66,7 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-button color="danger" fill="outline" expand="block" (click)="closeModal()">Back</ion-button>
+          <ion-button color="danger" fill="outline" expand="block" (click)="closeCart()">Back</ion-button>
         </ion-col>
         <ion-col>
           <ion-button color="danger" expand="block" (click)="checkOut()">Checkout</ion-button>

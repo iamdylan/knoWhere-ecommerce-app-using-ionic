@@ -1,16 +1,20 @@
 <ion-header>
   <ion-toolbar>
       <ion-buttons slot="start">
-          <ion-back-button></ion-back-button>
-        </ion-buttons>
+        <ion-menu-button></ion-menu-button>
+        <ion-back-button defaultHref="home"></ion-back-button>
+      </ion-buttons>
+      <ion-fab-button [routerDirection]="'root'" [routerLink]="['/cart']" slot="end" size="small" color="danger">
+        <ion-icon name="cart"></ion-icon>
+      </ion-fab-button>
+
+
     <ion-title> {{ productInfo.name }} </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-fab horizontal="end" vertical="top" edge slot="fixed" (click)="openCart()">
-    <ion-fab-button color="danger"><ion-icon name="cart"></ion-icon></ion-fab-button>
-  </ion-fab>
+  
   
   <ion-card>
     <ion-slides [options]="slideOpts" pager="true">
