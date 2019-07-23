@@ -69,34 +69,35 @@ export class MenuPage implements OnInit {
 
   }
 
-  ionViewDidEnter() {
-
-    console.log('menu entered')
-    
-        if( this.storage.get("userLoginInfo") != null){
-
-          console.log("User logged in...");
-          this.user = this.storage.get("userLoginInfo.user");
-          console.log(this.user);
-          this.loggedIn = true;
-        }
-        else {
-          console.log("No user found.");
-          this.user = {};
-          this.loggedIn = false;
-        }
-
-  }
-
   logOut(){
-    
+      console.log('logging out')
       this.storage.remove("userLoginInfo").then( () => {
         this.user = {};
+        console.log(this.user)
         this.loggedIn = false;
       })
   }
 
   ngOnInit() {
-  }
+    console.log('menu entered');
+    
+    this.storage.ready().then( () => {
+      this.storage.get("userLoginInfo").then( (userLoginInfo) => {
+
+        if(userLoginInfo != null){
+
+        console.log("User logged in...");
+        this.user = userLoginInfo.user;
+        console.log(this.user);
+        this.loggedIn = true;
+      }
+      else {
+        console.log("No user found.");
+        this.user = {};
+        this.loggedIn = false;
+      }
+    })
+  })
+}
 
 }
