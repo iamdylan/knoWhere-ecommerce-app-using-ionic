@@ -23,26 +23,23 @@
           <ion-label> Sign Up </ion-label>
         </ion-item>
         <ion-item [routerDirection]="'forward'" [routerLink]="['/login']"   routerLinkActive="active" *ngIf="!loggedIn">
-          <ion-icon name="clipboard" slot="start"></ion-icon>
+          <ion-icon name="log-in" slot="start"></ion-icon>
           <ion-label> Log In </ion-label>
         </ion-item>
 
         <ion-item *ngIf="loggedIn">
             <ion-icon name="contact" slot="start" large></ion-icon>
-            <h2>{{ (this.user.firstname == '' ? this.user.username : this.user.firstname) || "" }}</h2>
-            <p>Welcome</p>
+            <ion-label>{{ (this.user.firstname == '' ? this.user.username : this.user.firstname) || "" }}</ion-label>
           </ion-item>
     
           <ion-item *ngIf="loggedIn" [routerDirection]="'root'" [routerLink]="['/cart']" menuClose>
             <ion-icon name="cart" slot="start" large></ion-icon>
-            <h2>Your Cart</h2>
-            <p>Check items in your cart</p>
+            <ion-label>Cart</ion-label>
           </ion-item>
     
-          <ion-item *ngIf="loggedIn" (click)="logOut" menuClose>
+          <ion-item *ngIf="loggedIn" (click)="logOut()" menuClose>
             <ion-icon name="log-out" slot="start" large></ion-icon>
-            <h2>Logout</h2>
-            <p>of your Account</p>
+            <ion-label>Logout</ion-label>
           </ion-item>
       </ion-menu-toggle>
     </ion-list>

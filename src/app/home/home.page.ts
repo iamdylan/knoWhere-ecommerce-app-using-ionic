@@ -40,6 +40,7 @@ export class HomePage {
   };
 
   constructor(public toastCtrl: ToastController, private ngZone: NgZone){
+    
     this.page = 2;
 
     this.WooCommerce =  WC({
@@ -58,9 +59,12 @@ export class HomePage {
     })
 
     this.loadMoreProducts(null);
+  
   }
 
+
   loadMoreProducts(event){
+
     console.log(event);
     if(event == null)
     {
@@ -87,15 +91,20 @@ export class HomePage {
     }, (err) => {
       console.log(err)
     })
+  
   }
     
+
   async toast(){
+
     let tc= await this.toastCtrl.create({
           message: "No more products!",
           duration: 5000
         });
 
     tc.present();
+
   }
+
 
 }

@@ -41,25 +41,25 @@ export class LoginPage implements OnInit {
 
     this.http.get("http://localhost/dashboard/wordpress/api/auth/generate_auth_cookie/?insecure=cool&username=" + this.loginForm.value.username + "&password=" + this.loginForm.value.password)
     .subscribe( (res) => {
-    console.log(res.json());
+      console.log(res.json());
 
-    let response = res.json();
+      let response = res.json();
 
-    if(response.error){
-      this.markFieldsDirty();
-      this.toast(response);
-      return;
-    }
+      if(response.error){
+        this.markFieldsDirty();
+        this.toast(response);
+        return;
+      }
 
-    this.storage.set("userLoginInfo", response).then( (data) =>{
-      console.log(data, response)
-      this.presentAlert();
-    })
+      this.storage.set("userLoginInfo", response).then( (data) =>{
+        console.log(data, response)
+        this.presentAlert();
+      })
    
-  });
-
+    });
 
   }
+
 
   async toast(response){
     let tc= await this.toastCtrl.create({
@@ -70,9 +70,12 @@ export class LoginPage implements OnInit {
         });
 
     tc.present();
+
   }
 
+
   async presentAlert() {
+
     const alert = await this.alertCtrl.create({
       header: 'Login Successful',
       message: 'You are logged in successfully.',
@@ -81,24 +84,31 @@ export class LoginPage implements OnInit {
           text: 'OK',
           cssClass: 'secondary',
           handler: () => {
+
             console.log('routing')
             this.router.navigateByUrl('/home');
+
           }
         }
       ]
     });
 
     await alert.present();
+
   }
 
+
   markFieldsDirty() {
+
     const controls = this.loginForm.controls;
     for (const field in controls) {
       if (controls[field]) {
         controls[field].markAsDirty();
       }
     }
+
   }
+
 
   // logIn() {
   //   this.attemptedSubmit = true;
@@ -116,6 +126,7 @@ export class LoginPage implements OnInit {
   // }
 
   errorFor(fieldName: string) {
+
     const field = this.loginForm.controls[fieldName];
     for (const validator in field.errors) {
       if (field.errors[validator]) {
@@ -123,10 +134,14 @@ export class LoginPage implements OnInit {
         return this.errorMessages[validator].replace('{$1}', friendlyName);
       }
     }
+
     return null;
+
   }
+
 
   ngOnInit() {
   }
 
+  
 }
