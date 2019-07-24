@@ -3,20 +3,26 @@ import * as WC from 'woocommerce-api';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/bufferCount';
+import { RoutingStateService } from '../services/routing-state.service';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
   styleUrls: ['./menu.page.scss'],
 })
+
 export class MenuPage implements OnInit {
   WooCommerce: any;
   categories: any[];
   loggedIn: boolean;
   user: any;
+  routeData: any;
+  name: any;
+  previousRoute: string;
   
-
-  constructor(public menuCtrl: MenuController, public router: Router, public storage: Storage) { 
+  constructor(public menuCtrl: MenuController, public router: Router, public storage: Storage, private routingState: RoutingStateService) { 
     this.categories = [];
 
     this.WooCommerce =  WC({
@@ -66,7 +72,6 @@ export class MenuPage implements OnInit {
     }, (err)=> {
       console.log(err)
     })
-
   }
 
   logOut(){
@@ -86,18 +91,18 @@ export class MenuPage implements OnInit {
 
         if(userLoginInfo != null){
 
-        console.log("User logged in...");
-        this.user = userLoginInfo.user;
-        console.log(this.user);
-        this.loggedIn = true;
-      }
-      else {
-        console.log("No user found.");
-        this.user = {};
-        this.loggedIn = false;
-      }
+          console.log("User logged in...");
+          this.user = userLoginInfo.user;
+          console.log(this.user);
+          this.loggedIn = true;
+        }
+        else {
+          console.log("No user found.");
+          this.user = {};
+          this.loggedIn = false;
+        }
+      })
     })
-  })
-}
+  }
 
 }

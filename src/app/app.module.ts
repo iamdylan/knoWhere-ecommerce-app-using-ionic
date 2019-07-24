@@ -22,6 +22,7 @@ import { HttpModule } from '@angular/http';
 import { NeedAuthGuard } from './login/auth.guard';
 import { HomePageModule } from './home/home.module';
 import { ProductDetailsModule } from './product-details/product-details.module';
+import { RoutingStateService } from './services/routing-state.service';
 
 @NgModule({
   declarations: [AppComponent, MenuPage],
@@ -46,7 +47,8 @@ import { ProductDetailsModule } from './product-details/product-details.module';
     FormBuilder,
     EmailValidator,
     UserValidator,
-    NeedAuthGuard
+    NeedAuthGuard,
+    RoutingStateService
   ],
   bootstrap: [AppComponent]
 })

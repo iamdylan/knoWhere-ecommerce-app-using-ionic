@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MbscFormOptions } from '@mobiscroll/angular-lite/src/js/forms.angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { mobiscroll } from '@mobiscroll/angular-lite';
 import { Http } from '@angular/http';
 import { ToastController, AlertController, Events } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { Router } from '@angular/router';
+import { Router,  } from '@angular/router';
+import { RoutingStateService } from '../services/routing-state.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
 
-  constructor(private fb: FormBuilder, public http: Http, private router: Router, public toastCtrl: ToastController, public storage: Storage, public alertCtrl: AlertController, public events: Events) {
+export class LoginPage {
 
+  previousRoute: string;
+
+  constructor(private fb: FormBuilder, public http: Http, private router: Router, public toastCtrl: ToastController, public storage: Storage, public alertCtrl: AlertController, public events: Events, private routingState: RoutingStateService) {
     this.loginForm = fb.group({
       username: ['', [Validators.required, Validators.minLength(6)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -23,7 +25,6 @@ export class LoginPage implements OnInit {
   }
 
   loginForm: FormGroup;
-
 
   attemptedSubmit = false;
 
@@ -36,9 +37,7 @@ export class LoginPage implements OnInit {
     minlength: 'At least 6 characters required'
   };
 
-
   logIn(){
-
     this.http.get("http://localhost/dashboard/wordpress/api/auth/generate_auth_cookie/?insecure=cool&username=" + this.loginForm.value.username + "&password=" + this.loginForm.value.password)
     .subscribe( (res) => {
       console.log(res.json());
@@ -55,11 +54,8 @@ export class LoginPage implements OnInit {
         console.log(data, response)
         this.presentAlert();
       })
-   
     });
-
   }
-
 
   async toast(response){
     let tc= await this.toastCtrl.create({
@@ -70,12 +66,9 @@ export class LoginPage implements OnInit {
         });
 
     tc.present();
-
   }
 
-
   async presentAlert() {
-
     const alert = await this.alertCtrl.create({
       header: 'Login Successful',
       message: 'You are logged in successfully.',
@@ -84,31 +77,34 @@ export class LoginPage implements OnInit {
           text: 'OK',
           cssClass: 'secondary',
           handler: () => {
-
             console.log('routing')
-            this.router.navigateByUrl('/home');
+            console.log(this.routingState.cartUrl)
 
+            if(this.routingState.cartUrl){
+              this.router.navigateByUrl(
+                this.routingState.cartUrl
+              );
+            }else{
+              this.router.navigateByUrl(
+                this.previousRoute
+              );
+            }
           }
         }
       ]
     });
 
     await alert.present();
-
   }
 
-
   markFieldsDirty() {
-
     const controls = this.loginForm.controls;
     for (const field in controls) {
       if (controls[field]) {
         controls[field].markAsDirty();
       }
     }
-
   }
-
 
   // logIn() {
   //   this.attemptedSubmit = true;
@@ -126,7 +122,6 @@ export class LoginPage implements OnInit {
   // }
 
   errorFor(fieldName: string) {
-
     const field = this.loginForm.controls[fieldName];
     for (const validator in field.errors) {
       if (field.errors[validator]) {
@@ -136,12 +131,11 @@ export class LoginPage implements OnInit {
     }
 
     return null;
-
   }
 
-
-  ngOnInit() {
+  ionViewDidEnter() {
+    this.previousRoute = this.routingState.getPreviousUrl();
+    console.log(this.previousRoute);
   }
 
-  
 }

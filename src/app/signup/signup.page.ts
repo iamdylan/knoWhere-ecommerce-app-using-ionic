@@ -14,6 +14,7 @@ import { UserValidator } from '../validators/username.validator';
   styleUrls: ['./signup.page.scss'],
   changeDetection: ChangeDetectionStrategy.Default
 })
+
 export class SignupPage implements OnInit {
   formSettings: MbscFormOptions = {
     theme: 'mobiscroll'
@@ -26,151 +27,147 @@ billing_address: any;
 shipping_address: any;
 userGood: boolean;
 
-
-constructor(public fb: FormBuilder, private ngZone: NgZone, public toastCtrl: ToastController, public alertCtrl: AlertController, public emailValidator: EmailValidator, public userValidator: UserValidator) {
- 
-    this.billing_shipping_same = false;
-    this.billing_address = {};
-    this.shipping_address = {};
-
-}
-
-reactSubmitted: boolean = false;
-
-getErrorState(field: string) {
-  let ctrl = this.reactForm.get(field);
-  return ctrl.invalid && this.reactSubmitted;
-}
-
-registerReact() {
-    this.reactSubmitted = true;
-    if (this.reactForm.valid && this.thanksPopup) {
-        this.thanksPopup.instance.show();
-    }
-};
-
-getErrorMessage(field: string) {
-    
-    let formCtrl = this.reactForm,
-        message = '';
-    if (formCtrl) {
-      let ctrl = formCtrl.get(field);
-      if (ctrl && ctrl.errors) {
-          for (let err in ctrl.errors) {
-              if (!message && ctrl.errors[err]) {
-                  return message = this.errorMessages[field][err];
-              }
-          }
-      }
-      else if(formCtrl.hasError('noMatch')){
-        return message = this.errorMessages['conf_password']['noMatch'];
-      }
-    }
-
-    return message;
-}
-
-errorMessages = {
-    username: {
-        required: 'Username required',
-        minlength: 'Has to be at least 2 characters',
-        match: 'Username taken'
-    },
-    first_name: {
-        required: 'First name required',
-        minlength: 'Has to be at least 2 characters'
-    },
-    last_name: {
-        required: 'Last name required',
-        minlength: 'Has to be at least 1 characters'
-    },
-    email: {
-        required: 'Email address required',
-        email: 'Invalid email address',
-        match: 'Email already registered'
-    },
-    password: {
-        required: 'Password required',
-        minlength: 'At least 6 characters required',
-    },
-    conf_password: {
-      required: 'Password required',
-      noMatch: 'Passwords do not match'
-    },
-    bill_first_name: {
-        required: 'Full Name required',
-        minlength: 'At least 3 characters required'
-    },
-    bill_last_name: {
-        required: 'Full Name required',
-        minlength: 'At least 3 characters required'
-    },
-    
-    address_1: {
-        required: 'Address Line 1 required',
-        minlength: 'At least 5 characters required'
-    },
-    address_2: {
-        required: 'Address Line 2 required',
-        minlength: 'At least 2 characters required'
-    },
-    country: {
-        required: 'Country required',
-    },
-    state: {
-        required: 'State required',
-        minlength: 'At least 2 characters required'
-    },
-    city: {
-        required: 'City required',
-        minlength: 'At least 3 characters required'
-    },
-    postcode: {
-        required: 'Postal Code required',
-        minlength: 'At least 4 characters required'
-    },
-    phone: {
-        required: 'Phone No. required',
-        minlength: 'At least 10 characters required'
-    },
-    fullname: {
-      required: 'Full Name required',
-      minlength: 'At least 3 characters required'
-    }
-}
-
-@ViewChild('thanks')
-thanksPopup: any;
-
-popupSettings: any = {
-  theme: 'ios',
-  display: 'center',
-  focusOnClose: false,
-  buttons: [{
-      text: 'Log in',
-      handler: 'set'
-  }]
-};
-
-setBillingToShipping(){
-  this.billing_shipping_same = !this.billing_shipping_same;
-  if(this.billing_shipping_same == true){
-    this.reactForm.patchValue({
-      shipping: {
-        first_name: this.reactForm.value.billing.first_name,
-        last_name: this.reactForm.value.billing.last_name,
-        address_1: this.reactForm.value.billing.address_1,
-        address_2: this.reactForm.value.billing.address_2,
-        country: this.reactForm.value.billing.country,
-        state: this.reactForm.value.billing.state,
-        city: this.reactForm.value.billing.city,
-        postcode: this.reactForm.value.billing.postcode
-      }
-    });
+  constructor(public fb: FormBuilder, private ngZone: NgZone, public toastCtrl: ToastController, public alertCtrl: AlertController, public emailValidator: EmailValidator, public userValidator: UserValidator) {
+      this.billing_shipping_same = false;
+      this.billing_address = {};
+      this.shipping_address = {};
   }
-}
-  
-signup(){
+
+  reactSubmitted: boolean = false;
+
+  getErrorState(field: string) {
+    let ctrl = this.reactForm.get(field);
+    return ctrl.invalid && this.reactSubmitted;
+  }
+
+  registerReact() {
+      this.reactSubmitted = true;
+      if (this.reactForm.valid && this.thanksPopup) {
+          this.thanksPopup.instance.show();
+      }
+  };
+
+  getErrorMessage(field: string) {
+      let formCtrl = this.reactForm,
+      message = '';
+
+      if (formCtrl) {
+        let ctrl = formCtrl.get(field);
+        if (ctrl && ctrl.errors) {
+            for (let err in ctrl.errors) {
+                if (!message && ctrl.errors[err]) {
+                    return message = this.errorMessages[field][err];
+                }
+            }
+        }
+        else if(formCtrl.hasError('noMatch')){
+          return message = this.errorMessages['conf_password']['noMatch'];
+        }
+      }
+      return message;
+  }
+
+  errorMessages = {
+      username: {
+          required: 'Username required',
+          minlength: 'Has to be at least 2 characters',
+          match: 'Username taken'
+      },
+      first_name: {
+          required: 'First name required',
+          minlength: 'Has to be at least 2 characters'
+      },
+      last_name: {
+          required: 'Last name required',
+          minlength: 'Has to be at least 1 characters'
+      },
+      email: {
+          required: 'Email address required',
+          email: 'Invalid email address',
+          match: 'Email already registered'
+      },
+      password: {
+          required: 'Password required',
+          minlength: 'At least 6 characters required',
+      },
+      conf_password: {
+        required: 'Password required',
+        noMatch: 'Passwords do not match'
+      },
+      bill_first_name: {
+          required: 'Full Name required',
+          minlength: 'At least 3 characters required'
+      },
+      bill_last_name: {
+          required: 'Full Name required',
+          minlength: 'At least 3 characters required'
+      },
+      
+      address_1: {
+          required: 'Address Line 1 required',
+          minlength: 'At least 5 characters required'
+      },
+      address_2: {
+          required: 'Address Line 2 required',
+          minlength: 'At least 2 characters required'
+      },
+      country: {
+          required: 'Country required',
+      },
+      state: {
+          required: 'State required',
+          minlength: 'At least 2 characters required'
+      },
+      city: {
+          required: 'City required',
+          minlength: 'At least 3 characters required'
+      },
+      postcode: {
+          required: 'Postal Code required',
+          minlength: 'At least 4 characters required'
+      },
+      phone: {
+          required: 'Phone No. required',
+          minlength: 'At least 10 characters required'
+      },
+      fullname: {
+        required: 'Full Name required',
+        minlength: 'At least 3 characters required'
+      }
+  }
+
+  @ViewChild('thanks')
+  thanksPopup: any;
+
+  popupSettings: any = {
+    theme: 'ios',
+    display: 'center',
+    focusOnClose: false,
+    buttons: [{
+        text: 'Log in',
+        handler: 'set'
+    }]
+  };
+
+  setBillingToShipping(){
+    this.billing_shipping_same = !this.billing_shipping_same;
+    if(this.billing_shipping_same == true){
+      this.reactForm.patchValue({
+        shipping: {
+          first_name: this.reactForm.value.billing.first_name,
+          last_name: this.reactForm.value.billing.last_name,
+          address_1: this.reactForm.value.billing.address_1,
+          address_2: this.reactForm.value.billing.address_2,
+          country: this.reactForm.value.billing.country,
+          state: this.reactForm.value.billing.state,
+          city: this.reactForm.value.billing.city,
+          postcode: this.reactForm.value.billing.postcode
+        }
+      });
+    }
+  }
+    
+  signup(){
     let WooCommerce =  WC({
         url: "http://localhost/dashboard/wordpress",
         consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",

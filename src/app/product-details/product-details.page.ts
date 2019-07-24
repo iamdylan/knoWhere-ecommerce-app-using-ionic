@@ -2,7 +2,6 @@ import { Component, NgZone } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import * as WC from 'woocommerce-api';
 import { CartPage } from '../cart/cart.page';
-
 import { Storage } from '@ionic/storage';
 import { ToastController, ModalController } from '@ionic/angular';
 
@@ -11,6 +10,7 @@ import { ToastController, ModalController } from '@ionic/angular';
   templateUrl: './product-details.page.html',
   styleUrls: ['./product-details.page.scss'],
 })
+
 export class ProductDetailsPage{
   product: any;
   WooCommerce: any;
@@ -62,14 +62,15 @@ export class ProductDetailsPage{
     }, (err) => {
       console.log(err);
     });
-    
   }//Constructor close
 
   async addToCart(prod) {
     let product = await prod;
+
     if(product.price == null){
       return console.log('Could not add item to cart.');
     }
+
     this.storage.get("cart").then((data) => {
       if (data == null || data.length == 0) {
         data = [];
@@ -79,6 +80,7 @@ export class ProductDetailsPage{
           "qty": 1,
           "amount": parseFloat(product.price)
         })
+
       } else {
         let added = 0;
 
@@ -115,11 +117,12 @@ export class ProductDetailsPage{
       duration: 3000
     });
 
-  tc.present();
+    tc.present();
   }//toast close
 
   async openCart(){
     const modal = await this.modalCtrl.create({component: CartPage});
     return await modal.present();
   }
+
 }//class close
