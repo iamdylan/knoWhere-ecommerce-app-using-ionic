@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, Input } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import * as WC from 'woocommerce-api';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ChangeDetectionStrategy } from '@angular/core';
@@ -9,6 +9,7 @@ import { ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./products-by-category.page.scss'],
   changeDetection: ChangeDetectionStrategy.Default
 })
+
 export class ProductsByCategoryPage implements OnInit {
   WooCommerce: any;
   products: Array<any>;
@@ -16,6 +17,7 @@ export class ProductsByCategoryPage implements OnInit {
   page: number;
   
   constructor( private route: ActivatedRoute, private ngZone: NgZone) {
+    
     this.page = 1;
     this.products = [];
 
@@ -33,10 +35,10 @@ export class ProductsByCategoryPage implements OnInit {
     });
 
     this.WooCommerce.getAsync("products?category=" + this.cat).then((data) => {
-          this.ngZone.run(() => { this.products =  JSON.parse(data.body);});
-          }, (err) => {
-            console.log(err);
-        });
+      this.ngZone.run(() => { this.products =  JSON.parse(data.body);});
+      },(err) => {
+          console.log(err);
+    });
   }
 
   loadMoreProducts(event) {
@@ -50,7 +52,6 @@ export class ProductsByCategoryPage implements OnInit {
 
       if (temp.length < 10)
         event.target.enable=false;
-
     })
   }
 

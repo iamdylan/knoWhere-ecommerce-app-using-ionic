@@ -8,10 +8,13 @@ import { Location } from '@angular/common';
   templateUrl: './cart.page.html',
   styleUrls: ['./cart.page.scss'],
 })
+
 export class CartPage implements OnInit {
+
   cartItems: any[] = [];
   total: any;
   showEmptyCartMessage: boolean = false;
+
 
   constructor(public storage: Storage, public modalCtrl: ModalController, private location: Location) { 
     this.total = 0.0;
@@ -30,9 +33,12 @@ export class CartPage implements OnInit {
         }
       })
     })
+
   }
 
+
   removeFromCart(item, i){
+
     let price = item.product.price;
     let qty = item.qty;
 
@@ -44,21 +50,29 @@ export class CartPage implements OnInit {
     if(this.cartItems.length == 0){
       this.showEmptyCartMessage = true;
     }
+
   }
+
 
   closeCart(){
     this.location.back();
   }
 
+
   checkOut(){
+
       // let data=null;
       // this.storage.set("cart", data).then(() => {
       //   console.log("Cart Updated");
       //   console.log(data);
       // })
+
   }
 
+
   ngOnInit() {
+
   }
+
 
 }

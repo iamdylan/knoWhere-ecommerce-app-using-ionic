@@ -43,7 +43,7 @@ export class UserValidator {
             else{
                 resolve(null);
             }
-        });
-                 
+        });          
     }
+    
 }

@@ -2,18 +2,18 @@ import {CanActivate, Router} from '@angular/router';
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router/src/router_state';
 import { Storage } from '@ionic/storage';
+import { RoutingStateService } from '../services/routing-state.service';
 
 @Injectable()
 export class NeedAuthGuard implements CanActivate {
 
-  constructor(private router: Router, public storage: Storage) {
+  constructor(private router: Router, public storage: Storage, private routingState: RoutingStateService) {
   }
 
-
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean|Promise<boolean> {
-
-    const redirectUrl = route['_routerState']['url'];
-    console.log(redirectUrl)
+    this.routingState.cartUrl = route['_routerState']['url'];
+    console.log(this.routingState.cartUrl)
+    console.log(route)
 
     return new Promise(resolve => {
       this.storage.ready().then( () => {
@@ -23,23 +23,12 @@ export class NeedAuthGuard implements CanActivate {
               console.log(userLoginInfo)
                 resolve (true);
             }else{
-              this.router.navigateByUrl(
-                this.router.createUrlTree(
-                  ['/login'], {
-                    queryParams: {
-                      redirectUrl
-                    }
-                  }
-                )
-              );
-
+              this.router.navigateByUrl('/login');
               resolve (false);
             }
         })
       })
     })
-
   }
-
 
 }

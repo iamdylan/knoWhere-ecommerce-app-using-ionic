@@ -1,6 +1,5 @@
 import { Component, NgZone } from '@angular/core';
 import {  ToastController } from '@ionic/angular'
-
 import * as WC from 'woocommerce-api';
 
 @Component({
@@ -8,6 +7,7 @@ import * as WC from 'woocommerce-api';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
+
 export class HomePage {
   WooCommerce: any;
   popProducts: any;
@@ -59,12 +59,9 @@ export class HomePage {
     })
 
     this.loadMoreProducts(null);
-  
   }
 
-
   loadMoreProducts(event){
-
     console.log(event);
     if(event == null)
     {
@@ -91,20 +88,16 @@ export class HomePage {
     }, (err) => {
       console.log(err)
     })
-  
   }
     
 
   async toast(){
-
     let tc= await this.toastCtrl.create({
           message: "No more products!",
           duration: 5000
         });
 
     tc.present();
-
   }
-
 
 }
