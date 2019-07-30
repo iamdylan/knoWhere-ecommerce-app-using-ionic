@@ -7,6 +7,7 @@ import { PasswordValidator } from '../validators/pass.validator';
 import 'rxjs/add/operator/map';
 import { EmailValidator } from '../validators/email.validator';
 import { UserValidator } from '../validators/username.validator';
+import  errorMessages  from './errorMessages.json';
 
 @Component({
   selector: 'app-signup',
@@ -47,7 +48,7 @@ userGood: boolean;
       }
   };
 
-  getErrorMessage(field: string) {
+  getErrorMessage(field: any) {
       let formCtrl = this.reactForm,
       message = '';
 
@@ -56,85 +57,19 @@ userGood: boolean;
         if (ctrl && ctrl.errors) {
             for (let err in ctrl.errors) {
                 if (!message && ctrl.errors[err]) {
-                    return message = this.errorMessages[field][err];
+                  let errField = field.replace(".","_")
+                    return message = errorMessages[errField][err];
                 }
             }
         }
         else if(formCtrl.hasError('noMatch')){
-          return message = this.errorMessages['conf_password']['noMatch'];
+          return message = errorMessages['conf_password']['noMatch'];
         }
       }
       return message;
   }
 
-  errorMessages = {
-      username: {
-          required: 'Username required',
-          minlength: 'Has to be at least 2 characters',
-          match: 'Username taken'
-      },
-      first_name: {
-          required: 'First name required',
-          minlength: 'Has to be at least 2 characters'
-      },
-      last_name: {
-          required: 'Last name required',
-          minlength: 'Has to be at least 1 characters'
-      },
-      email: {
-          required: 'Email address required',
-          email: 'Invalid email address',
-          match: 'Email already registered'
-      },
-      password: {
-          required: 'Password required',
-          minlength: 'At least 6 characters required',
-      },
-      conf_password: {
-        required: 'Password required',
-        noMatch: 'Passwords do not match'
-      },
-      bill_first_name: {
-          required: 'Full Name required',
-          minlength: 'At least 3 characters required'
-      },
-      bill_last_name: {
-          required: 'Full Name required',
-          minlength: 'At least 3 characters required'
-      },
-      
-      address_1: {
-          required: 'Address Line 1 required',
-          minlength: 'At least 5 characters required'
-      },
-      address_2: {
-          required: 'Address Line 2 required',
-          minlength: 'At least 2 characters required'
-      },
-      country: {
-          required: 'Country required',
-      },
-      state: {
-          required: 'State required',
-          minlength: 'At least 2 characters required'
-      },
-      city: {
-          required: 'City required',
-          minlength: 'At least 3 characters required'
-      },
-      postcode: {
-          required: 'Postal Code required',
-          minlength: 'At least 4 characters required'
-      },
-      phone: {
-          required: 'Phone No. required',
-          minlength: 'At least 10 characters required'
-      },
-      fullname: {
-        required: 'Full Name required',
-        minlength: 'At least 3 characters required'
-      }
-  }
+  
 
   @ViewChild('thanks')
   thanksPopup: any;
@@ -179,20 +114,16 @@ userGood: boolean;
     let customerData: any = {
     }
 
-    console.log(this.reactForm.value);
     customerData = this.reactForm.value;
 
     if(this.billing_shipping_same){
       this.shipping_address = this.shipping_address;
     }
 
-    console.log(customerData);
-
     WooCommerce.postAsync('customers', customerData).then( (data) => {
       let response = (JSON.parse(data.body));
       console.log(response);
       if(response.id){
-        console.log('Worked');
         this.presentAlert();
 
       } else if(response.data.status == 400){

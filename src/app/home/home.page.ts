@@ -53,7 +53,6 @@ export class HomePage {
 
     this.WooCommerce.getAsync("products").then( (data) => {
       this.ngZone.run(() => {this.popProducts = (JSON.parse(data.body));});
-      console.log(this.popProducts);
     }, (err) => {
       console.log(err);
     })
@@ -72,7 +71,6 @@ export class HomePage {
       this.page++;
 
     this.WooCommerce.getAsync("products?page=" + this.page).then( (data) => {
-      console.log(JSON.parse(data.body));
       this.ngZone.run(() => {this.moreProducts = this.moreProducts.concat(JSON.parse(data.body));});
 
       if(event != null)

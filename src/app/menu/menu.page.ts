@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import * as WC from 'woocommerce-api';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -6,23 +6,25 @@ import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/bufferCount';
 import { RoutingStateService } from '../services/routing-state.service';
+import { Observable } from 'rxjs';
+import { from } from 'rxjs';
+import { GetUserInfo } from './getUserInfo.service';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
-  styleUrls: ['./menu.page.scss'],
+  styleUrls: ['./menu.page.scss']
 })
 
 export class MenuPage implements OnInit {
   WooCommerce: any;
   categories: any[];
-  loggedIn: boolean;
-  user: any;
+  
   routeData: any;
   name: any;
   previousRoute: string;
   
-  constructor(public menuCtrl: MenuController, public router: Router, public storage: Storage, private routingState: RoutingStateService) { 
+  constructor(public menuCtrl: MenuController, public router: Router, public storage: Storage, private routingState: RoutingStateService, private ngZone: NgZone, public getUserInfo: GetUserInfo) { 
     this.categories = [];
 
     this.WooCommerce =  WC({
@@ -72,37 +74,52 @@ export class MenuPage implements OnInit {
     }, (err)=> {
       console.log(err)
     })
+
+    // this.getUserInfo.getUser.subscribe((userLoginInfo) => { 
+    //   if(userLoginInfo != null){
+  
+    //     console.log("User logged in...");
+    //     this.ngZone.run(() => { this.getUserInfo.user = userLoginInfo.user;
+    //     console.log(this.getUserInfo.user);
+    //     this.loggedIn = true;});
+    //   }
+    //   else {
+    //     console.log("No user found.");
+    //     this.ngZone.run(() => { this.getUserInfo.user = {};
+    //     console.log(this.getUserInfo.user);
+    //     this.loggedIn = false;});
+    //   }
+    //   });
   }
 
   logOut(){
       console.log('logging out')
       this.storage.remove("userLoginInfo").then( () => {
-        this.user = {};
-        console.log(this.user)
-        this.loggedIn = false;
+        this.getUserInfo.user = {};
+        console.log(this.getUserInfo.user)
+        this.getUserInfo.loggedIn.next(false);
       })
   }
 
   ngOnInit() {
-    console.log('menu entered');
     
     this.storage.ready().then( () => {
       this.storage.get("userLoginInfo").then( (userLoginInfo) => {
 
-        if(userLoginInfo != null){
+    if(userLoginInfo != null){
+      console.log("User logged in...");
+      this.getUserInfo.user = userLoginInfo.user;
+      console.log(this.getUserInfo.user);
+      this.getUserInfo.loggedIn.next(true);
+    }
+    else {
+      console.log("No user found.");
+      this.getUserInfo.user = {};
+      console.log(this.getUserInfo.user);
+      this.getUserInfo.loggedIn.next(false);
+    }
+    });
+  });
 
-          console.log("User logged in...");
-          this.user = userLoginInfo.user;
-          console.log(this.user);
-          this.loggedIn = true;
-        }
-        else {
-          console.log("No user found.");
-          this.user = {};
-          this.loggedIn = false;
-        }
-      })
-    })
-  }
-
+}
 }

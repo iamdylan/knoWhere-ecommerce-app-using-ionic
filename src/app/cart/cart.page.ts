@@ -22,7 +22,6 @@ export class CartPage implements OnInit {
     this.storage.ready().then(()=>{
       this.storage.get("cart").then( (data)=>{
         this.cartItems = data;
-        console.log(this.cartItems);
 
         if(this.cartItems != null && this.cartItems.length > 0){
           this.cartItems.forEach( (item, index)=> {

@@ -25,10 +25,6 @@ export class UserValidator {
                         });
                                     
                     WooCommerce.get("customers/?username=" + fc.value, function(err, data, res) {
-                        
-                        console.log(JSON.parse(data.body));
-                        console.log(JSON.parse(data.body).length);
-
                         Array.prototype.some.call(JSON.parse(data.body), (item)=>{
                             if (item.username == fc.value){
                                 resolve({'match': true});

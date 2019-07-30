@@ -27,22 +27,22 @@
       <mbsc-form-group formGroupName="billing">
           <mbsc-form-group-title><b>Billing Details</b></mbsc-form-group-title>
           <mbsc-form-group-content>
-            <mbsc-input formControlName="first_name" label-style="floating" [error]="reactForm.controls.billing.controls['first_name'].touched && reactForm.controls.billing.controls['first_name'].invalid" [errorMessage]="getErrorMessage('first_name')">First Name</mbsc-input>
-            <mbsc-input formControlName="last_name" label-style="floating" [error]="reactForm.controls.billing.controls['last_name'].touched && reactForm.controls.billing.controls['last_name'].invalid" [errorMessage]="getErrorMessage('last_name')">Last Name</mbsc-input>
-            <mbsc-input formControlName="email" label-style="floating" [error]="reactForm.controls.billing.controls['email'].touched && reactForm.controls.billing.controls['email'].invalid" [errorMessage]="getErrorMessage('email')">Email</mbsc-input>
-            <mbsc-input formControlName="address_1" label-style="floating" [error]="reactForm.controls.billing.controls['address_1'].touched && reactForm.controls.billing.controls['address_1'].invalid" [errorMessage]="getErrorMessage('address_1')">Address Line 1</mbsc-input>
-            <mbsc-input formControlName="address_2" label-style="floating" [error]="reactForm.controls.billing.controls['address_2'].touched && reactForm.controls.billing.controls['address_2'].invalid" [errorMessage]="getErrorMessage('address_2')">Address Line 2</mbsc-input>
-            <mbsc-dropdown formControlName="country" [error]="reactForm.controls.billing.controls['country'].touched && reactForm.controls.billing.controls['country'].invalid" [errorMessage]="getErrorMessage('country')">
+            <mbsc-input formControlName="first_name" label-style="floating" [error]="reactForm.controls.billing.controls['first_name'].touched && reactForm.controls.billing.controls['first_name'].invalid" [errorMessage]="getErrorMessage('billing.first_name')">First Name</mbsc-input>
+            <mbsc-input formControlName="last_name" label-style="floating" [error]="reactForm.controls.billing.controls['last_name'].touched && reactForm.controls.billing.controls['last_name'].invalid" [errorMessage]="getErrorMessage('billing.last_name')">Last Name</mbsc-input>
+            <mbsc-input formControlName="email" label-style="floating" [error]="reactForm.controls.billing.controls['email'].touched && reactForm.controls.billing.controls['email'].invalid" [errorMessage]="getErrorMessage('billing.email')">Email</mbsc-input>
+            <mbsc-input formControlName="address_1" label-style="floating" [error]="reactForm.controls.billing.controls['address_1'].touched && reactForm.controls.billing.controls['address_1'].invalid" [errorMessage]="getErrorMessage('billing.address_1')">Address Line 1</mbsc-input>
+            <mbsc-input formControlName="address_2" label-style="floating" [error]="reactForm.controls.billing.controls['address_2'].touched && reactForm.controls.billing.controls['address_2'].invalid" [errorMessage]="getErrorMessage('billing.address_2')">Address Line 2</mbsc-input>
+            <mbsc-dropdown formControlName="country" [error]="reactForm.controls.billing.controls['country'].touched && reactForm.controls.billing.controls['country'].invalid" [errorMessage]="getErrorMessage('billing.country')">
                 <option value="" disabled selected hidden>Country</option>
                 <option value="India">India</option>
                 <option value="USA">United States of America</option>
                 <option value="UK">United Kingdom</option>
                 <option value="AUS">Australia</option>
             </mbsc-dropdown>
-            <mbsc-input formControlName="state" label-style="floating" [error]="reactForm.controls.billing.controls['state'].touched && reactForm.controls.billing.controls['state'].invalid" [errorMessage]="getErrorMessage('state')">State</mbsc-input>
-            <mbsc-input formControlName="city" label-style="floating" [error]="reactForm.controls.billing.controls['city'].touched && reactForm.controls.billing.controls['city'].invalid" [errorMessage]="getErrorMessage('city')">City</mbsc-input>
-            <mbsc-input formControlName="postcode" label-style="floating" [error]="reactForm.controls.billing.controls['postcode'].touched && reactForm.controls.billing.controls['postcode'].invalid" [errorMessage]="getErrorMessage('postcode')">Postal Code</mbsc-input>
-            <mbsc-input formControlName="phone" label-style="floating" [error]="reactForm.controls.billing.controls['phone'].touched && reactForm.controls.billing.controls['phone'].invalid" [errorMessage]="getErrorMessage('phone')">Phone No.</mbsc-input>
+            <mbsc-input formControlName="state" label-style="floating" [error]="reactForm.controls.billing.controls['state'].touched && reactForm.controls.billing.controls['state'].invalid" [errorMessage]="getErrorMessage('billing.state')">State</mbsc-input>
+            <mbsc-input formControlName="city" label-style="floating" [error]="reactForm.controls.billing.controls['city'].touched && reactForm.controls.billing.controls['city'].invalid" [errorMessage]="getErrorMessage('billing.city')">City</mbsc-input>
+            <mbsc-input formControlName="postcode" label-style="floating" [error]="reactForm.controls.billing.controls['postcode'].touched && reactForm.controls.billing.controls['postcode'].invalid" [errorMessage]="getErrorMessage('billing.postcode')">Postal Code</mbsc-input>
+            <mbsc-input formControlName="phone" label-style="floating" [error]="reactForm.controls.billing.controls['phone'].touched && reactForm.controls.billing.controls['phone'].invalid" [errorMessage]="getErrorMessage('billing.phone')">Phone No.</mbsc-input>
             <mbsc-switch color="primary" (change)="setBillingToShipping()"> Billing Details same as Shipping Details?
                 <!-- <span class="mbsc-desc">This is description for Switch</span> -->
             </mbsc-switch>
@@ -52,20 +52,20 @@
         <mbsc-form-group formGroupName="shipping" *ngIf="!billing_shipping_same">
             <mbsc-form-group-title><b>Shipping Details</b></mbsc-form-group-title>
             <mbsc-form-group-content>
-              <mbsc-input formControlName="first_name" label-style="floating" [error]="reactForm.controls.shipping.controls['first_name'].touched && reactForm.controls.shipping.controls['first_name'].invalid" [errorMessage]="getErrorMessage('first_name')">First Name</mbsc-input>
-              <mbsc-input formControlName="last_name" label-style="floating" [error]="reactForm.controls.shipping.controls['last_name'].touched && reactForm.controls.shipping.controls['last_name'].invalid" [errorMessage]="getErrorMessage('last_name')">Last Name</mbsc-input>
-              <mbsc-input formControlName="address_1" label-style="floating" [error]="reactForm.controls.shipping.controls['address_1'].touched && reactForm.controls.shipping.controls['address_1'].invalid" [errorMessage]="getErrorMessage('address_1')">Address Line 1</mbsc-input>
-              <mbsc-input formControlName="address_2" label-style="floating" [error]="reactForm.controls.shipping.controls['address_2'].touched && reactForm.controls.shipping.controls['address_2'].invalid" [errorMessage]="getErrorMessage('address_2')">Address Line 2</mbsc-input>
-              <mbsc-dropdown formControlName="country" [error]="reactForm.controls.shipping.controls['country'].touched && reactForm.controls.shipping.controls['country'].invalid" [errorMessage]="getErrorMessage('country')">
+              <mbsc-input formControlName="first_name" label-style="floating" [error]="reactForm.controls.shipping.controls['first_name'].touched && reactForm.controls.shipping.controls['first_name'].invalid" [errorMessage]="getErrorMessage('shipping.first_name')">First Name</mbsc-input>
+              <mbsc-input formControlName="last_name" label-style="floating" [error]="reactForm.controls.shipping.controls['last_name'].touched && reactForm.controls.shipping.controls['last_name'].invalid" [errorMessage]="getErrorMessage('shipping.last_name')">Last Name</mbsc-input>
+              <mbsc-input formControlName="address_1" label-style="floating" [error]="reactForm.controls.shipping.controls['address_1'].touched && reactForm.controls.shipping.controls['address_1'].invalid" [errorMessage]="getErrorMessage('shipping.address_1')">Address Line 1</mbsc-input>
+              <mbsc-input formControlName="address_2" label-style="floating" [error]="reactForm.controls.shipping.controls['address_2'].touched && reactForm.controls.shipping.controls['address_2'].invalid" [errorMessage]="getErrorMessage('shipping.address_2')">Address Line 2</mbsc-input>
+              <mbsc-dropdown formControlName="country" [error]="reactForm.controls.shipping.controls['country'].touched && reactForm.controls.shipping.controls['country'].invalid" [errorMessage]="getErrorMessage('shipping.country')">
                   <option value="" disabled selected hidden>Country</option>
                   <option value="india">India</option>
                   <option value="usa">USA</option>
                   <option value="usa">UK</option>
                   <option value="usa">AUS</option>
               </mbsc-dropdown>
-              <mbsc-input formControlName="state" label-style="floating" [error]="reactForm.controls.shipping.controls['state'].touched && reactForm.controls.shipping.controls['state'].invalid" [errorMessage]="getErrorMessage('state')">State</mbsc-input>
-              <mbsc-input formControlName="city" label-style="floating" [error]="reactForm.controls.shipping.controls['city'].touched && reactForm.controls.shipping.controls['city'].invalid" [errorMessage]="getErrorMessage('city')">City</mbsc-input>
-              <mbsc-input formControlName="postcode" label-style="floating" [error]="reactForm.controls.shipping.controls['postcode'].touched && reactForm.controls.shipping.controls['postcode'].invalid" [errorMessage]="getErrorMessage('postcode')">Postal Code</mbsc-input>
+              <mbsc-input formControlName="state" label-style="floating" [error]="reactForm.controls.shipping.controls['state'].touched && reactForm.controls.shipping.controls['state'].invalid" [errorMessage]="getErrorMessage('shipping.state')">State</mbsc-input>
+              <mbsc-input formControlName="city" label-style="floating" [error]="reactForm.controls.shipping.controls['city'].touched && reactForm.controls.shipping.controls['city'].invalid" [errorMessage]="getErrorMessage('shipping.city')">City</mbsc-input>
+              <mbsc-input formControlName="postcode" label-style="floating" [error]="reactForm.controls.shipping.controls['postcode'].touched && reactForm.controls.shipping.controls['postcode'].invalid" [errorMessage]="getErrorMessage('shipping.postcode')">Postal Code</mbsc-input>
             </mbsc-form-group-content>
           </mbsc-form-group>
     </form>

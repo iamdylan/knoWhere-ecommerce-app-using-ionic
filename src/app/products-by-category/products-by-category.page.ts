@@ -15,11 +15,13 @@ export class ProductsByCategoryPage implements OnInit {
   products: Array<any>;
   cat: number;
   page: number;
+  catName: any;
   
   constructor( private route: ActivatedRoute, private ngZone: NgZone) {
     
     this.page = 1;
     this.products = [];
+    this.catName = [{name: ''}];
 
     this.WooCommerce =  WC({
       url: "http://localhost/dashboard/wordpress",
@@ -28,10 +30,17 @@ export class ProductsByCategoryPage implements OnInit {
       wpAPI: true,
       version: 'wc/v3'
     });
-      
+
     this.route.params.subscribe((params: Params)=>{
-      this.cat = params['category'];
-      console.log(this.cat);
+      this.ngZone.run(() => {this.cat = params['category'];});      
+    });
+
+    this.WooCommerce.getAsync("products/categories").then((data) => {
+      this.ngZone.run(() => { this.catName = JSON.parse(data.body).filter((categ)=>{
+        return categ.id==this.cat;
+      });});
+      },(err) => {
+          console.log(err);
     });
 
     this.WooCommerce.getAsync("products?category=" + this.cat).then((data) => {
@@ -47,7 +56,6 @@ export class ProductsByCategoryPage implements OnInit {
     this.WooCommerce.getAsync("products?category=" + this.cat + "&page=" + this.page).then((data) => {
       let temp = (JSON.parse(data.body));
       this.products = this.products.concat(JSON.parse(data.body));
-      console.log(this.products);
       event.target.complete();
 
       if (temp.length < 10)
