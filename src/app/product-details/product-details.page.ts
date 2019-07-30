@@ -46,19 +46,16 @@ export class ProductDetailsPage{
     
     this.route.params.subscribe((params: Params)=>{
       this.product = params['product'];
-      console.log(this.product);
     });
 
     this.WooCommerce.getAsync("products/" + this.product).then((data) => {
       this.ngZone.run(() => { this.productInfo =  JSON.parse(data.body);});
-      console.log(this.productInfo);
       }, (err) => {
         console.log(err);
     });
 
     this.WooCommerce.getAsync("products/"+(this.product)+"/reviews").then((data) => {
       this.ngZone.run(() => { this.reviews = JSON.parse(data.body);});
-      console.log(this.reviews);
     }, (err) => {
       console.log(err);
     });

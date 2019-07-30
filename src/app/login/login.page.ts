@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone, ChangeDetectorRef } from '@angular/core';
 import { MbscFormOptions } from '@mobiscroll/angular-lite/src/js/forms.angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Http } from '@angular/http';
@@ -6,6 +6,7 @@ import { ToastController, AlertController, Events } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Router,  } from '@angular/router';
 import { RoutingStateService } from '../services/routing-state.service';
+import { GetUserInfo } from '../menu/getUserInfo.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginPage {
 
   previousRoute: string;
 
-  constructor(private fb: FormBuilder, public http: Http, private router: Router, public toastCtrl: ToastController, public storage: Storage, public alertCtrl: AlertController, public events: Events, private routingState: RoutingStateService) {
+  constructor(private fb: FormBuilder, public http: Http, private router: Router, public toastCtrl: ToastController, public storage: Storage, public alertCtrl: AlertController, public events: Events, private routingState: RoutingStateService, public getUserInfo: GetUserInfo) {
     this.loginForm = fb.group({
       username: ['', [Validators.required, Validators.minLength(6)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -40,7 +41,6 @@ export class LoginPage {
   logIn(){
     this.http.get("http://localhost/dashboard/wordpress/api/auth/generate_auth_cookie/?insecure=cool&username=" + this.loginForm.value.username + "&password=" + this.loginForm.value.password)
     .subscribe( (res) => {
-      console.log(res.json());
 
       let response = res.json();
 
@@ -51,7 +51,9 @@ export class LoginPage {
       }
 
       this.storage.set("userLoginInfo", response).then( (data) =>{
-        console.log(data, response)
+        this.getUserInfo.user = response.user;
+        console.log(this.getUserInfo.user)
+        this.getUserInfo.loggedIn.next(true);
         this.presentAlert();
       })
     });
@@ -78,7 +80,6 @@ export class LoginPage {
           cssClass: 'secondary',
           handler: () => {
             console.log('routing')
-            console.log(this.routingState.cartUrl)
 
             if(this.routingState.cartUrl){
               this.router.navigateByUrl(
@@ -135,7 +136,7 @@ export class LoginPage {
 
   ionViewDidEnter() {
     this.previousRoute = this.routingState.getPreviousUrl();
-    console.log(this.previousRoute);
+    console.log('Previous route', this.previousRoute);
   }
 
 }
