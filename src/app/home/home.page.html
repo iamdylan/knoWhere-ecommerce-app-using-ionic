@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button color="light"></ion-menu-button>
     </ion-buttons>
     <ion-fab-button router-direction="'root'" [routerLink]="['/cart']" slot="end" size="small" color="light" fill="outline">
       <ion-icon name="cart"></ion-icon>
@@ -14,41 +14,38 @@
 
 <ion-content no-padding>
   <ion-card>
-    <ion-slides [options]="slideOpts" pager="true">
+    <ion-slides [options]="config" pager="true">
       <ion-slide *ngFor="let number of [1,2,3,4]">
         <img src="./assets/images/{{number}}.jpg" />
       </ion-slide>
     </ion-slides>
   </ion-card>
 
-  <ion-grid>
-    <ion-row>
-      <ion-slides [options]="slideOpts2">
-        <ion-slide *ngFor="let product of popProducts" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
-          <ion-card no-padding> 
-            <img [src]="product.images[0].src" />
-            <h1 center> {{ product.name }} </h1>
-            <p center [innerHTML]="product.short_description"></p>
-          </ion-card>
-        </ion-slide>
-      </ion-slides>
-    </ion-row>
-  </ion-grid>
+  <ion-header class="new-deals-header">NEW DEALS</ion-header>
+  <ion-slides *ngIf="popProducts && popProducts.length" [options]="slideOpts2" class="new-deals">
+    <ion-slide class="new-deal-slides" *ngFor="let product of popProducts " [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
+      <ion-thumbnail no-padding> 
+        <img [src]="product?.images[0].src" />
+      </ion-thumbnail>
+      <ion-label>{{ product.name }} </ion-label>
+    </ion-slide>
+  </ion-slides>
+
 
   <ion-list>
+      <ion-list-header>
+          <ion-label>Popular Products</ion-label>
+      </ion-list-header>
       <ion-item *ngFor="let product of moreProducts" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
         <ion-thumbnail slot="start">
           <img [src]="product.images[0].src" />
         </ion-thumbnail>
-        
-        <p><ion-label class="custom-label-style">{{ product.name }}</ion-label>
-          <span class="custom-desc">{{product.short_description.substr(3, 50) + '...'}}</span><br>
-          <span class="custom-price-style" [innerHTML]="product.price_html"></span>
-        </p>
 
-        <button ion-button icon clear slot="end">
-          <ion-icon name="arrow-forward"></ion-icon>
-        </button>
+        <ion-text>
+          <ion-label class="custom-label-style">{{ product?.name }}</ion-label>
+          <p class="custom-desc">{{product?.short_description.substr(3, 50) + '...'}}</p>
+          <p class="custom-price-style" [innerHTML]="product?.price_html"></p>
+        </ion-text>
         
       </ion-item>
   </ion-list>

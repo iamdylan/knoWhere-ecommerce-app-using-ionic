@@ -24,6 +24,7 @@ import { HomePageModule } from './home/home.module';
 import { ProductDetailsModule } from './product-details/product-details.module';
 import { RoutingStateService } from './services/routing-state.service';
 import { GetUserInfo } from './menu/getUserInfo.service';
+import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
 
 @NgModule({
   declarations: [AppComponent, MenuPage],
@@ -39,6 +40,7 @@ import { GetUserInfo } from './menu/getUserInfo.service';
     HomePageModule,
     AppRoutingModule,
     HttpModule,
+    NgxUsefulSwiperModule,
     IonicStorageModule.forRoot()
   ],
   providers: [
