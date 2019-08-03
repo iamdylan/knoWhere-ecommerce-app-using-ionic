@@ -1,6 +1,7 @@
-import { Component, NgZone } from '@angular/core';
-import {  ToastController } from '@ionic/angular'
+import { Component, NgZone, ViewChild } from '@angular/core';
+import {  ToastController, IonSlides } from '@ionic/angular'
 import * as WC from 'woocommerce-api';
+import Swiper from 'swiper';
 
 @Component({
   selector: 'app-home',
@@ -13,34 +14,47 @@ export class HomePage {
   popProducts: any;
   moreProducts: any[];
   page: number;
-
-  slideOpts = {
-    effect: 'flip',
-    autoplay: {
-      delay: 3000,
-      disableOnInteraction: false,
-    },
-    loop: true,
-    speed: 1500,
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true    }
-  };
-
-  slideOpts2 = {
-    effect: 'flip',
-    autoplay: {
-      delay: 3000,
-      disableOnInteraction: false,
-    },
-    loop: true,
-    speed: 1500,
-    pagination: {
-      clickable: true    }
-  };
+  slideOpts: {};
+  slideOpts2: {};
+  config: any
 
   constructor(public toastCtrl: ToastController, private ngZone: NgZone){
-    
+    this.config =  {
+      effect: "fade",
+      fadeEffect: {
+        crossFade: true
+      },
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false
+      },
+      loop: true,
+      speed: 1500,
+      pagination: {
+        el: '.swiper-pagination',
+        },
+        paginationClickable: true,
+        navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+        }
+    };
+  
+    this.slideOpts2 = {
+      effect: 'flip',
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false
+      },
+      loop: true,
+      speed: 1500,
+      slidesPerView: 3,
+      pagination: {
+        clickable: true 
+      }
+    };
+
+
     this.page = 2;
 
     this.WooCommerce =  WC({
@@ -51,11 +65,7 @@ export class HomePage {
       version: 'wc/v3'
     });
 
-    this.WooCommerce.getAsync("products").then( (data) => {
-      this.ngZone.run(() => {this.popProducts = (JSON.parse(data.body));});
-    }, (err) => {
-      console.log(err);
-    })
+    
 
     this.loadMoreProducts(null);
   }
@@ -98,4 +108,13 @@ export class HomePage {
     tc.present();
   }
 
+
+  ionViewWillEnter(){
+    this.WooCommerce.getAsync("products").then( (data) => {
+      this.ngZone.run(() => {this.popProducts = (JSON.parse(data.body));});
+      console.log(this.popProducts)
+    }, (err) => {
+      console.log(err);
+    });
+  }
 }

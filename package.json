@@ -28,8 +28,10 @@
     "@ionic/storage": "^2.2.0",
     "@mobiscroll/angular-lite": "^4.6.1",
     "core-js": "^2.5.4",
+    "ngx-useful-swiper": "^8.0.1-beta.2",
     "rxjs": "~6.3.3",
     "rxjs-compat": "^6.4.0",
+    "swiper": "^4.5.0",
     "woocommerce-api": "^1.4.2",
     "zone.js": "~0.8.29"
   },

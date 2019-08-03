@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
+        <ion-menu-button color="light"></ion-menu-button>
       </ion-buttons>
       <ion-fab-button router-direction="'root'" [routerLink]="['/cart']" slot="end" size="small" color="light" fill="outline">
         <ion-icon name="cart"></ion-icon>
@@ -17,10 +17,15 @@
         <ion-img [src]="product?.images[0].src"></ion-img>
       </ion-thumbnail>
 
-      <p><ion-label class="custom-label-style">{{ product?.name }}</ion-label>
+      <ion-text>
+        <ion-label class="custom-label-style">{{ product?.name }}</ion-label>
+        <p class="custom-desc">{{product?.short_description.substr(3, 50) + '...'}}</p>
+        <p class="custom-price-style" [innerHTML]="product?.price_html"></p>
+      </ion-text>
+      <!-- <p>
         <span class="custom-desc">{{product?.short_description.substr(3, 50) + '...'}}</span><br>
-        <span class="custom-price-style" [innerHTML]="product?.price_html"></span>
-      </p>
+        <span ></span>
+      </p> -->
 
       <!-- <ion-button icon clear slot="end">
         <ion-icon name="arrow-forward"></ion-icon>

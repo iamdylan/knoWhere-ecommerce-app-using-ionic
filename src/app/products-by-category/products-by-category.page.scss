@@ -4,19 +4,35 @@ ion-card {
 }
 
 ion-thumbnail {
-  width: 26% !important;
-  height: 26% ;
+  width: 30%;
+  height: 30% ;
+  margin-right: 0;
 }
 
 .custom-label-style{
-  font-weight: bold !important;
-  text-decoration: underline !important;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-top: 6%;
+  color: #00609a;
 }
 
 .custom-price-style{
-  font-weight: bold !important;
+  font-weight: bold;
+  margin-top: 4%;
+  color: #e10000;
 }
 
 .custom-desc{
   font-size: 0.9em;
+  margin-top: 4%;
+}
+
+ion-item{
+  --padding-start: 5px !important;
+  --background: #eeeded !important;
+  --box-shadow: 0px 0px 1px black;
+}
+
+ion-content{
+  --background: #eeeded;
 }

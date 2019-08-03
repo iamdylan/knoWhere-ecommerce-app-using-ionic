@@ -38,9 +38,12 @@
               {
                 "input": "src/global.scss"
               },
-              "./node_modules/@mobiscroll/angular-lite/dist/css/mobiscroll.min.css"
+              "./node_modules/@mobiscroll/angular-lite/dist/css/mobiscroll.min.css",
+              "./node_modules/swiper/dist/css/swiper.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/swiper/dist/js/swiper.js"
+            ]
           },
           "configurations": {
             "production": {
