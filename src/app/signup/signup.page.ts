@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { MbscFormOptions } from '@mobiscroll/angular-lite/src/js/forms.angular';
 import * as WC from 'woocommerce-api';

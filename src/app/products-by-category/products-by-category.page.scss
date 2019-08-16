@@ -6,33 +6,44 @@ ion-card {
 ion-thumbnail {
   width: 30%;
   height: 30% ;
-  margin-right: 0;
+  // margin-right: 0;
+}
+
+ion-thumbnail ion-img {
+  box-shadow: 1px 1px 10px 1px rgba(0,0,0,.21);
+  border-radius: 5px;
+  margin-left: 5px;
 }
 
 .custom-label-style{
   font-weight: bold;
   text-decoration: underline;
   margin-top: 6%;
-  color: #00609a;
+  margin-left: 0;
+  color: #1e3e5f;
+  letter-spacing: 0.2px;
 }
 
 .custom-price-style{
-  font-weight: bold;
+  font-weight: 600;
   margin-top: 4%;
   color: #e10000;
+  letter-spacing: 0.8px;
 }
 
 .custom-desc{
-  font-size: 0.9em;
+  font-size: 0.95em;
   margin-top: 4%;
+  font-weight: 400;
+  letter-spacing: 0.2px;
 }
 
 ion-item{
   --padding-start: 5px !important;
-  --background: #eeeded !important;
+  --background: #ffffff !important;
   --box-shadow: 0px 0px 1px black;
 }
 
-ion-content{
-  --background: #eeeded;
-}
+// ion-content{
+//   --background: #ffffff;
+// }

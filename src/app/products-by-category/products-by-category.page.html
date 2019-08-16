@@ -1,13 +1,14 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button color="light"></ion-menu-button>
-      </ion-buttons>
-      <ion-fab-button router-direction="'root'" [routerLink]="['/cart']" slot="end" size="small" color="light" fill="outline">
-        <ion-icon name="cart"></ion-icon>
-      </ion-fab-button>
-      <ion-title>{{this.catName[0].name}}</ion-title>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-back-button slot="start" text="" defaultHref="home"></ion-back-button>
+    <ion-fab-button router-direction="'root'" [routerLink]="['/cart']" slot="end" size="small" fill="outline">
+      <ion-icon name="cart"></ion-icon>
+    </ion-fab-button>
+    <ion-title>{{this.catName[0].name}}</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>

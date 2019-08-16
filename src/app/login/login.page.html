@@ -1,16 +1,19 @@
 <ion-header>
   <ion-toolbar>
-      <ion-buttons slot="start">
-          <ion-menu-button  color="light"></ion-menu-button>
-      </ion-buttons>
-    <ion-title>login</ion-title>
+    <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-back-button slot="start" text="" defaultHref="home"></ion-back-button>
+    <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <mbsc-form class="md-login-form" [options]="formSettings">
     <form [formGroup]="loginForm" novalidate>
-      <div class="md-logo micons icon-mbsc-logo"></div>
+      <div class="md-logo">
+        <ion-img src="./assets/images/Logo_2.png"></ion-img>
+      </div>
       <mbsc-form-group inset>
         <mbsc-input formControlName="username" name="username" placeholder="Username"
           [error]="loginForm.controls['username'].invalid && loginForm.controls['username'].dirty"
@@ -21,11 +24,12 @@
           [error]="loginForm.controls['password'].invalid && loginForm.controls['password'].dirty"
           [errorMessage]="errorFor('password')"></mbsc-input>
       </mbsc-form-group>
-      <mbsc-form-group inset class="mbsc-padding mbsc-align-center">
+      <div class="sign-up">
         <a [routerDirection]="'root'" [routerLink]="['/signup']">Don't have an account yet? Sign up.</a>
-        <br><br>
-
-      </mbsc-form-group>
+      </div>
+        
+      
+      
       <mbsc-form-group inset class="mbsc-padding">
         <mbsc-button block [disabled]="loginForm.invalid && attemptedSubmit" (click)="logIn()">Sign in
         </mbsc-button>

@@ -13,13 +13,29 @@
 
 .mbsc-ios.mbsc-form {
     background: rgb(157,235,255) !important;
-background: radial-gradient(circle, rgba(157,235,255,1) 0%, rgba(102,223,255,1) 50%, rgba(17,154,191,1) 100%) !important;
-background: radial-gradient(circle, rgba(0,102,129,1) 0%, rgba(0,131,164,1) 69%, rgba(0,167,210,1) 100%)!important;
+    background: radial-gradient(circle, rgba(157,235,255,1) 0%, rgba(102,223,255,1) 50%, rgba(17,154,191,1) 100%) !important;
+    background: radial-gradient(circle, rgba(0,102,129,1) 0%, rgba(0,131,164,1) 69%, rgba(0,167,210,1) 100%)!important;
     min-height: 100%;
 }
 
+.mbsc-form-group-title {
+    color: #00c6cf !important;
+    letter-spacing: 0.04em;
+    word-spacing: 1px;
+}
+
 .mbsc-ios.mbsc-form a{
-    color: rgba(0, 255, 255, 0.800);
+    color: white;
+}
+
+.mbsc-ios .mbsc-btn {
+    color: #39649c !important;
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.mbsc-form {
+    font-family: inter, sans-serif !important;
 }
 
 .mbsc-input-wrap{

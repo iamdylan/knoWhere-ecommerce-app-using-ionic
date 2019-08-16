@@ -25,6 +25,7 @@ import { ProductDetailsModule } from './product-details/product-details.module';
 import { RoutingStateService } from './services/routing-state.service';
 import { GetUserInfo } from './menu/getUserInfo.service';
 import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [AppComponent, MenuPage],
@@ -41,7 +42,8 @@ import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
     AppRoutingModule,
     HttpModule,
     NgxUsefulSwiperModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    MDBBootstrapModule.forRoot()
   ],
   providers: [
     StatusBar,

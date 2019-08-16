@@ -73,7 +73,6 @@ export class LoginPage {
   async presentAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Login Successful',
-      message: 'You are logged in successfully.',
       buttons: [
         {
           text: 'OK',
