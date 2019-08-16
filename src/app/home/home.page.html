@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button color="light"></ion-menu-button>
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-fab-button router-direction="'root'" [routerLink]="['/cart']" slot="end" size="small" color="light" fill="outline">
+    <ion-fab-button router-direction="'root'" [routerLink]="['/cart']" slot="end" size="small" fill="outline">
       <ion-icon name="cart"></ion-icon>
     </ion-fab-button>
     <ion-title>
@@ -13,32 +13,39 @@
 </ion-header>
 
 <ion-content no-padding>
-  <ion-card>
+  <!-- <ion-card>
     <ion-slides [options]="config" pager="true">
       <ion-slide *ngFor="let number of [1,2,3,4]">
-        <img src="./assets/images/{{number}}.jpg" />
+        <img  />
       </ion-slide>
     </ion-slides>
-  </ion-card>
+  </ion-card> -->
 
-  <ion-header class="new-deals-header">NEW DEALS</ion-header>
+  <mdb-carousel #carousel class="carousel slide carousel-fade" [animation]="'fade'" >
+    <mdb-carousel-item *ngFor="let number of [1,2,3,4]">
+      <img class="d-block w-100" src="./assets/images/{{number}}.jpg">
+    </mdb-carousel-item>
+  </mdb-carousel>
+
+  <ion-header class="new-deals-header">New Deals</ion-header>
   <ion-slides *ngIf="popProducts && popProducts.length" [options]="slideOpts2" class="new-deals">
     <ion-slide class="new-deal-slides" *ngFor="let product of popProducts " [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
       <ion-thumbnail no-padding> 
         <img [src]="product?.images[0].src" />
       </ion-thumbnail>
-      <ion-label>{{ product.name }} </ion-label>
+      <ion-label>{{ product?.name }} </ion-label>
+      <p class="new-deals-price-style" [innerHTML]="product?.price_html"></p>
     </ion-slide>
   </ion-slides>
 
 
   <ion-list>
-      <ion-list-header>
-          <ion-label>Popular Products</ion-label>
-      </ion-list-header>
+      <ion-header class="pop-prod-header">
+          Popular Products
+      </ion-header>
       <ion-item *ngFor="let product of moreProducts" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
         <ion-thumbnail slot="start">
-          <img [src]="product.images[0].src" />
+          <ion-img [src]="product.images[0].src"></ion-img>
         </ion-thumbnail>
 
         <ion-text>

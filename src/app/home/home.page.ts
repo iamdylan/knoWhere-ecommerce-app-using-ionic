@@ -2,6 +2,7 @@ import { Component, NgZone, ViewChild } from '@angular/core';
 import {  ToastController, IonSlides } from '@ionic/angular'
 import * as WC from 'woocommerce-api';
 import Swiper from 'swiper';
+import { CarouselComponent } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,8 @@ import Swiper from 'swiper';
 })
 
 export class HomePage {
+  @ViewChild('carousel', {read: CarouselComponent})carousel: CarouselComponent;
+
   WooCommerce: any;
   popProducts: any;
   moreProducts: any[];
@@ -116,5 +119,9 @@ export class HomePage {
     }, (err) => {
       console.log(err);
     });
+  }
+
+  ngAfterViewInit(){
+    this.carousel.play();
   }
 }

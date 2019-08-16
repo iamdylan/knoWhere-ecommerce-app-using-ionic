@@ -1,3 +1,35 @@
 ion-card{
     margin: 0.5em;
 }
+
+ion-card-title {
+    // text-decoration: underline;
+    margin-right: 1em;
+    font-size: 1.2em;
+    border-bottom: 1px solid black;
+}
+
+ion-chip {
+    height: 1.4em;
+    margin-top: 0;
+    float: right;
+}
+
+.desc {
+    word-spacing: 1.5px;
+    color: black;
+    margin-top: 1em;
+    margin-bottom: 1.5em;
+    font-size: 1em;
+}
+
+.add-to-cart-btn {
+    font-weight: 700;
+    font-size: 1.1em;
+    letter-spacing: 0.02em;
+}
+
+ion-chip ion-label {
+    font-weight: 400;
+}
+

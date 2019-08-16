@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { HomePage } from './home.page';
+import { CarouselModule, WavesModule } from 'angular-bootstrap-md';
 
 const routes: Routes = [
   {
@@ -15,8 +16,10 @@ const routes: Routes = [
   imports: [
     CommonModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    CarouselModule,
+    WavesModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
 })
 export class HomePageModule {}

@@ -1,20 +1,19 @@
 <ion-header>
   <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button color="light"></ion-menu-button>
-        <ion-back-button defaultHref="home"></ion-back-button>
-      </ion-buttons>
-      <ion-fab-button [routerDirection]="'root'" [routerLink]="['/cart']" slot="end" size="small" color="light">
-        <ion-icon name="cart"></ion-icon>
-      </ion-fab-button>
-
+    <!-- <ion-fab-button slot="start" size="small"> -->
+      <ion-menu-button slot="start"></ion-menu-button>
+    <!-- </ion-fab-button>   -->
+    <ion-buttons >
+    </ion-buttons>
+    <ion-back-button slot="start" text="" defaultHref="home"></ion-back-button>
+    <ion-fab-button [routerDirection]="'root'" [routerLink]="['/cart']" slot="end" size="small">
+      <ion-icon name="cart"></ion-icon>
+    </ion-fab-button>
 
     <ion-title> {{ productInfo.name }} </ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  
   
   <ion-card>
     <ion-slides [options]="slideOpts" pager="true">
@@ -25,16 +24,16 @@
 
     <ion-card-content>
       <ion-card-title>
-        {{ productInfo.name }} &nbsp;
+        {{ productInfo.name }}
         <ion-chip *ngFor="let cat of productInfo.categories" style="margin-left: 5px;">
-          <ion-label color="danger"> {{ cat.name }} </ion-label>
-        </ion-chip>
+        <ion-label color="danger"> {{ cat.name }} </ion-label>
+      </ion-chip>
       </ion-card-title>
+      
+      <p class="desc" [innerHTML]="productInfo.description"></p>
 
-      <p [innerHTML]="productInfo.description"></p>
-
-      <ion-button expand="block" fill="outline" color="danger" (click)="addToCart(productInfo)">
-        <ion-icon slot="start" name="basket"></ion-icon> Add to Cart for ${{productInfo.price}}
+      <ion-button class="add-to-cart-btn" expand="block" fill="outline" color="danger" (click)="addToCart(productInfo)">
+        Add to Cart for ${{productInfo.price}}
       </ion-button>
 
     </ion-card-content>

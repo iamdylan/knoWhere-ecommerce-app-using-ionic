@@ -4,9 +4,11 @@
         text-align: right;
         margin: 0px !important;
         width: 100% !important;
-        height: 35% !important;
+        // height: 35% !important;
         // box-shadow: 0px 0px 5px 0px #000000;
         // z-index: 1;
+        background-color: #1e252b;
+        border-radius: 0;
     }
 
     // .card-title {
@@ -28,7 +30,7 @@
 }
 
 .active{
-    --background: #FF8181 !important;
+    --background: #00c6cf !important;
     --color: white;
     --detail-icon-color: white;
     --detail-icon-opacity: 1;
@@ -46,7 +48,7 @@ ion-list{
 }
 
 ion-list-header{
-    background-color: #119ABF;
+    background-color: #1e3e5f;
     color: white;
     // font-weight: bold;
     font-size: medium;
@@ -60,8 +62,14 @@ ion-title{
 
 ion-item{
     --background: #eeeded;
+    font-weight: 500;
+    letter-spacing: 0.02em;
 }
 
 ion-content{
     --background: #eeeded;
+}
+
+.logo {
+    width: 55%;
 }
