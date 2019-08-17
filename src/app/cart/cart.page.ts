@@ -57,18 +57,6 @@ export class CartPage implements OnInit {
     this.location.back();
   }
 
-
-  checkOut(){
-
-      // let data=null;
-      // this.storage.set("cart", data).then(() => {
-      //   console.log("Cart Updated");
-      //   console.log(data);
-      // })
-
-  }
-
-
   ngOnInit() {
 
   }
