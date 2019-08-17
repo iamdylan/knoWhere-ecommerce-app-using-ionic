@@ -70,7 +70,7 @@
           <ion-button color="danger" expand="block" (click)="closeCart()">Back</ion-button>
         </ion-col>
         <ion-col>
-          <ion-button color="danger" expand="block" (click)="checkOut()">Checkout</ion-button>
+          <ion-button color="danger" expand="block" [routerLink]="['/checkout']">Checkout</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
