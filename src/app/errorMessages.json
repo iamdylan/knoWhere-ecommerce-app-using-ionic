@@ -95,5 +95,12 @@
     "shipping_postcode": {
         "required": "Postal Code required",
         "minlength": "At least 4 characters required"
+    },
+    "shipping_phone": {
+        "required": "Phone No. required",
+        "minlength": "At least 10 characters required"
+    },
+    "payment_paymeth": {
+        "required": "Please choose a Payment Method"
     }
 }

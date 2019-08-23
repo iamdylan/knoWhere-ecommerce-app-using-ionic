@@ -1,13 +1,11 @@
 import { Component, OnInit, NgZone, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import * as WC from 'woocommerce-api';
-import { MenuController } from '@ionic/angular';
+import { MenuController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/bufferCount';
 import { RoutingStateService } from '../services/routing-state.service';
-import { Observable } from 'rxjs';
-import { from } from 'rxjs';
 import { GetUserInfo } from './getUserInfo.service';
 
 @Component({
@@ -24,7 +22,7 @@ export class MenuPage implements OnInit {
   name: any;
   previousRoute: string;
   
-  constructor(public menuCtrl: MenuController, public router: Router, public storage: Storage, private routingState: RoutingStateService, private ngZone: NgZone, public getUserInfo: GetUserInfo) { 
+  constructor(public menuCtrl: MenuController, public router: Router, public storage: Storage, private routingState: RoutingStateService, public getUserInfo: GetUserInfo, public alertCtrl: AlertController) { 
     this.categories = [];
 
     this.WooCommerce =  WC({
@@ -96,9 +94,30 @@ export class MenuPage implements OnInit {
       console.log('logging out')
       this.storage.remove("userLoginInfo").then( () => {
         this.getUserInfo.user = {};
+        this.presentAlert();
         console.log(this.getUserInfo.user)
         this.getUserInfo.loggedIn.next(false);
       })
+  }
+
+  async presentAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Logout Successful',
+      buttons: [
+        {
+          text: 'OK',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('routing')
+              this.router.navigateByUrl(
+                '/home'
+              );
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   ngOnInit() {
