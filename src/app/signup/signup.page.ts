@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone, ChangeDetectionStrategy, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { MbscFormOptions } from '@mobiscroll/angular-lite/src/js/forms.angular';
 import * as WC from 'woocommerce-api';
@@ -7,7 +7,8 @@ import { PasswordValidator } from '../validators/pass.validator';
 import 'rxjs/add/operator/map';
 import { EmailValidator } from '../validators/email.validator';
 import { UserValidator } from '../validators/username.validator';
-import  errorMessages  from './errorMessages.json';
+import  errorMessages  from '../errorMessages.json';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -19,34 +20,38 @@ import  errorMessages  from './errorMessages.json';
 export class SignupPage implements OnInit {
   formSettings: MbscFormOptions = {
     theme: 'mobiscroll'
-};
-
-reactForm: FormGroup;
-
-billing_shipping_same: boolean;
-billing_address: any;
-shipping_address: any;
-userGood: boolean;
-
-  constructor(public fb: FormBuilder, private ngZone: NgZone, public toastCtrl: ToastController, public alertCtrl: AlertController, public emailValidator: EmailValidator, public userValidator: UserValidator) {
-      this.billing_shipping_same = false;
-      this.billing_address = {};
-      this.shipping_address = {};
-  }
-
-  reactSubmitted: boolean = false;
-
-  getErrorState(field: string) {
-    let ctrl = this.reactForm.get(field);
-    return ctrl.invalid && this.reactSubmitted;
-  }
-
-  registerReact() {
-      this.reactSubmitted = true;
-      if (this.reactForm.valid && this.thanksPopup) {
-          this.thanksPopup.instance.show();
-      }
   };
+
+  reactForm: FormGroup;
+
+  billing_shipping_same: boolean;
+  userGood: boolean;
+  label_style: string;
+  countries: any[];
+
+  constructor(public fb: FormBuilder, public router: Router, private ngZone: NgZone, public toastCtrl: ToastController, public alertCtrl: AlertController, public emailValidator: EmailValidator, public userValidator: UserValidator) {
+      this.billing_shipping_same = false;
+      this.label_style = "floating";
+      this.countries = [
+        {country_id: 'IND', country_title: 'India'},
+        {country_id: 'USA', country_title: 'United States of America'},
+        {country_id: 'UK', country_title: 'United Kingdom'},
+        {country_id: 'AUS', country_title: 'Australia'},
+        {country_id: 'CAN', country_title: 'Canada'},
+        {country_id: 'JAP', country_title: 'Japan'},
+        {country_id: 'NZ', country_title: 'New Zealand'}
+      ];
+      
+  }
+
+  // reactSubmitted: boolean = false;
+
+  // registerReact() {
+  //     this.reactSubmitted = true;
+  //     if (this.reactForm.valid && this.thanksPopup) {
+  //         this.thanksPopup.instance.show();
+  //     }
+  // };
 
   getErrorMessage(field: any) {
       let formCtrl = this.reactForm,
@@ -87,6 +92,7 @@ userGood: boolean;
   setBillingToShipping(){
     this.billing_shipping_same = !this.billing_shipping_same;
     if(this.billing_shipping_same == true){
+      this.ngZone.run(() => {this.label_style = "stacked";});
       this.reactForm.patchValue({
         shipping: {
           first_name: this.reactForm.value.billing.first_name,
@@ -116,10 +122,6 @@ userGood: boolean;
 
     customerData = this.reactForm.value;
 
-    if(this.billing_shipping_same){
-      this.shipping_address = this.shipping_address;
-    }
-
     WooCommerce.postAsync('customers', customerData).then( (data) => {
       let response = (JSON.parse(data.body));
       console.log(response);
@@ -143,7 +145,10 @@ userGood: boolean;
           role: 'Login',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+            console.log('routing')
+              this.router.navigateByUrl(
+                '/login'
+              );
           }
         }
       ]
@@ -170,18 +175,6 @@ userGood: boolean;
       email: ['', [Validators.required, Validators.email], this.emailValidator.checkEmail.bind(this.emailValidator)],
       password: ['', [Validators.required, Validators.minLength(6)]],
       conf_password: ['', [Validators.required]],
-      billing: this.fb.group({
-        first_name: ['', [Validators.required, Validators.minLength(3)]],
-        last_name: ['', [Validators.required, Validators.minLength(3)]],
-        email: ['', [Validators.required, Validators.email]],
-        address_1: ['', [Validators.required, Validators.minLength(5)]],
-        address_2: ['', [Validators.required, Validators.minLength(2)]],
-        country: ['', Validators.required],
-        state: ['', [Validators.required, Validators.minLength(2)]],
-        city: ['', [Validators.required, Validators.minLength(3)]],
-        postcode: ['', [Validators.required, Validators.minLength(4)]],
-        phone: ['', [Validators.required, Validators.minLength(10)]],
-      }),
       shipping: this.fb.group({
         first_name: ['', [Validators.required, Validators.minLength(3)]],
         last_name: ['', [Validators.required, Validators.minLength(3)]],
@@ -190,15 +183,21 @@ userGood: boolean;
         country: ['', Validators.required],
         state: ['', [Validators.required, Validators.minLength(2)]],
         city: ['', [Validators.required, Validators.minLength(3)]],
+        postcode: ['', [Validators.required, Validators.minLength(4)]]
+      }),
+      billing: this.fb.group({
+        first_name: ['', [Validators.required, Validators.minLength(3)]],
+        last_name: ['', [Validators.required, Validators.minLength(3)]],
+        address_1: ['', [Validators.required, Validators.minLength(5)]],
+        address_2: ['', [Validators.required, Validators.minLength(2)]],
+        country: ['', Validators.required],
+        state: ['', [Validators.required, Validators.minLength(2)]],
+        city: ['', [Validators.required, Validators.minLength(3)]],
         postcode: ['', [Validators.required, Validators.minLength(4)]],
+        phone: ['', [Validators.required, Validators.minLength(10)]]
       })
     }, {validator: PasswordValidator.validPassword}
     );
   }
 
-  get first_name() { return this.reactForm.get('first_name'); }
-  get last_name() { return this.reactForm.get('last_name'); }
-  get email() { return this.reactForm.get('email'); }
-  get password() { return this.reactForm.get('password'); }
-  get conf_password() { return this.reactForm.get('conf_password'); }
 }

@@ -1,4 +1,4 @@
-import { Component, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { MbscFormOptions } from '@mobiscroll/angular-lite/src/js/forms.angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Http } from '@angular/http';
@@ -134,7 +134,11 @@ export class LoginPage {
   }
 
   ionViewDidEnter() {
-    this.previousRoute = this.routingState.getPreviousUrl();
+    if(this.routingState.getPreviousUrl() == '/signup'){
+      this.previousRoute = '/home';
+    }else{
+      this.previousRoute = this.routingState.getPreviousUrl();
+    }
     console.log('Previous route', this.previousRoute);
   }
 
