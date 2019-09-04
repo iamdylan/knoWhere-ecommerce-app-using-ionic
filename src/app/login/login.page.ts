@@ -19,10 +19,7 @@ export class LoginPage {
   previousRoute: string;
 
   constructor(private fb: FormBuilder, public http: Http, private router: Router, public toastCtrl: ToastController, public storage: Storage, public alertCtrl: AlertController, public events: Events, private routingState: RoutingStateService, public getUserInfo: GetUserInfo) {
-    this.loginForm = fb.group({
-      username: ['', [Validators.required, Validators.minLength(6)]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    });
+    
   }
 
   loginForm: FormGroup;
@@ -140,6 +137,13 @@ export class LoginPage {
       this.previousRoute = this.routingState.getPreviousUrl();
     }
     console.log('Previous route', this.previousRoute);
+  }
+
+  ngOnInit(){
+    this.loginForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
   }
 
 }

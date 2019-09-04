@@ -3,6 +3,7 @@ import {  ToastController, IonSlides } from '@ionic/angular'
 import * as WC from 'woocommerce-api';
 import Swiper from 'swiper';
 import { CarouselComponent } from 'angular-bootstrap-md';
+import { WooCommerceService } from '../services/woo-commerce.service';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,10 @@ export class HomePage {
   slideOpts2: {};
   config: any
 
-  constructor(public toastCtrl: ToastController, private ngZone: NgZone){
+  constructor(public toastCtrl: ToastController, private ngZone: NgZone, public WC: WooCommerceService){
+    this.moreProducts = [];
+    this.popProducts = [];
+
     this.config =  {
       effect: "fade",
       fadeEffect: {
@@ -60,17 +64,14 @@ export class HomePage {
 
     this.page = 2;
 
-    this.WooCommerce =  WC({
-      url: "http://localhost/dashboard/wordpress",
-      consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
-      consumerSecret: "cs_300fb32ce0875c45a2520ff860d1282a8891f113",
-      wpAPI: true,
-      version: 'wc/v3'
-    });
+    // this.WooCommerce =  WC({
+    //   url: "http://localhost/dashboard/wordpress",
+    //   consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
+    //   consumerSecret: "cs_300fb32ce0875c45a2520ff860d1282a8891f113",
+    //   wpAPI: true,
+    //   version: 'wc/v3'
+    // });
 
-    
-
-    this.loadMoreProducts(null);
   }
 
   loadMoreProducts(event){
@@ -83,7 +84,7 @@ export class HomePage {
     else
       this.page++;
 
-    this.WooCommerce.getAsync("products?page=" + this.page).then( (data) => {
+    this.WC.WooCommerceV3.getAsync("products?page=" + this.page).then( (data) => {
       this.ngZone.run(() => {this.moreProducts = this.moreProducts.concat(JSON.parse(data.body));});
 
       if(event != null)
@@ -103,7 +104,7 @@ export class HomePage {
     
 
   async toast(){
-    let tc= await this.toastCtrl.create({
+    let tc = await this.toastCtrl.create({
           message: "No more products!",
           duration: 5000
         });
@@ -111,17 +112,15 @@ export class HomePage {
     tc.present();
   }
 
-
-  ionViewWillEnter(){
-    this.WooCommerce.getAsync("products").then( (data) => {
+  ngOnInit(){
+    this.WC.WooCommerceV3.getAsync("products").then( (data) => {
       this.ngZone.run(() => {this.popProducts = (JSON.parse(data.body));});
       console.log(this.popProducts)
     }, (err) => {
       console.log(err);
     });
-  }
 
-  ngAfterViewInit(){
+    this.loadMoreProducts(null);
     this.carousel.play();
   }
 }

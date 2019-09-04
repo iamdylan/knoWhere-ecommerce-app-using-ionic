@@ -8,7 +8,9 @@ import 'rxjs/add/operator/map';
 import { EmailValidator } from '../validators/email.validator';
 import { UserValidator } from '../validators/username.validator';
 import  errorMessages  from '../errorMessages.json';
+import  countries  from '../countries.json';
 import { Router } from '@angular/router';
+import { WooCommerceService } from '../services/woo-commerce.service';
 
 @Component({
   selector: 'app-signup',
@@ -29,18 +31,11 @@ export class SignupPage implements OnInit {
   label_style: string;
   countries: any[];
 
-  constructor(public fb: FormBuilder, public router: Router, private ngZone: NgZone, public toastCtrl: ToastController, public alertCtrl: AlertController, public emailValidator: EmailValidator, public userValidator: UserValidator) {
-      this.billing_shipping_same = false;
-      this.label_style = "floating";
-      this.countries = [
-        {country_id: 'IND', country_title: 'India'},
-        {country_id: 'USA', country_title: 'United States of America'},
-        {country_id: 'UK', country_title: 'United Kingdom'},
-        {country_id: 'AUS', country_title: 'Australia'},
-        {country_id: 'CAN', country_title: 'Canada'},
-        {country_id: 'JAP', country_title: 'Japan'},
-        {country_id: 'NZ', country_title: 'New Zealand'}
-      ];
+  constructor(public fb: FormBuilder, public router: Router, private ngZone: NgZone, public toastCtrl: ToastController, public alertCtrl: AlertController, public emailValidator: EmailValidator, public userValidator: UserValidator, public WC: WooCommerceService) {
+      
+    this.billing_shipping_same = false;
+    this.label_style = "floating";
+    this.countries = countries.countries;
       
   }
 
@@ -54,24 +49,24 @@ export class SignupPage implements OnInit {
   // };
 
   getErrorMessage(field: any) {
-      let formCtrl = this.reactForm,
-      message = '';
+    let formCtrl = this.reactForm,
+    message = '';
 
-      if (formCtrl) {
-        let ctrl = formCtrl.get(field);
-        if (ctrl && ctrl.errors) {
-            for (let err in ctrl.errors) {
-                if (!message && ctrl.errors[err]) {
-                  let errField = field.replace(".","_")
-                    return message = errorMessages[errField][err];
-                }
-            }
-        }
-        else if(formCtrl.hasError('noMatch')){
-          return message = errorMessages['conf_password']['noMatch'];
-        }
+    if (formCtrl) {
+      let ctrl = formCtrl.get(field);
+      if (ctrl && ctrl.errors) {
+          for (let err in ctrl.errors) {
+              if (!message && ctrl.errors[err]) {
+                let errField = field.replace(".","_")
+                  return message = errorMessages[errField][err];
+              }
+          }
       }
-      return message;
+      else if(formCtrl.hasError('noMatch')){
+        return message = errorMessages['conf_password']['noMatch'];
+      }
+    }
+    return message;
   }
 
   
@@ -109,20 +104,20 @@ export class SignupPage implements OnInit {
   }
     
   signup(){
-    let WooCommerce =  WC({
-        url: "http://localhost/dashboard/wordpress",
-        consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
-        consumerSecret: "cs_300fb32ce0875c45a2520ff860d1282a8891f113",
-        wpAPI: true,
-        version: 'wc/v3'
-    });
+    // let WooCommerce =  WC({
+    //     url: "http://localhost/dashboard/wordpress",
+    //     consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
+    //     consumerSecret: "cs_300fb32ce0875c45a2520ff860d1282a8891f113",
+    //     wpAPI: true,
+    //     version: 'wc/v3'
+    // });
 
     let customerData: any = {
     }
 
     customerData = this.reactForm.value;
 
-    WooCommerce.postAsync('customers', customerData).then( (data) => {
+    this.WC.WooCommerceV3.postAsync('customers', customerData).then( (data) => {
       let response = (JSON.parse(data.body));
       console.log(response);
       if(response.id){

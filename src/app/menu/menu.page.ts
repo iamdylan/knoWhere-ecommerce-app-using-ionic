@@ -7,6 +7,7 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/bufferCount';
 import { RoutingStateService } from '../services/routing-state.service';
 import { GetUserInfo } from './getUserInfo.service';
+import { WooCommerceService } from '../services/woo-commerce.service';
 
 @Component({
   selector: 'app-menu',
@@ -22,18 +23,50 @@ export class MenuPage implements OnInit {
   name: any;
   previousRoute: string;
   
-  constructor(public menuCtrl: MenuController, public router: Router, public storage: Storage, private routingState: RoutingStateService, public getUserInfo: GetUserInfo, public alertCtrl: AlertController) { 
+  constructor(public menuCtrl: MenuController, public router: Router, public storage: Storage, private routingState: RoutingStateService, public getUserInfo: GetUserInfo, public alertCtrl: AlertController, public WC: WooCommerceService) { 
     this.categories = [];
 
-    this.WooCommerce =  WC({
-      url: "http://localhost/dashboard/wordpress",
-      consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
-      consumerSecret: "cs_300fb32ce0875c45a2520ff860d1282a8891f113",
-      wpAPI: true,
-      version: 'wc/v3'
+    // this.WooCommerce =  WC({
+    //   url: "http://localhost/dashboard/wordpress",
+    //   consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
+    //   consumerSecret: "cs_300fb32ce0875c45a2520ff860d1282a8891f113",
+    //   wpAPI: true,
+    //   version: 'wc/v3'
+    // });
+  }
+
+  logOut(){
+      console.log('logging out')
+      this.storage.remove("userLoginInfo").then( () => {
+        this.getUserInfo.user = {};
+        this.presentAlert();
+        console.log(this.getUserInfo.user)
+        this.getUserInfo.loggedIn.next(false);
+      })
+  }
+
+  async presentAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Logout Successful',
+      buttons: [
+        {
+          text: 'OK',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('routing')
+              this.router.navigateByUrl(
+                '/home'
+              );
+          }
+        }
+      ]
     });
 
-    this.WooCommerce.getAsync("products/categories").then((data) => {
+    await alert.present();
+  }
+
+  ngOnInit() {
+    this.WC.WooCommerceV3.getAsync("products/categories").then((data) => {
       let temp: any[] = JSON.parse(data.body);
 
       for( let i = 0; i < temp.length; i++){
@@ -72,55 +105,6 @@ export class MenuPage implements OnInit {
     }, (err)=> {
       console.log(err)
     })
-
-    // this.getUserInfo.getUser.subscribe((userLoginInfo) => { 
-    //   if(userLoginInfo != null){
-  
-    //     console.log("User logged in...");
-    //     this.ngZone.run(() => { this.getUserInfo.user = userLoginInfo.user;
-    //     console.log(this.getUserInfo.user);
-    //     this.loggedIn = true;});
-    //   }
-    //   else {
-    //     console.log("No user found.");
-    //     this.ngZone.run(() => { this.getUserInfo.user = {};
-    //     console.log(this.getUserInfo.user);
-    //     this.loggedIn = false;});
-    //   }
-    //   });
-  }
-
-  logOut(){
-      console.log('logging out')
-      this.storage.remove("userLoginInfo").then( () => {
-        this.getUserInfo.user = {};
-        this.presentAlert();
-        console.log(this.getUserInfo.user)
-        this.getUserInfo.loggedIn.next(false);
-      })
-  }
-
-  async presentAlert() {
-    const alert = await this.alertCtrl.create({
-      header: 'Logout Successful',
-      buttons: [
-        {
-          text: 'OK',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('routing')
-              this.router.navigateByUrl(
-                '/home'
-              );
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
-  ngOnInit() {
     
     this.storage.ready().then( () => {
       this.storage.get("userLoginInfo").then( (userLoginInfo) => {
