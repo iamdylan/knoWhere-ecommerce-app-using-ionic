@@ -2,9 +2,11 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MbscFormOptions } from '@mobiscroll/angular-lite';
 import  errorMessages  from '../errorMessages.json';
+import  countries  from '../countries.json';
 import { EmailValidator } from '../validators/email.validator';
 import { Storage } from '@ionic/storage';
 import * as WC from 'woocommerce-api';
+import { WooCommerceService } from '../services/woo-commerce.service';
 
 @Component({
   selector: 'app-checkout',
@@ -17,7 +19,7 @@ export class CheckoutPage implements OnInit {
   };
 
   WooCommerce: any;
-  newOrder: any;
+  custInfo: any;
   paymentMethods: any[];
   paymentMethod: any;
   billing_shipping_same: boolean;
@@ -27,7 +29,7 @@ export class CheckoutPage implements OnInit {
 
   reactForm: FormGroup;
   
-  constructor(public fb: FormBuilder, public emailValidator: EmailValidator, public storage: Storage, private ngZone: NgZone) {
+  constructor(public fb: FormBuilder, public emailValidator: EmailValidator, public storage: Storage, private ngZone: NgZone, public WC: WooCommerceService) {
     
     this.label_style = "floating";
     this.billing_shipping_same = false;
@@ -37,15 +39,7 @@ export class CheckoutPage implements OnInit {
       { method_id: "cod", method_title: "Cash on Delivery" },
       { method_id: "paypal", method_title: "PayPal" 
     }];
-    this.countries = [
-      {country_id: 'IND', country_title: 'India'},
-      {country_id: 'USA', country_title: 'United States of America'},
-      {country_id: 'UK', country_title: 'United Kingdom'},
-      {country_id: 'AUS', country_title: 'Australia'},
-      {country_id: 'CAN', country_title: 'Canada'},
-      {country_id: 'JAP', country_title: 'Japan'},
-      {country_id: 'NZ', country_title: 'New Zealand'}
-    ];
+    this.countries = countries.countries;
 
   }
 
@@ -65,7 +59,7 @@ export class CheckoutPage implements OnInit {
       }
     }
     return message;
-}
+  }
 
   setBillingToShipping(){
     this.billing_shipping_same = !this.billing_shipping_same;
@@ -83,6 +77,7 @@ export class CheckoutPage implements OnInit {
           postcode: this.reactForm.value.billing.postcode
         }
       });
+      
     }
   }
 
@@ -115,32 +110,28 @@ export class CheckoutPage implements OnInit {
     }
     );
 
-    this.WooCommerce = WC({
-      url: "http://localhost/dashboard/wordpress",
-      consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
-      consumerSecret: "cs_300fb32ce0875c45a2520ff860d1282a8891f113",
-      wpAPI: true,
-      version: 'wc/v3'
-    });
+    // this.WooCommerce = WC({
+    //   url: "http://localhost/dashboard/wordpress",
+    //   consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
+    //   consumerSecret: "cs_300fb32ce0875c45a2520ff860d1282a8891f113",
+    //   wpAPI: true,
+    //   version: 'wc/v3'
+    // });
 
     this.storage.get("userLoginInfo").then( (userLoginInfo) => {
       this.userInfo = userLoginInfo.user;
       console.log(this.userInfo);
       let id = userLoginInfo.user.id;
-      this.WooCommerce.getAsync("customers/"+id).then( (data) => {
-        this.newOrder = JSON.parse(data.body);
-        console.log(this.newOrder);
+      this.WC.WooCommerceV3.getAsync("customers/"+id).then( (data) => {
+        this.custInfo = JSON.parse(data.body);
+        console.log(this.custInfo);
         this.ngZone.run(() => {this.label_style = "stacked";});
         this.reactForm.patchValue({
-          billing: this.newOrder.billing,
-          shipping: this.newOrder.shipping
-          
+          billing: this.custInfo.billing,
+          shipping: this.custInfo.shipping
         })
       })
     });
-
-
-
   }
 
 }

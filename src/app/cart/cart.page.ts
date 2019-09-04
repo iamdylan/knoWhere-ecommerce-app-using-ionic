@@ -18,21 +18,6 @@ export class CartPage implements OnInit {
 
   constructor(public storage: Storage, public modalCtrl: ModalController, private location: Location) { 
     this.total = 0.0;
-    
-    this.storage.ready().then(()=>{
-      this.storage.get("cart").then( (data)=>{
-        this.cartItems = data;
-
-        if(this.cartItems != null && this.cartItems.length > 0){
-          this.cartItems.forEach( (item, index)=> {
-            this.total = this.total + (item.product.price * item.qty)
-          })
-        } else {
-          this.showEmptyCartMessage = true;
-        }
-      })
-    })
-
   }
 
 
@@ -52,14 +37,27 @@ export class CartPage implements OnInit {
 
   }
 
-
   closeCart(){
     this.location.back();
   }
 
   ngOnInit() {
-
   }
 
+  ionViewWillEnter(){
+    this.storage.ready().then(()=>{
+      this.storage.get("cart").then( (data)=>{
+        this.cartItems = data;
 
+        if(this.cartItems != null && this.cartItems.length > 0){
+          this.cartItems.forEach( (item, index)=> {
+            this.total = this.total + (item.product.price * item.qty)
+          })
+        } else {
+          this.showEmptyCartMessage = true;
+        }
+      })
+    })
+  }
+  
 }

@@ -1,9 +1,10 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import * as WC from 'woocommerce-api';
 import { CartPage } from '../cart/cart.page';
 import { Storage } from '@ionic/storage';
 import { ToastController, ModalController } from '@ionic/angular';
+import { WooCommerceService } from '../services/woo-commerce.service';
 
 @Component({
   selector: 'app-product-details',
@@ -11,7 +12,7 @@ import { ToastController, ModalController } from '@ionic/angular';
   styleUrls: ['./product-details.page.scss'],
 })
 
-export class ProductDetailsPage{
+export class ProductDetailsPage implements OnInit {
   product: any;
   WooCommerce: any;
   productInfo: any;
@@ -30,35 +31,24 @@ export class ProductDetailsPage{
   };
 
   constructor(private route: ActivatedRoute, private ngZone: NgZone, public storage: Storage, 
-    public toastCtrl: ToastController, public modalCtrl: ModalController) {
+    public toastCtrl: ToastController, public modalCtrl: ModalController, public WC: WooCommerceService) {
 
     this.productInfo = [];
     this.reviews = [];
     this.productInfo.attributes = [];
 
-    this.WooCommerce =  WC({
-      url: "http://localhost/dashboard/wordpress",
-      consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
-      consumerSecret: "cs_300fb32ce0875c45a2520ff860d1282a8891f113",
-      wpAPI: true,
-      version: 'wc/v2'
-    });
+    // this.WooCommerce =  WC({
+    //   url: "http://localhost/dashboard/wordpress",
+    //   consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
+    //   consumerSecret: "cs_300fb32ce0875c45a2520ff860d1282a8891f113",
+    //   wpAPI: true,
+    //   version: 'wc/v2'
+    // });
     
     this.route.params.subscribe((params: Params)=>{
       this.product = params['product'];
     });
 
-    this.WooCommerce.getAsync("products/" + this.product).then((data) => {
-      this.ngZone.run(() => { this.productInfo =  JSON.parse(data.body);});
-      }, (err) => {
-        console.log(err);
-    });
-
-    this.WooCommerce.getAsync("products/"+(this.product)+"/reviews").then((data) => {
-      this.ngZone.run(() => { this.reviews = JSON.parse(data.body);});
-    }, (err) => {
-      console.log(err);
-    });
   }//Constructor close
 
   async addToCart(prod) {
@@ -122,4 +112,17 @@ export class ProductDetailsPage{
     return await modal.present();
   }
 
+  ngOnInit(){
+    this.WC.WooCommerceV3.getAsync("products/" + this.product).then((data) => {
+      this.ngZone.run(() => { this.productInfo =  JSON.parse(data.body);});
+      }, (err) => {
+        console.log(err);
+    });
+
+    this.WC.WooCommerceV2.getAsync("products/"+(this.product)+"/reviews").then((data) => {
+      this.ngZone.run(() => { this.reviews = JSON.parse(data.body);});
+    }, (err) => {
+      console.log(err);
+    });
+  }
 }//class close
