@@ -81,6 +81,53 @@ export class CheckoutPage implements OnInit {
     }
   }
 
+  placeOrder(){
+    let orderItems: any[] = [];
+    let details: any = {};
+    let paymentData: any = {};
+
+    this.paymentMethods.forEach( (element) => {
+      if(element.method_id == this.reactForm.value.payment.paymeth){
+        paymentData = element;
+        console.log(paymentData);
+      }
+    });
+
+    details = {
+      payment_method: paymentData.method_id,
+      payment_method_title: paymentData.method_title,
+      billing: this.reactForm.value.billing,
+      shipping: this.reactForm.value.shipping,
+      customer_id: this.userInfo.id,
+      line_items: orderItems
+    };
+
+    if(paymentData.method_id == "paypal"){
+    
+    }else{
+      this.storage.get("cart").then( (cart) => {
+        cart.forEach( (element) => {
+          orderItems.push({
+            product_id: element.product.id,
+            quantity: element.qty
+          });
+        });
+
+        console.log(orderItems);
+
+        details.line_items = orderItems;
+        let orderData: any = {};
+        orderData = details;
+        console.log(orderData);
+
+        this.WC.WooCommerceV3.postAsync("orders", orderData).then( (data) => {
+          console.log(data);
+          console.log(JSON.parse(data.body));
+        })
+      })
+    }
+  }
+
   ngOnInit() {
     this.reactForm = this.fb.group({
       billing: this.fb.group({
@@ -121,7 +168,7 @@ export class CheckoutPage implements OnInit {
     this.storage.get("userLoginInfo").then( (userLoginInfo) => {
       this.userInfo = userLoginInfo.user;
       console.log(this.userInfo);
-      let id = userLoginInfo.user.id;
+      let id = this.userInfo.id;
       this.WC.WooCommerceV3.getAsync("customers/"+id).then( (data) => {
         this.custInfo = JSON.parse(data.body);
         console.log(this.custInfo);
