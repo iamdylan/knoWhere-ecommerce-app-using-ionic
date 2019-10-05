@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProductsByCategoryPage } from './products-by-category.page';
 import { IonicModule } from '@ionic/angular';
+import { ProductsByCategoryPage } from './products-by-category.page';
 
 const routes: Routes = [
   {

@@ -11,17 +11,31 @@
 @import '~@ionic/angular/css/flex-utils.css';
 
 
-.mbsc-ios.mbsc-form {
+.md-login-form .mbsc-ios.mbsc-form {
     background: rgb(157,235,255) !important;
     background: radial-gradient(circle, rgba(157,235,255,1) 0%, rgba(102,223,255,1) 50%, rgba(17,154,191,1) 100%) !important;
     background: radial-gradient(circle, rgba(0,102,129,1) 0%, rgba(0,131,164,1) 69%, rgba(0,167,210,1) 100%)!important;
     min-height: 100%;
 }
 
+.signUp .mbsc-material.mbsc-form {
+    background: white !important;
+}
+
+.checkOut .mbsc-material.mbsc-form {
+    background: white !important;
+}
+
 .mbsc-form-group-title {
-    color: #00c6cf !important;
+    color: #ffffff !important;
     letter-spacing: 0.04em;
     word-spacing: 1px;
+    background: #1e3e5f;
+}
+
+.mbsc-form-group {
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
 }
 
 .mbsc-ios.mbsc-form a{
@@ -47,7 +61,27 @@
     min-width: 100%;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    padding-left: .2em;
-    height: 1.7em;
 }
+
+.mbsc-material .mbsc-input input:focus {
+    border-bottom: 2px solid #3a99ff !important;
+}
+
+// mbsc-dropdown label {
+//     padding-top: 15px;
+// }
+
+.mbsc-ios .mbsc-err-msg {
+    color: #e13600;
+    background-color: #ffe991;
+}
+
+[_nghost-c4] {
+    margin-bottom: 2.5em !important;
+}
+
+.mbsc-material .mbsc-err-msg, .mbsc-material .mbsc-err .mbsc-label {
+    color: #FF5722 !important;
+}
+
 @import "~@mobiscroll/angular-lite/dist/css/mobiscroll.css";

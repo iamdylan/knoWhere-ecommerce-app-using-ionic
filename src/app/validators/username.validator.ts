@@ -1,50 +1,54 @@
-import { FormControl} from '@angular/forms';
 import { Injectable } from '@angular/core';
-import * as WC from 'woocommerce-api';
+import { FormControl } from '@angular/forms';
 import { WooCommerceService } from '../services/woo-commerce.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class UserValidator {
 
-    constructor(public WC: WooCommerceService){
-
+    constructor(public WooCom: WooCommerceService, public http: HttpClient) {
     }
 
     debouncer: any;
 
-    checkUser(fc: FormControl){
+    checkUser(fc: FormControl) {
         clearTimeout(this.debouncer);
-      
-        console.log('Username validator')
+
+        console.log('Username validator');
 
         return new Promise(resolve => {
-            if (fc.value.length > 1){
+            if (fc.value.length > 1) {
                 this.debouncer = setTimeout(() => {
-        
-                    // let WooCommerce =  WC({
-                    //     url: "http://localhost/dashboard/wordpress",
-                    //     consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
-                    //     consumerSecret: "cs_300fb32ce0875c45a2520ff860d1282a8891f113",
-                    //     wpAPI: true,
-                    //     version: 'wc/v3'
-                    // });
-                                    
-                    this.WC.WooCommerceV3.get("customers/?username=" + fc.value, function(err, data, res) {
-                        Array.prototype.some.call(JSON.parse(data.body), (item)=>{
-                            if (item.username == fc.value){
+
+                    // tslint:disable-next-line: max-line-length
+                    this.http.get(`${this.WooCom.url}/wp-json/wc/v3/customers/?username=${fc.value}&consumer_key=${this.WooCom.consumerKey}&consumer_secret=${this.WooCom.consumerSecret}`)
+                    .subscribe(res => {
+                        const response: any = res;
+                        Array.prototype.some.call(response, (item) => {
+                            if (item.username === fc.value) {
                                 resolve({'match': true});
-                             }else{
+                            } else {
                                 resolve(null);
-                             }
-                            return (item.username == fc.value);
-                            });
-                          });
+                            }
+                            return (item.username === fc.value);
+                        });
+                    });
+
+                    // this.WC.WooCommerceV3.get('customers/?username=' + fc.value, function(err, data, res) {
+                    //     Array.prototype.some.call(JSON.parse(data.body), (item) => {
+                    //         if (item.username === fc.value) {
+                    //             resolve({'match': true});
+                    //          } else {
+                    //             resolve(null);
+                    //          }
+                    //         return (item.username === fc.value);
+                    //     });
+                    // });
                     }, 200);
-            } 
-            else{
+            } else {
                 resolve(null);
             }
-        });          
+        });
     }
-    
+
 }

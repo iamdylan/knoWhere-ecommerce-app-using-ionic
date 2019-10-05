@@ -1,13 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule   } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
-
-
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-
-import { SignupPage } from './signup.page';
 import { MbscModule } from '@mobiscroll/angular-lite';
+import { SignupPage } from './signup.page';
 
 const routes: Routes = [
   {

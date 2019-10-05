@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: 'product-details/:product', loadChildren: './product-details/product-details.module#ProductDetailsModule' },
   { path: 'cart', loadChildren: './cart/cart.module#CartPageModule', canActivate: [NeedAuthGuard] },
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
-  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },  { path: 'checkout', loadChildren: './checkout/checkout.module#CheckoutPageModule' }
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'checkout', loadChildren: './checkout/checkout.module#CheckoutPageModule' }
 
 ];
 

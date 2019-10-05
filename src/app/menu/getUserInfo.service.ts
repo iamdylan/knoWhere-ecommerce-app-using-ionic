@@ -11,11 +11,11 @@ export class GetUserInfo {
   loggedIn = new BehaviorSubject(false);
 
 
-    constructor(public storage: Storage){
+    constructor(public storage: Storage) {
 
     }
 
-    // public getUser: Observable<any> = 
+    // public getUser: Observable<any> =
     //     from(this.storage.get("userLoginInfo").then( userLoginInfo => {
     //     return userLoginInfo;
     // }));

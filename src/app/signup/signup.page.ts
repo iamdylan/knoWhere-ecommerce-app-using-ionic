@@ -1,16 +1,18 @@
-import { Component, OnInit, ViewChild, NgZone, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { MbscFormOptions } from '@mobiscroll/angular-lite/src/js/forms.angular';
-import * as WC from 'woocommerce-api';
-import { AlertController, ToastController } from '@ionic/angular';
-import { PasswordValidator } from '../validators/pass.validator';
-import 'rxjs/add/operator/map';
-import { EmailValidator } from '../validators/email.validator';
-import { UserValidator } from '../validators/username.validator';
-import  errorMessages  from '../errorMessages.json';
-import  countries  from '../countries.json';
+import { ChangeDetectionStrategy, Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertController, ToastController, LoadingController } from '@ionic/angular';
+import { MbscFormOptions } from '@mobiscroll/angular-lite/src/js/forms.angular';
+import 'rxjs/add/operator/map';
+import countries from '../countries.json';
+import errorMessages from '../errorMessages.json';
 import { WooCommerceService } from '../services/woo-commerce.service';
+import { EmailValidator } from '../validators/email.validator';
+import { PasswordValidator } from '../validators/pass.validator';
+import { UserValidator } from '../validators/username.validator';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import jQuery from 'jquery';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signup',
@@ -20,56 +22,28 @@ import { WooCommerceService } from '../services/woo-commerce.service';
 })
 
 export class SignupPage implements OnInit {
+
+  constructor(public fb: FormBuilder, public router: Router, private ngZone: NgZone, public toastCtrl: ToastController,
+    public alertCtrl: AlertController, public emailValidator: EmailValidator, public userValidator: UserValidator,
+    public WooCom: WooCommerceService, public http: HttpClient, public loadingCtrl: LoadingController) {
+
+    this.billing_shipping_same = false;
+    this.label_style = 'floating';
+    this.countries = countries.countries;
+
+  }
+
   formSettings: MbscFormOptions = {
-    theme: 'mobiscroll'
+    theme: 'material'
   };
 
-  reactForm: FormGroup;
+  signUpForm: FormGroup;
 
   billing_shipping_same: boolean;
   userGood: boolean;
   label_style: string;
   countries: any[];
-
-  constructor(public fb: FormBuilder, public router: Router, private ngZone: NgZone, public toastCtrl: ToastController, public alertCtrl: AlertController, public emailValidator: EmailValidator, public userValidator: UserValidator, public WC: WooCommerceService) {
-      
-    this.billing_shipping_same = false;
-    this.label_style = "floating";
-    this.countries = countries.countries;
-      
-  }
-
-  // reactSubmitted: boolean = false;
-
-  // registerReact() {
-  //     this.reactSubmitted = true;
-  //     if (this.reactForm.valid && this.thanksPopup) {
-  //         this.thanksPopup.instance.show();
-  //     }
-  // };
-
-  getErrorMessage(field: any) {
-    let formCtrl = this.reactForm,
-    message = '';
-
-    if (formCtrl) {
-      let ctrl = formCtrl.get(field);
-      if (ctrl && ctrl.errors) {
-          for (let err in ctrl.errors) {
-              if (!message && ctrl.errors[err]) {
-                let errField = field.replace(".","_")
-                  return message = errorMessages[errField][err];
-              }
-          }
-      }
-      else if(formCtrl.hasError('noMatch')){
-        return message = errorMessages['conf_password']['noMatch'];
-      }
-    }
-    return message;
-  }
-
-  
+  formNotValid: boolean;
 
   @ViewChild('thanks')
   thanksPopup: any;
@@ -84,63 +58,109 @@ export class SignupPage implements OnInit {
     }]
   };
 
-  setBillingToShipping(){
+  getErrorMessage(field: any) {
+    const formCtrl = this.signUpForm;
+    let message = '';
+
+    if (formCtrl) {
+      const ctrl = formCtrl.get(field);
+      if (ctrl && ctrl.errors) {
+          for (const err in ctrl.errors) {
+              if (!message && ctrl.errors[err]) {
+                const errField = field.replace('.', '_');
+                  return message = errorMessages[errField][err];
+              }
+          }
+      } else if (formCtrl.hasError('noMatch')) {
+        return message = errorMessages['conf_password']['noMatch'];
+      }
+    }
+    return message;
+  }
+
+  setBillingToShipping() {
     this.billing_shipping_same = !this.billing_shipping_same;
-    if(this.billing_shipping_same == true){
-      this.ngZone.run(() => {this.label_style = "stacked";});
-      this.reactForm.patchValue({
+    if (this.billing_shipping_same === true) {
+      this.ngZone.run(() => {this.label_style = 'stacked'; });
+      this.signUpForm.patchValue({
         shipping: {
-          first_name: this.reactForm.value.billing.first_name,
-          last_name: this.reactForm.value.billing.last_name,
-          address_1: this.reactForm.value.billing.address_1,
-          address_2: this.reactForm.value.billing.address_2,
-          country: this.reactForm.value.billing.country,
-          state: this.reactForm.value.billing.state,
-          city: this.reactForm.value.billing.city,
-          postcode: this.reactForm.value.billing.postcode
+          first_name: this.signUpForm.value.billing.first_name,
+          last_name: this.signUpForm.value.billing.last_name,
+          address_1: this.signUpForm.value.billing.address_1,
+          address_2: this.signUpForm.value.billing.address_2,
+          country: this.signUpForm.value.billing.country,
+          state: this.signUpForm.value.billing.state,
+          city: this.signUpForm.value.billing.city,
+          postcode: this.signUpForm.value.billing.postcode
         }
       });
     }
   }
-    
-  signup(){
-    // let WooCommerce =  WC({
-    //     url: "http://localhost/dashboard/wordpress",
-    //     consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
-    //     consumerSecret: "cs_300fb32ce0875c45a2520ff860d1282a8891f113",
-    //     wpAPI: true,
-    //     version: 'wc/v3'
-    // });
 
-    let customerData: any = {
-    }
-
-    customerData = this.reactForm.value;
-
-    this.WC.WooCommerceV3.postAsync('customers', customerData).then( (data) => {
-      let response = (JSON.parse(data.body));
-      console.log(response);
-      if(response.id){
-        this.presentAlert();
-
-      } else if(response.data.status == 400){
-
-        this.toast(response);
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
       }
-    })
+    });
+  }
+
+  async signup() {
+    const loading = await this.loadingCtrl.create();
+
+    let customerData: any = {};
+
+    this.validateAllFormFields(this.signUpForm);
+    if (this.signUpForm.valid) {
+      await loading.present();
+      customerData = this.signUpForm.value;
+      console.log(customerData);
+      const header = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded'
+      });
+
+      // tslint:disable-next-line: max-line-length
+      this.http.post(`${this.WooCom.url}/wp-json/wc/v3/customers?consumer_key=${this.WooCom.consumerKey}&consumer_secret=${this.WooCom.consumerSecret}`, jQuery.param(customerData), { headers: header })
+      .pipe(finalize(() => loading.dismiss()))
+      .subscribe(res => {
+        const response: any = res;
+        console.log(response);
+        if (response.id) {
+              this.presentAlert();
+            } else if (response.data.status === 400) {
+              this.toast(response);
+            }
+      });
+
+      // this.WC.WooCommerceV3.postAsync('customers', customerData).then( (data) => {
+      //   const response = (JSON.parse(data.body));
+      //   console.log(response);
+      //   if (response.id) {
+      //     this.presentAlert();
+      //   } else if (response.data.status === 400) {
+      //     this.toast(response);
+      //   }
+      // });
+    } else {
+      this.formNotValid = true;
+    }
   }
 
   async presentAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Account Created',
       message: 'Your account has been created successfully! Please login to proceed.',
+      backdropDismiss: false,
       buttons: [
         {
           text: 'Login',
           role: 'Login',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('routing')
+            console.log('routing');
               this.router.navigateByUrl(
                 '/login'
               );
@@ -152,19 +172,19 @@ export class SignupPage implements OnInit {
     await alert.present();
   }
 
-  async toast(response){
-    let tc= await this.toastCtrl.create({
+  async toast(response) {
+    const tc = await this.toastCtrl.create({
           message: response.message,
           showCloseButton: true,
-          color: "dark"
+          color: 'dark'
         });
 
     tc.present();
   }
 
   ngOnInit() {
-    this.reactForm = this.fb.group({
-      username: ['', [Validators.required , Validators.minLength(2)], this.userValidator.checkUser.bind(this.userValidator)],
+    this.signUpForm = this.fb.group({
+      username: ['', [Validators.required , Validators.minLength(6)], this.userValidator.checkUser.bind(this.userValidator)],
       first_name: ['', [Validators.required, Validators.minLength(2)]],
       last_name: ['', [Validators.required, Validators.minLength(1)]],
       email: ['', [Validators.required, Validators.email], this.emailValidator.checkEmail.bind(this.emailValidator)],
@@ -193,6 +213,8 @@ export class SignupPage implements OnInit {
       })
     }, {validator: PasswordValidator.validPassword}
     );
+
+    console.log(this.signUpForm);
   }
 
 }
