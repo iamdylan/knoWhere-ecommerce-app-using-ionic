@@ -1,9 +1,8 @@
-import { Component, NgZone, ViewChild } from '@angular/core';
-import {  ToastController, IonSlides } from '@ionic/angular'
-import * as WC from 'woocommerce-api';
-import Swiper from 'swiper';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { CarouselComponent } from 'angular-bootstrap-md';
 import { WooCommerceService } from '../services/woo-commerce.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -11,23 +10,22 @@ import { WooCommerceService } from '../services/woo-commerce.service';
   styleUrls: ['home.page.scss'],
 })
 
-export class HomePage {
+export class HomePage implements OnInit {
   @ViewChild('carousel', {read: CarouselComponent})carousel: CarouselComponent;
 
-  WooCommerce: any;
   popProducts: any;
   moreProducts: any[];
   page: number;
   slideOpts: {};
   slideOpts2: {};
-  config: any
+  config: any;
 
-  constructor(public toastCtrl: ToastController, private ngZone: NgZone, public WC: WooCommerceService){
+  constructor(public toastCtrl: ToastController, private ngZone: NgZone, public WooCom: WooCommerceService, public http: HttpClient) {
     this.moreProducts = [];
     this.popProducts = [];
 
     this.config =  {
-      effect: "fade",
+      effect: 'fade',
       fadeEffect: {
         crossFade: true
       },
@@ -46,7 +44,7 @@ export class HomePage {
         prevEl: '.swiper-button-prev',
         }
     };
-  
+
     this.slideOpts2 = {
       effect: 'flip',
       autoplay: {
@@ -57,69 +55,84 @@ export class HomePage {
       speed: 1500,
       slidesPerView: 3,
       pagination: {
-        clickable: true 
+        clickable: true
       }
     };
 
 
     this.page = 2;
 
-    // this.WooCommerce =  WC({
-    //   url: "http://localhost/dashboard/wordpress",
-    //   consumerKey: "ck_b137f07c8316ede0376d58741bf799dada631743",
-    //   consumerSecret: "cs_300fb32ce0875c45a2520ff860d1282a8891f113",
-    //   wpAPI: true,
-    //   version: 'wc/v3'
-    // });
-
   }
 
-  loadMoreProducts(event){
-    console.log(event);
-    if(event == null)
-    {
+  getProducts() {
+    // tslint:disable-next-line: max-line-length
+    this.http.get(`${this.WooCom.url}/wp-json/wc/v3/products/?consumer_key=${this.WooCom.consumerKey}&consumer_secret=${this.WooCom.consumerSecret}`)
+    .subscribe(res => {
+      this.popProducts = res;
+      console.log(this.popProducts);
+    });
+  }
+
+  loadMoreProducts(event) {
+    if (event == null) {
       this.page = 2;
       this.moreProducts = [];
-    }
-    else
+    } else {
       this.page++;
+    }
 
-    this.WC.WooCommerceV3.getAsync("products?page=" + this.page).then( (data) => {
-      this.ngZone.run(() => {this.moreProducts = this.moreProducts.concat(JSON.parse(data.body));});
+    // tslint:disable-next-line: max-line-length
+    this.http.get(`${this.WooCom.url}/wp-json/wc/v3/products/?page=${this.page}&consumer_key=${this.WooCom.consumerKey}&consumer_secret=${this.WooCom.consumerSecret}`)
+    .subscribe(res => {
+      const data: any = res;
+      this.moreProducts = this.moreProducts.concat(res);
 
-      if(event != null)
-      {
+      if (event != null) {
         event.target.complete();
       }
 
-      if(JSON.parse(data.body).length < 10){
-        event.target.enable=false;
-
+      if (data.length === 0) {
+        event.target.disabled = true;
         this.toast();
       }
-    }, (err) => {
-      console.log(err)
-    })
-  }
-    
+    });
 
-  async toast(){
-    let tc = await this.toastCtrl.create({
-          message: "No more products!",
-          duration: 5000
+    // this.WC.WooCommerceV3.get("products?page=" + this.page).then( (data) => {
+    //   this.ngZone.run(() => {this.moreProducts = this.moreProducts.concat(JSON.parse(data.body)); });
+
+    //   if (event != null) {
+    //     event.target.complete();
+    //   }
+
+    //   if (JSON.parse(data.body).length === 0) {
+    //     event.target.enable = false;
+
+    //     this.toast();
+    //   }
+    // }).catch((error) => {
+    //   console.log(error.response.data);
+    // });
+  }
+
+  async toast() {
+    const tc = await this.toastCtrl.create({
+          message: 'That\'s all for now. Please try again later.',
+          duration: 5000,
+          color: 'dark',
+          cssClass: 'home-toast'
         });
 
     tc.present();
   }
 
-  ngOnInit(){
-    this.WC.WooCommerceV3.getAsync("products").then( (data) => {
-      this.ngZone.run(() => {this.popProducts = (JSON.parse(data.body));});
-      console.log(this.popProducts)
-    }, (err) => {
-      console.log(err);
-    });
-
+  ngOnInit() {
+    // this.WC.WooCommerceV3.getAsync('products').then( (data) => {
+    //   this.ngZone.run(() => {this.popProducts = (JSON.parse(data.body)); });
+    //   console.log(this.popProducts);
+    // }, (err) => {
+    //   console.log(err);
+    // });
+    this.getProducts();
     this.loadMoreProducts(null);
     this.carousel.play();
   }

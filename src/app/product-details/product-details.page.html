@@ -30,7 +30,7 @@
       </ion-chip>
       </ion-card-title>
       
-      <p class="desc" [innerHTML]="productInfo.description"></p>
+      <div class="desc" [innerHTML]="productInfo.description"></div>
 
       <ion-button class="add-to-cart-btn" expand="block" fill="outline" color="danger" (click)="addToCart(productInfo)">
         Add to Cart for ${{productInfo.price}}
@@ -87,7 +87,7 @@
 
           </ion-col>
           <ion-col size="8">
-            {{  review.review }}
+            <div class="review">{{  review.review }}</div>
           </ion-col>
 
         </ion-row>

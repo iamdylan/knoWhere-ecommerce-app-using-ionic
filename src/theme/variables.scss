@@ -163,3 +163,21 @@ ion-back-button {
   --color: #00c6cf !important;
   --icon-font-size: 25px !important;
 }
+
+.checkout-alert {
+    .alert-title {
+      color: #4CAF50;
+      font-size: 1.3em;
+    }
+    .alert-message {
+      margin-top: 5%;
+      font-size: 1em;
+    }
+    .alert-button {
+      font-size: 1.3em;
+    }
+}
+
+.home-toast, .addToCart-toast, .login-toast, .cart-toast {
+  text-align: center;
+}

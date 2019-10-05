@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
-
-import { Platform } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
 import { RoutingStateService } from './services/routing-state.service';
 
 @Component({
@@ -11,13 +10,13 @@ import { RoutingStateService } from './services/routing-state.service';
   templateUrl: 'app.component.html'
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public router: Router, 
+    public router: Router,
     private routingState: RoutingStateService
   ) {
     this.initializeApp();
@@ -31,7 +30,7 @@ export class AppComponent {
     });
   }
 
-  ngOnInit(){
+  ngOnInit() {
   }
 
 }

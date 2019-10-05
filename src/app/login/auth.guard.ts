@@ -11,22 +11,22 @@ export class NeedAuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean|Promise<boolean> {
     this.routingState.cartUrl = route['_routerState']['url'];
-    console.log(this.routingState.cartUrl)
+    console.log(this.routingState.cartUrl);
 
     return new Promise(resolve => {
       this.storage.ready().then( () => {
-        this.storage.get("userLoginInfo").then( (userLoginInfo) => {
-            
-            if(userLoginInfo != null){
-              console.log(userLoginInfo)
+        this.storage.get('userLoginInfo').then( (userLoginInfo) => {
+
+            if (userLoginInfo != null) {
+              console.log(userLoginInfo);
                 resolve (true);
-            }else{
+            } else {
               this.router.navigateByUrl('/login');
               resolve (false);
             }
-        })
-      })
-    })
+        });
+      });
+    });
   }
 
 }

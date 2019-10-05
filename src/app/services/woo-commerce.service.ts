@@ -13,9 +13,9 @@ export class WooCommerceService {
   wpAPI: boolean;
 
   constructor() {
-    this.url = "http://localhost/dashboard/wordpress";
-    this.consumerKey = "ck_b137f07c8316ede0376d58741bf799dada631743";
-    this.consumerSecret = "cs_300fb32ce0875c45a2520ff860d1282a8891f113";
+    this.url = 'https://dylan-thompson.000webhostapp.com';
+    this.consumerKey = 'ck_eadf44c4c6282f0422dce4fd603dc97b2e36bb46';
+    this.consumerSecret = 'cs_9c4144c7668ba17ef986e838937e82b892a9f3b6';
     this.wpAPI = true;
 
     this.WooCommerceV2 =  WC({
@@ -25,7 +25,7 @@ export class WooCommerceService {
       wpAPI: this.wpAPI,
       version: 'wc/v2'
     });
-    
+
     this.WooCommerceV3 =  WC({
       url: this.url,
       consumerKey: this.consumerKey,

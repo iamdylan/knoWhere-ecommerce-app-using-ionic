@@ -3,8 +3,6 @@ ion-card{
 }
 
 ion-card-title {
-    // text-decoration: underline;
-    margin-right: 1em;
     font-size: 1.2em;
     border-bottom: 1px solid black;
 }
@@ -31,5 +29,9 @@ ion-chip {
 
 ion-chip ion-label {
     font-weight: 400;
+}
+
+.review{
+    color: #000;
 }
 

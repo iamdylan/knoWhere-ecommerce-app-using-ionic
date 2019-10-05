@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
-import { MbscFormOptions } from '@mobiscroll/angular-lite/src/js/forms.angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Http } from '@angular/http';
-import { ToastController, AlertController, Events } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AlertController, Events, ToastController, LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { Router,  } from '@angular/router';
-import { RoutingStateService } from '../services/routing-state.service';
+import { MbscFormOptions } from '@mobiscroll/angular-lite/src/js/forms.angular';
 import { GetUserInfo } from '../menu/getUserInfo.service';
+import { RoutingStateService } from '../services/routing-state.service';
+import { WooCommerceService } from '../services/woo-commerce.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -14,12 +16,15 @@ import { GetUserInfo } from '../menu/getUserInfo.service';
   styleUrls: ['./login.page.scss'],
 })
 
-export class LoginPage {
+export class LoginPage implements OnInit {
 
   previousRoute: string;
 
-  constructor(private fb: FormBuilder, public http: Http, private router: Router, public toastCtrl: ToastController, public storage: Storage, public alertCtrl: AlertController, public events: Events, private routingState: RoutingStateService, public getUserInfo: GetUserInfo) {
-    
+  constructor(private fb: FormBuilder, public http: HttpClient, private router: Router,
+  public toastCtrl: ToastController, public storage: Storage, public alertCtrl: AlertController,
+  public events: Events, private routingState: RoutingStateService, public getUserInfo: GetUserInfo,
+  public WooCom: WooCommerceService, public loadingCtrl: LoadingController) {
+
   }
 
   loginForm: FormGroup;
@@ -27,7 +32,7 @@ export class LoginPage {
   attemptedSubmit = false;
 
   formSettings: MbscFormOptions = {
-    theme: 'ios',
+    theme: 'ios'
   };
 
   errorMessages = {
@@ -35,33 +40,53 @@ export class LoginPage {
     minlength: 'At least 6 characters required'
   };
 
-  logIn(){
-    this.http.get("http://localhost/dashboard/wordpress/api/auth/generate_auth_cookie/?insecure=cool&username=" + this.loginForm.value.username + "&password=" + this.loginForm.value.password)
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsDirty({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      }
+    });
+  }
+
+  async logIn() {
+    const loading = await this.loadingCtrl.create();
+
+    this.validateAllFormFields(this.loginForm);
+    if (this.loginForm.valid) {
+      await loading.present();
+
+    // tslint:disable-next-line: max-line-length
+    this.http.get(`${this.WooCom.url}/api/auth/generate_auth_cookie/?username=${this.loginForm.value.username}&password=${this.loginForm.value.password}`)
+    .pipe(finalize(() => loading.dismiss()))
     .subscribe( (res) => {
+      console.log(res);
+      const response = res;
 
-      let response = res.json();
-
-      if(response.error){
+      if (response['error']) {
         this.markFieldsDirty();
         this.toast(response);
         return;
       }
 
-      this.storage.set("userLoginInfo", response).then( (data) =>{
-        this.getUserInfo.user = response.user;
-        console.log(this.getUserInfo.user)
+      this.storage.set('userLoginInfo', response).then( (data) => {
+        this.getUserInfo.user = response['user'];
+        console.log(this.getUserInfo.user);
         this.getUserInfo.loggedIn.next(true);
         this.presentAlert();
-      })
+      });
     });
+    }
   }
 
-  async toast(response){
-    let tc= await this.toastCtrl.create({
+  async toast(response) {
+    const tc = await this.toastCtrl.create({
           message: response.error,
           duration: 5000,
-          showCloseButton: true,
-          color: "dark"
+          color: 'dark',
+          cssClass: 'login-toast'
         });
 
     tc.present();
@@ -75,13 +100,13 @@ export class LoginPage {
           text: 'OK',
           cssClass: 'secondary',
           handler: () => {
-            console.log('routing')
+            console.log('routing');
 
-            if(this.routingState.cartUrl){
+            if (this.routingState.cartUrl) {
               this.router.navigateByUrl(
                 this.routingState.cartUrl
               );
-            }else{
+            } else {
               this.router.navigateByUrl(
                 this.previousRoute
               );
@@ -131,18 +156,18 @@ export class LoginPage {
   }
 
   ionViewDidEnter() {
-    if(this.routingState.getPreviousUrl() == '/signup'){
+    if (this.routingState.getPreviousUrl() === '/signup') {
       this.previousRoute = '/home';
-    }else{
+    } else {
       this.previousRoute = this.routingState.getPreviousUrl();
     }
     console.log('Previous route', this.previousRoute);
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(6)]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]]
     });
   }
 

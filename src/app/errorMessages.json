@@ -1,7 +1,7 @@
 {
     "username": {
         "required": "Username required",
-        "minlength": "Has to be at least 2 characters",
+        "minlength": "Has to be at least 6 characters",
         "match": "Username taken"
     },
     "first_name": {
