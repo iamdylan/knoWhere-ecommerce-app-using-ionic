@@ -12,7 +12,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content no-padding>
+<ion-content no-padding class="home">
   <!-- <ion-card>
     <ion-slides [options]="config" pager="true">
       <ion-slide *ngFor="let number of [1,2,3,4]">
@@ -38,10 +38,32 @@
     </ion-slide>
   </ion-slides>
 
+  <ion-header class="more-prod-header">
+    Most Popular
+  </ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let product of moreProducts" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
+        <ion-card>
+          <ion-thumbnail>
+            <ion-img [src]="product?.images[0].src"></ion-img>
+          </ion-thumbnail>
+            <ion-card-header>
+              <ion-card-title class="custom-label-style">{{ product?.name }}</ion-card-title>
+            </ion-card-header>
+            
+            <ion-card-content>
+              <p class="custom-desc">{{product?.short_description.substr(3, 50) + '...'}}</p>
+              <p class="custom-price-style" [innerHTML]="product?.price_html"></p>
+            </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-  <ion-list>
+  <!-- <ion-list>
       <ion-header class="more-prod-header">
-          Popular Products
+          Most Popular
       </ion-header>
       <ion-item *ngFor="let product of moreProducts" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
         <ion-thumbnail slot="start">
@@ -55,10 +77,13 @@
         </ion-text>
         
       </ion-item>
-  </ion-list>
+  </ion-list> -->
 
   <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
+  <ion-card *ngIf="endMsg" class="endMsg">
+    That's all for now. Please try again later!
+  </ion-card>
   
 </ion-content>

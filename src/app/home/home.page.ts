@@ -19,10 +19,12 @@ export class HomePage implements OnInit {
   slideOpts: {};
   slideOpts2: {};
   config: any;
+  endMsg: boolean;
 
   constructor(public toastCtrl: ToastController, private ngZone: NgZone, public WooCom: WooCommerceService, public http: HttpClient) {
     this.moreProducts = [];
     this.popProducts = [];
+    this.endMsg = false;
 
     this.config =  {
       effect: 'fade',
@@ -93,7 +95,8 @@ export class HomePage implements OnInit {
 
       if (data.length === 0) {
         event.target.disabled = true;
-        this.toast();
+        // this.toast();
+        this.endMsg = true;
       }
     });
 
@@ -114,16 +117,16 @@ export class HomePage implements OnInit {
     // });
   }
 
-  async toast() {
-    const tc = await this.toastCtrl.create({
-          message: 'That\'s all for now. Please try again later.',
-          duration: 5000,
-          color: 'dark',
-          cssClass: 'home-toast'
-        });
+  // async toast() {
+  //   const tc = await this.toastCtrl.create({
+  //         message: 'That\'s all for now. Please try again later.',
+  //         duration: 5000,
+  //         color: 'dark',
+  //         cssClass: 'home-toast'
+  //       });
 
-    tc.present();
-  }
+  //   tc.present();
+  // }
 
   ngOnInit() {
     // this.WC.WooCommerceV3.getAsync('products').then( (data) => {

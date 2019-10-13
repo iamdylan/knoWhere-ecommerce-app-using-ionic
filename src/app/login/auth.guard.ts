@@ -21,8 +21,8 @@ export class NeedAuthGuard implements CanActivate {
               console.log(userLoginInfo);
                 resolve (true);
             } else {
-              this.router.navigateByUrl('/login');
-              resolve (false);
+                this.router.navigateByUrl('/login');
+                resolve (false);
             }
         });
       });

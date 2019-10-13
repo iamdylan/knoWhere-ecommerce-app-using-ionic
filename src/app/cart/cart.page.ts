@@ -42,7 +42,7 @@ export class CartPage implements OnInit {
   }
 
   checkOut() {
-    this.cartItems.length === 0 ? this.toast() : this.router.navigateByUrl('/checkout');
+    this.router.navigateByUrl('/checkout');
   }
 
   async toast() {

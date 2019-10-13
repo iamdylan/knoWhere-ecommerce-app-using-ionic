@@ -11,8 +11,28 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
+<ion-content class="prodsByCat">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let product of products" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
+        <ion-card>
+          <ion-thumbnail>
+            <ion-img [src]="product?.images[0].src"></ion-img>
+          </ion-thumbnail>
+            <ion-card-header>
+              <ion-card-title class="custom-label-style">{{ product?.name }}</ion-card-title>
+            </ion-card-header>
+            
+            <ion-card-content>
+              <p class="custom-desc">{{product?.short_description.substr(3, 50) + '...'}}</p>
+              <p class="custom-price-style" [innerHTML]="product?.price_html"></p>
+            </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- <ion-list>
     <ion-item *ngFor="let product of products" [routerDirection]="'forward'" [routerLink]="['/product-details/' + product.id]">
       <ion-thumbnail slot="start">
         <ion-img [src]="product?.images[0].src"></ion-img>
@@ -23,18 +43,13 @@
         <p class="custom-desc">{{product?.short_description.substr(3, 50) + '...'}}</p>
         <p class="custom-price-style" [innerHTML]="product?.price_html"></p>
       </ion-text>
-      <!-- <p>
-        <span class="custom-desc">{{product?.short_description.substr(3, 50) + '...'}}</span><br>
-        <span ></span>
-      </p> -->
-
-      <!-- <ion-button icon clear slot="end">
-        <ion-icon name="arrow-forward"></ion-icon>
-      </ion-button> -->
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 
   <ion-infinite-scroll threshold="10%" (ionInfinite)="loadMoreProducts($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
+  <ion-card *ngIf="endMsg" class="endMsg">
+    That's all for now. Please try again later!
+  </ion-card>
 </ion-content>

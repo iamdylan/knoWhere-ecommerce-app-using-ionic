@@ -77,13 +77,73 @@
 }
 
 ion-menu-button {
-  --color: #00c6cf;
+  --color: #00e4ff;
 }
 
 ion-fab-button{
-  --background: #00a4ab;
+  --background: #363c42;
+  --color: #00e4ff;
+  --background-activated: #00c3da;
+  margin: 1px;
+}
+
+
+ion-toolbar{
+  --background: #363c42;
+  // --background: #2F3C7E;
   --color: white;
-  --background-activated: #00eff9;
+  box-shadow: 0px 1px 6px 0px #000000;
+}
+
+ion-title {
+  letter-spacing: .02em;
+  font-weight: 600;
+  font-size: 1.2em;
+}
+
+html.ios{
+  --ion-font-family: inter, sans-serif !important;
+  --ion-default-font: inter, sans-serif !important;
+}
+
+html.md{
+  --ion-font-family: inter, sans-serif !important;
+  --ion-default-font: inter, sans-serif !important;
+}
+
+body{
+  font-family: inter, sans-serif !important;
+  font-weight: 400 !important;
+}
+
+ion-back-button {
+  margin-left: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  --color: #00c6cf !important;
+  --icon-font-size: 25px !important;
+}
+
+.checkout-alert {
+  .alert-title {
+    color: #4CAF50;
+    font-size: 1.3em;
+  }
+  .alert-message {
+    margin-top: 5%;
+      font-size: 1em;
+  }
+  .alert-button {
+      font-size: 1.3em;
+  }
+}
+  
+.home-toast, .addToCart-toast, .login-toast, .cart-toast {
+  text-align: center;
+}
+
+ion-item .item-detail-icon {
+  display: none;
 }
 
 @font-face {
@@ -126,58 +186,4 @@ ion-fab-button{
   font-style: black;
   font-weight: 900;
   src: url('../assets/fonts/inter/Inter-Black.ttf');
-}
-
-ion-toolbar{
-  --background: #1e3e5f;
-  // --background: #2F3C7E;
-  --color: white;
-  box-shadow: 0px 1px 6px 0px #000000;
-}
-
-ion-title {
-  letter-spacing: .02em;
-  font-weight: 600;
-  font-size: 1.2em;
-}
-
-html.ios{
-  --ion-font-family: inter, sans-serif !important;
-  --ion-default-font: inter, sans-serif !important;
-}
-
-html.md{
-  --ion-font-family: inter, sans-serif !important;
-  --ion-default-font: inter, sans-serif !important;
-}
-
-body{
-  font-family: inter, sans-serif !important;
-  font-weight: 400 !important;
-}
-
-ion-back-button {
-  margin-left: 15px;
-  padding-left: 10px;
-  padding-right: 10px;
-  --color: #00c6cf !important;
-  --icon-font-size: 25px !important;
-}
-
-.checkout-alert {
-    .alert-title {
-      color: #4CAF50;
-      font-size: 1.3em;
-    }
-    .alert-message {
-      margin-top: 5%;
-      font-size: 1em;
-    }
-    .alert-button {
-      font-size: 1.3em;
-    }
-}
-
-.home-toast, .addToCart-toast, .login-toast, .cart-toast {
-  text-align: center;
 }
