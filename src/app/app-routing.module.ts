@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NeedAuthGuard } from './login/auth.guard';
+import { CheckoutGuard } from './checkout/checkout.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -10,7 +11,7 @@ const routes: Routes = [
   { path: 'cart', loadChildren: './cart/cart.module#CartPageModule', canActivate: [NeedAuthGuard] },
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'checkout', loadChildren: './checkout/checkout.module#CheckoutPageModule' }
+  { path: 'checkout', loadChildren: './checkout/checkout.module#CheckoutPageModule', canActivate: [CheckoutGuard]  }
 
 ];
 

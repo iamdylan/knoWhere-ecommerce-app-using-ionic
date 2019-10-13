@@ -18,12 +18,14 @@ export class ProductsByCategoryPage implements OnInit {
   cat: number;
   page: number;
   catName: any;
+  endMsg: boolean;
 
   constructor(public toastCtrl: ToastController, private route: ActivatedRoute,
   private ngZone: NgZone, public WooCom: WooCommerceService, public http: HttpClient) {
     this.page = 1;
     this.products = [];
     this.catName = [{name: ''}];
+    this.endMsg = false;
 
     this.route.params.subscribe((params: Params) => {
       this.ngZone.run(() => {this.cat = params['category']; });
@@ -66,7 +68,8 @@ export class ProductsByCategoryPage implements OnInit {
 
       if (temp.length === 0 ) {
         event.target.disabled = true;
-        this.toast();
+        // this.toast();
+        this.endMsg = true;
       }
     });
 
@@ -81,16 +84,16 @@ export class ProductsByCategoryPage implements OnInit {
     // });
   }
 
-  async toast() {
-    const tc = await this.toastCtrl.create({
-          message: 'That\'s all for now. Please try again later.',
-          duration: 5000,
-          color: 'dark',
-          cssClass: 'home-toast'
-        });
+  // async toast() {
+  //   const tc = await this.toastCtrl.create({
+  //         message: 'That\'s all for now. Please try again later.',
+  //         duration: 5000,
+  //         color: 'dark',
+  //         cssClass: 'home-toast'
+  //       });
 
-    tc.present();
-  }
+  //   tc.present();
+  // }
 
   ngOnInit() {
     this.getProdCats();

@@ -1,112 +1,43 @@
-ion-card {
-  margin: 0 !important;
-  width: 100% !important;
-}
-
-ion-thumbnail {
-  width: 30%;
-  height: 30% ;
-  // margin-right: 0;
-  
-}
-
-ion-thumbnail ion-img {
-  box-shadow: 1px 1px 10px 1px rgba(0,0,0,.21);
-  border-radius: 5px;
-}
-
-.custom-label-style{
-  font-weight: bold;
-  text-decoration: underline;
-  margin-top: 6%;
-  margin-left: 0;
-  color: #1e3e5f;
-  letter-spacing: 0.2px;
-}
-
-.custom-price-style{
-  font-weight: 600;
-  margin-top: 4%;
-  color: #e10000;
-  letter-spacing: 0.8px;
-}
-
 .new-deals-price-style{
   font-weight: 600;
-  margin-top: 4%;
-  color: #e10000;
-  letter-spacing: 0.8px;
+  color: #ff3d00;
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+  margin-top: 5%;
 }
 
-.custom-desc{
-  font-size: 0.95em;
-  margin-top: 4%;
-  font-weight: 400;
-  letter-spacing: 0.2px;
-}
-
-ion-item{
-  --padding-start: 10px !important;
-  // --background: #eeeded !important;
-  --box-shadow: 0px 0px 1px black;
-}
-
-// ion-content{
-//   --background: #eeeded;
-// }
-
-ion-label{
-  margin: 0 auto;
-  color: #000000;
-  font-weight: 500;
-}
-
-
-
-// ion-list{
-//   box-shadow: 0 0 5px black;
-// }
 
 .new-deals{
-  height: 180px;
-  background-color: #f3f3f3;
+  background-color: #ededed;
+  // height: 24%;
   // box-shadow: 0 0 3px black;
 }
 
 ion-slides ion-thumbnail {
-  width: 100%;
+  width: 75%;
   height: 50% ;
-  margin-right: 0;
-  margin-bottom: 5px;
+  margin: 5px auto;
 }
 
-.new-deals-header{
+.new-deals-header, .more-prod-header{
   text-align: center;
-  background-color: #00a4ab;
-  // background-color: #2F3C7E;
+  background-color: #00c3da;
   color: white;
-  font-size: 1.1em;
+  font-size: 1em;
   min-height: 20px;
   line-height: 1.5;
-  box-shadow: 0 2px 4px #0000007a;
-  font-weight: 700;
-  letter-spacing: .06em;
+  font-weight: 600;
+  letter-spacing: .05em;
+  padding: 2px;
+  // box-shadow: 0 2px 4px #0000007a;
+  // background-color: #2F3C7E;
 }
 
-.more-prod-header{
-  text-align: center;
-  background-color: #00a4ab;
-  // background-color: #2F3C7E;
-  color: white;
-  font-size: 1.1em;
-  min-height: 20px;
-  line-height: 1.5;
-  box-shadow: 0 2px 4px #0000007a;
-  font-weight: 700;
-  letter-spacing: .06em;
-}
 .new-deal-slides{
   display: block;
-  margin-top: 20px;
   font-size: 1em;
+  padding-top: 5px;
+  padding-bottom: 7px;
+  font-weight: 500;
+  letter-spacing: 0.04em
 }
