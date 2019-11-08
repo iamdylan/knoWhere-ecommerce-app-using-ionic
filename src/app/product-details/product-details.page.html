@@ -22,7 +22,7 @@
       </ion-slide>
     </ion-slides>
 
-    <ion-card-content>
+    <ion-card-content *ngIf="productInfo.categories">
       <ion-card-title>
         {{ productInfo.name }}
         <ion-chip *ngFor="let cat of productInfo.categories" style="margin-left: 5px;">
