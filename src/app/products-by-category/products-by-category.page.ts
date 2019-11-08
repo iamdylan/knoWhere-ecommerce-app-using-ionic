@@ -4,7 +4,6 @@ import { WooCommerceService } from '../services/woo-commerce.service';
 import { HttpClient } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 
-
 @Component({
   selector: 'app-products-by-category',
   templateUrl: './products-by-category.page.html',
@@ -73,15 +72,6 @@ export class ProductsByCategoryPage implements OnInit {
       }
     });
 
-    // this.WC.WooCommerceV3.getAsync('products?category=' + this.cat + '&page=' + this.page).then((data) => {
-    //   const temp = (JSON.parse(data.body));
-    //   this.products = this.products.concat(JSON.parse(data.body));
-    //   event.target.complete();
-
-    //   if (temp.length < 10) {
-    //     event.target.enable = false;
-    //   }
-    // });
   }
 
   // async toast() {
@@ -98,19 +88,5 @@ export class ProductsByCategoryPage implements OnInit {
   ngOnInit() {
     this.getProdCats();
     this.getProdbyCat();
-
-    // this.WC.WooCommerceV3.getAsync('products/categories').then((data) => {
-    //   this.ngZone.run(() => { this.catName = JSON.parse(data.body).filter((categ) => {
-    //     return categ.id === this.cat;
-    //   }); }); console.log(this.catName);
-    //   }, (err) => {
-    //       console.log(err);
-    // });
-
-    // this.WC.WooCommerceV3.getAsync('products?category=' + this.cat).then((data) => {
-    //   this.ngZone.run(() => { this.products =  JSON.parse(data.body); });
-    //   }, (err) => {
-    //       console.log(err);
-    // });
   }
 }

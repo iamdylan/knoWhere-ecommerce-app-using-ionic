@@ -24,7 +24,7 @@
 }
 
 .home ion-col, .prodsByCat ion-col {
-    --ion-grid-column-padding: 8px;
+    --ion-grid-column-padding: 6px;
     // border: 3px solid #ededed;
 }
 
@@ -44,10 +44,21 @@
     font-size: 1em;
     font-weight: 500;
     letter-spacing: 0.02em;
-    margin-bottom: 30px !important;
+    // margin-bottom: 30px !important;
     border-radius: 0;
-    margin-top: 10px !important;
-    color: #949494;
+    margin-top: 15px !important;
+    color: #777777;
+    opacity: 0;
+    bottom: 0;
+    animation-name: fade-up;
+    animation-duration: 600ms;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+}
+
+@keyframes fade-up {
+    0% {opacity: 0; bottom: 0;}
+    100% {opacity: 1; bottom: 15px;}
 }
 
 .home ion-card-header, .prodsByCat ion-card-header {
@@ -67,8 +78,8 @@
 .home .custom-label-style, .prodsByCat .custom-label-style {
     font-weight: 600;
     margin-left: 0;
-    color: #363c42;
-    letter-spacing: 0.4px;
+    color: #1a1c1d;
+    letter-spacing: 0.2px;
     font-size: 1.3em;
     white-space: nowrap;
     text-align: center;
@@ -78,7 +89,7 @@
 
 .home .custom-price-style, .prodsByCat .custom-price-style {
     font-weight: 600;
-    color: #ff3d00;
+    color: var(--kw-price);
     letter-spacing: 0.8px;
     margin-bottom: 0;
     font-size: 1em;
@@ -87,9 +98,9 @@
 }
 
 .home .custom-desc, .prodsByCat .custom-desc {
-    font-size: 0.90em;
-    font-weight: 500;
-    letter-spacing: 0.5px;
+    font-size: 0.95em;
+    font-weight: 400;
+    letter-spacing: 0.2px;
     // text-align: center;
     // margin-top: 2%;
 }
@@ -101,6 +112,24 @@
     padding-top: 3%;
     padding-bottom: 3%;
     --inner-border-width: 0;
+}
+
+.carousel, .new-deals-header, .more-prod-header,ion-grid, ion-col, ion-thumbnail, ion-slide, mbsc-form-group {
+    opacity: 0;
+    animation-name: fade;
+    animation-duration: 600ms;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+    animation-delay: calc(var(--animation-order) * 160ms);
+}
+
+@keyframes fade {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+.home .swiper-container {
+    height: 25vh;
 }
 //End of Styles for Home and Category pages.
 
@@ -124,7 +153,7 @@
     color: #ffffff !important;
     letter-spacing: 0.04em;
     word-spacing: 1px;
-    background: #1e3e5f;
+    background: var(--kw-secondary);
 }
 
 .mbsc-form-group {
@@ -137,7 +166,7 @@
 }
 
 .mbsc-ios .mbsc-btn {
-    color: #39649c !important;
+    color: var(--kw-primary) !important;
     font-weight: 700;
     font-size: 1.1em;
 }
@@ -158,7 +187,7 @@
 }
 
 .mbsc-material .mbsc-input input:focus {
-    border-bottom: 2px solid #3a99ff !important;
+    border-bottom: 2px solid var(--kw-primary-tint) !important;
 }
 
 .mbsc-material .mbsc-input .mbsc-label {
@@ -169,14 +198,14 @@
 .mbsc-material .mbsc-input input, .mbsc-material .mbsc-input textarea {
     font-weight: 500;
     letter-spacing: 0.02em;
-    border-bottom: 1px solid #008389 !important;
+    border-bottom: 1px solid var(--kw-primary) !important;
     font-size: 1.1em !important;
 }
 
-.mbsc-ios .mbsc-err-msg {
-    color: #e13600;
-    background-color: #ffe991;
-}
+// .mbsc-ios .mbsc-err-msg {
+//     color: #e13600;
+//     background-color: #ffe991;
+// }
 
 [_nghost-c4] {
     margin-bottom: 2.5em !important;
@@ -200,6 +229,22 @@
 mdb-carousel div .carousel-inner {
     background-color: #696969;
 }
+
+// .new-deals-header, ion-slides {
+//     animation-delay: calc(var(--animation-order) * 200ms);
+// }
+
+// .more-prod-header, ion-grid {
+//     animation-delay: 1000ms;
+// }
 //End of Styles for MDB Carousel.
+
+// .swiper-slide img { 
+//     // border: 1px solid #b1b1b1;
+//     border-radius: 15px;
+//     box-shadow: 0 0 2px 2px #d2d2d2;
+//     margin-bottom: 5px;
+// }
+
 
 @import "~@mobiscroll/angular-lite/dist/css/mobiscroll.css";

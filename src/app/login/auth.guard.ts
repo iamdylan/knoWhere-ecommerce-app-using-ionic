@@ -1,4 +1,4 @@
-import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import {CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
 import {Injectable} from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { RoutingStateService } from '../services/routing-state.service';
@@ -9,7 +9,7 @@ export class NeedAuthGuard implements CanActivate {
   constructor(private router: Router, public storage: Storage, private routingState: RoutingStateService) {
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean|Promise<boolean> {
+  canActivate(route: ActivatedRouteSnapshot): boolean|Promise<boolean> {
     this.routingState.cartUrl = route['_routerState']['url'];
     console.log(this.routingState.cartUrl);
 

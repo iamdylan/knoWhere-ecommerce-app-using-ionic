@@ -12,7 +12,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content no-padding class="home">
+<ion-content class="home ion-no-padding">
   <!-- <ion-card>
     <ion-slides [options]="config" pager="true">
       <ion-slide *ngFor="let number of [1,2,3,4]">
@@ -21,32 +21,32 @@
     </ion-slides>
   </ion-card> -->
 
-  <mdb-carousel #carousel class="carousel slide carousel-fade" [animation]="'fade'" >
+  <mdb-carousel style="--animation-order: 1;" #carousel class="carousel slide carousel-fade" [animation]="'fade'" >
     <mdb-carousel-item *ngFor="let number of [1,2,3,4]">
-      <img class="d-block w-100" src="./assets/images/{{number}}.jpg">
+      <ion-img class="d-block w-100" src="./assets/images/{{number}}.jpg"></ion-img>
     </mdb-carousel-item>
   </mdb-carousel>
 
-  <ion-header class="new-deals-header">New Deals</ion-header>
-  <ion-slides *ngIf="popProducts && popProducts.length" [options]="slideOpts2" class="new-deals">
+  <ion-header style="--animation-order: 2;" class="new-deals-header">New Deals</ion-header>
+  <ion-slides style="--animation-order: 3;" [options]="slideOpts2" class="new-deals">
     <ion-slide class="new-deal-slides" *ngFor="let product of popProducts " [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
-      <ion-thumbnail no-padding> 
-        <img [src]="product?.images[0].src" />
+      <ion-thumbnail class="ion-no-padding"> 
+        <img [src]="product?.images[0].src"/>
       </ion-thumbnail>
-      <ion-label>{{ product?.name }} </ion-label>
-      <p class="new-deals-price-style" [innerHTML]="product?.price_html"></p>
+      <ion-label class="new-deals-label" >{{ product?.name }} </ion-label>
+      <p class="new-deals-price" [innerHTML]="product?.price_html"></p>
     </ion-slide>
   </ion-slides>
 
-  <ion-header class="more-prod-header">
+  <ion-header style="--animation-order: 4;" class="more-prod-header">
     Most Popular
   </ion-header>
-  <ion-grid>
+  <ion-grid style="--animation-order: 4.1;">
     <ion-row>
       <ion-col size="6" *ngFor="let product of moreProducts" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
         <ion-card>
           <ion-thumbnail>
-            <ion-img [src]="product?.images[0].src"></ion-img>
+            <img [src]="product?.images[0].src"/>
           </ion-thumbnail>
             <ion-card-header>
               <ion-card-title class="custom-label-style">{{ product?.name }}</ion-card-title>

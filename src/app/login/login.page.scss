@@ -1,12 +1,22 @@
 .md-login-form .md-logo {
     text-align: center;
     margin-top: 140px;
-    margin-bottom: 50px;
+    // margin-bottom: 50px;
 }
 
 ion-img {
     display: inline-block;
-    width: 80%;
+    width: 50%;
+    opacity: 0;
+    animation-name: fade-in;
+    animation-duration: 1500ms;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+}
+
+@keyframes fade-in {
+    0% {opacity: 0; width: 50%;}
+    100% {opacity: 1; width: 80%;}
 }
 
 mbsc-form-group{

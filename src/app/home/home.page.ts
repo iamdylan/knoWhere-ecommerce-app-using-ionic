@@ -18,7 +18,7 @@ export class HomePage implements OnInit {
   page: number;
   slideOpts: {};
   slideOpts2: {};
-  config: any;
+  // config: any;
   endMsg: boolean;
 
   constructor(public toastCtrl: ToastController, private ngZone: NgZone, public WooCom: WooCommerceService, public http: HttpClient) {
@@ -26,26 +26,26 @@ export class HomePage implements OnInit {
     this.popProducts = [];
     this.endMsg = false;
 
-    this.config =  {
-      effect: 'fade',
-      fadeEffect: {
-        crossFade: true
-      },
-      autoplay: {
-        delay: 3000,
-        disableOnInteraction: false
-      },
-      loop: true,
-      speed: 1500,
-      pagination: {
-        el: '.swiper-pagination',
-        },
-        paginationClickable: true,
-        navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-        }
-    };
+    // this.config =  {
+    //   effect: 'fade',
+    //   fadeEffect: {
+    //     crossFade: true
+    //   },
+    //   autoplay: {
+    //     delay: 3000,
+    //     disableOnInteraction: false
+    //   },
+    //   loop: true,
+    //   speed: 1500,
+    //   pagination: {
+    //     el: '.swiper-pagination',
+    //     },
+    //     paginationClickable: true,
+    //     navigation: {
+    //     nextEl: '.swiper-button-next',
+    //     prevEl: '.swiper-button-prev',
+    //     }
+    // };
 
     this.slideOpts2 = {
       effect: 'flip',
@@ -100,21 +100,6 @@ export class HomePage implements OnInit {
       }
     });
 
-    // this.WC.WooCommerceV3.get("products?page=" + this.page).then( (data) => {
-    //   this.ngZone.run(() => {this.moreProducts = this.moreProducts.concat(JSON.parse(data.body)); });
-
-    //   if (event != null) {
-    //     event.target.complete();
-    //   }
-
-    //   if (JSON.parse(data.body).length === 0) {
-    //     event.target.enable = false;
-
-    //     this.toast();
-    //   }
-    // }).catch((error) => {
-    //   console.log(error.response.data);
-    // });
   }
 
   // async toast() {
@@ -129,12 +114,6 @@ export class HomePage implements OnInit {
   // }
 
   ngOnInit() {
-    // this.WC.WooCommerceV3.getAsync('products').then( (data) => {
-    //   this.ngZone.run(() => {this.popProducts = (JSON.parse(data.body)); });
-    //   console.log(this.popProducts);
-    // }, (err) => {
-    //   console.log(err);
-    // });
     this.getProducts();
     this.loadMoreProducts(null);
     this.carousel.play();

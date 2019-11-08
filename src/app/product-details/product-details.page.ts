@@ -19,15 +19,10 @@ export class ProductDetailsPage implements OnInit {
   reviews: any;
   slideOpts = {
     effect: 'flip',
-    autoplay: {
-      delay: 3000,
-      disableOnInteraction: false,
-    },
     loop: true,
-    speed: 1500,
     pagination: {
       el: '.swiper-pagination',
-      clickable: true    }
+    }
   };
 
   constructor(private route: ActivatedRoute, private ngZone: NgZone, public storage: Storage,
