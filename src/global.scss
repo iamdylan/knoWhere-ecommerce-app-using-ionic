@@ -37,6 +37,10 @@
     border-radius: 15px;
 }
 
+.home .outr-endMsg, .prodsByCat .outr-endMsg{
+    margin-bottom: 10px;
+}
+
 .home .endMsg, .prodsByCat .endMsg {
     box-shadow: none;
     text-align: center;
@@ -44,21 +48,20 @@
     font-size: 1em;
     font-weight: 500;
     letter-spacing: 0.02em;
-    // margin-bottom: 30px !important;
     border-radius: 0;
-    margin-top: 15px !important;
     color: #777777;
     opacity: 0;
-    bottom: 0;
+    // bottom: 0;
     animation-name: fade-up;
     animation-duration: 600ms;
     animation-fill-mode: forwards;
     animation-timing-function: ease;
+    transform: translateY(10px);
 }
 
 @keyframes fade-up {
-    0% {opacity: 0; bottom: 0;}
-    100% {opacity: 1; bottom: 15px;}
+    0% {opacity: 0; transform: translateY(10px);}
+    100% {opacity: 1; transform: translateY(0);}
 }
 
 .home ion-card-header, .prodsByCat ion-card-header {
@@ -98,7 +101,7 @@
 }
 
 .home .custom-desc, .prodsByCat .custom-desc {
-    font-size: 0.95em;
+    font-size: 0.85em;
     font-weight: 400;
     letter-spacing: 0.2px;
     // text-align: center;
@@ -129,7 +132,7 @@
 }
 
 .home .swiper-container {
-    height: 25vh;
+    // height: 25vh;
 }
 //End of Styles for Home and Category pages.
 

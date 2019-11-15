@@ -10,10 +10,10 @@
 
 <ion-content>
   <mbsc-form class="md-login-form" [options]="formSettings">
+    <div class="md-logo">
+      <ion-img src="./assets/images/Logo_2.png"></ion-img>
+    </div>
     <form [formGroup]="loginForm" novalidate>
-      <div class="md-logo">
-        <ion-img src="./assets/images/Logo_2.png"></ion-img>
-      </div>
       <mbsc-form-group inset>
         <mbsc-input formControlName="username" name="username" placeholder="Username"
           [error]="loginForm.controls['username'].invalid && loginForm.controls['username'].dirty"
@@ -27,9 +27,7 @@
       <div class="sign-up">
         <a [routerDirection]="'root'" [routerLink]="['/signup']">Don't have an account yet? Sign up.</a>
       </div>
-        
-      
-      
+  
       <mbsc-form-group inset class="mbsc-padding">
         <mbsc-button block [disabled]="loginForm.invalid && attemptedSubmit" (click)="logIn()">Sign in
         </mbsc-button>
