@@ -49,7 +49,9 @@
   <ion-infinite-scroll threshold="10%" (ionInfinite)="loadMoreProducts($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
-  <ion-card *ngIf="endMsg" class="endMsg">
-    That's all for now. Please try again later!
-  </ion-card>
+  <div class="outr-endMsg">
+    <ion-card *ngIf="endMsg" class="endMsg">
+      That's all for now. Please try again later!
+    </ion-card>
+  </div>
 </ion-content>
