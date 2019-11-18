@@ -28,38 +28,85 @@
   </mdb-carousel>
 
   <ion-header style="--animation-order: 2;" class="new-deals-header">New Deals</ion-header>
-  <ion-slides style="--animation-order: 3;" [options]="slideOpts2" class="new-deals">
-    <ion-slide class="new-deal-slides" *ngFor="let product of popProducts " [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
-      <ion-thumbnail class="ion-no-padding"> 
-        <img [src]="product?.images[0].src"/>
-      </ion-thumbnail>
-      <ion-label class="new-deals-label" >{{ product?.name }} </ion-label>
-      <p class="new-deals-price" [innerHTML]="product?.price_html"></p>
-    </ion-slide>
-  </ion-slides>
+  <div *ngIf="popProducts.length > 0">
+    <ion-slides style="--animation-order: 3;" [options]="slideOpts2" class="new-deals">
+      <ion-slide class="new-deal-slides" *ngFor="let product of popProducts " [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
+        <ion-thumbnail class="ion-no-padding"> 
+          <img [src]="product?.images[0].src"/>
+        </ion-thumbnail>
+        <ion-label class="new-deals-label" >{{ product?.name }} </ion-label>
+        <p class="new-deals-price" [innerHTML]="product?.price_html"></p>
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+  <!-- Slider Skeleton -->
+  <div *ngIf="!(popProducts.length > 0)">
+    <ion-slides style="--animation-order: 3;" [options]="slideOpts2" class="new-deals">
+      <ion-slide class="new-deal-slides" *ngFor="let product of [1,2,3,4,5,6] ">
+        <ion-thumbnail> 
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <ion-skeleton-text animated style="width: 60%; margin: 0 auto;"></ion-skeleton-text>
+        </ion-label>
+        <ion-label >
+          <ion-skeleton-text animated style="width: 40%; margin: 5px auto;"></ion-skeleton-text>
+        </ion-label>
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <!-- Slider Skeleton -->
 
   <ion-header style="--animation-order: 4;" class="more-prod-header">
     Most Popular
   </ion-header>
-  <ion-grid style="--animation-order: 4.1;">
-    <ion-row>
-      <ion-col size="6" *ngFor="let product of moreProducts" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
-        <ion-card>
-          <ion-thumbnail>
-            <img [src]="product?.images[0].src"/>
-          </ion-thumbnail>
-            <ion-card-header>
-              <ion-card-title class="custom-label-style">{{ product?.name }}</ion-card-title>
-            </ion-card-header>
-            
-            <ion-card-content>
-              <p class="custom-desc">{{product?.short_description.substr(3, 50) + '...'}}</p>
-              <p class="custom-price-style" [innerHTML]="product?.price_html"></p>
-            </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <div *ngIf="moreProducts.length > 0">
+    <ion-grid style="--animation-order: 4.1;">
+      <ion-row>
+        <ion-col size="6" *ngFor="let product of moreProducts" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
+          <ion-card>
+            <ion-thumbnail>
+              <img [src]="product?.images[0].src"/>
+            </ion-thumbnail>
+              <ion-card-header>
+                <ion-card-title class="custom-label-style">{{ product?.name }}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <p class="custom-desc">{{product?.short_description.substr(3, 50) + '...'}}</p>
+                <p class="custom-price-style" [innerHTML]="product?.price_html"></p>
+              </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- Products Skeleton -->
+  <div *ngIf="!(moreProducts.length > 0)">
+    <ion-grid style="--animation-order: 4.1;">
+      <ion-row>
+        <ion-col size="6" *ngFor="let product of [1,2,3,4]">
+          <ion-card>
+            <ion-thumbnail>
+                <ion-skeleton-text animated style="height: 180px"></ion-skeleton-text>
+            </ion-thumbnail>
+              <ion-card-header>
+                <ion-card-title class="custom-label-style">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-skeleton-text animated></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 40%; margin: 5px auto;"></ion-skeleton-text>
+              </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+    <!-- Products Skeleton -->
+  
 
   <!-- <ion-list>
       <ion-header class="more-prod-header">
@@ -69,13 +116,11 @@
         <ion-thumbnail slot="start">
           <ion-img [src]="product.images[0].src"></ion-img>
         </ion-thumbnail>
-
         <ion-text>
           <ion-label class="custom-label-style">{{ product?.name }}</ion-label>
           <p class="custom-desc">{{product?.short_description.substr(3, 50) + '...'}}</p>
           <p class="custom-price-style" [innerHTML]="product?.price_html"></p>
         </ion-text>
-        
       </ion-item>
   </ion-list> -->
 
