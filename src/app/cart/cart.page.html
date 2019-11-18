@@ -6,7 +6,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngIf="cartItems.length == 0">
+  <ion-card *ngIf="cartItems?.length == 0">
     <ion-grid>
       <ion-row>
         <ion-col class="cartMsg">Cart Empty!</ion-col>
@@ -14,7 +14,7 @@
     </ion-grid>
   </ion-card>
 
-  <ion-grid *ngIf="cartItems.length > 0">
+  <ion-grid *ngIf="cartItems?.length > 0">
     <ion-row class="cartHeads">
       <ion-col align-self-center size="6">
         <ion-label>Product</ion-label>
@@ -49,7 +49,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-card class="total" *ngIf="cartItems.length > 0">
+  <ion-card class="total" *ngIf="cartItems?.length > 0">
     <ion-grid>
       <ion-row>
         <ion-col size="6">
