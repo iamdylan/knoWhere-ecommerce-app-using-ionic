@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-      <ion-back-button slot="start" text="" defaultHref="home"></ion-back-button>
+      <ion-back-button slot="start" text="" defaultHref="home"  class="ion-no-margin"></ion-back-button>
     <ion-title>My Cart</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -16,30 +16,30 @@
 
   <ion-grid *ngIf="cartItems?.length > 0">
     <ion-row class="cartHeads">
-      <ion-col align-self-center size="6">
+      <ion-col class="ion-align-self-center" size="6">
         <ion-label>Product</ion-label>
       </ion-col>
-      <ion-col align-self-center size="3">
+      <ion-col class="ion-align-self-center" size="3">
         <ion-label>Quantity</ion-label>
       </ion-col>
-      <ion-col align-self-center size="3">
+      <ion-col class="ion-align-self-center" size="3">
         <ion-label>Price</ion-label>
       </ion-col>
     </ion-row>
 
     <ion-row class="cartItem" *ngFor="let item of cartItems; let i = index">
-      <ion-col size="2" align-self-center>
+      <ion-col size="2" class="ion-align-self-center">
         <ion-avatar>
           <img [src]="item.product.images[0].src"/>
         </ion-avatar>
       </ion-col>
-      <ion-col size="4" align-self-center>
+      <ion-col size="4" class="ion-align-self-center">
         <ion-label>{{ item.product.name }}</ion-label>
       </ion-col>
-      <ion-col size="3" align-self-center>
+      <ion-col size="3" class="ion-align-self-center">
         <ion-label>{{ item.qty }}</ion-label>
       </ion-col>
-      <ion-col size="3" align-self-center>
+      <ion-col size="3" class="ion-align-self-center">
         <ion-label>${{ item.product.price }}</ion-label>
         
       </ion-col>

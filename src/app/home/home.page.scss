@@ -3,6 +3,7 @@
   color: var(--kw-price);
   letter-spacing: 0.5px;
   margin-bottom: 5px;
+  font-size: 0.9em;
   // margin-top: 3%;
 }
 
@@ -25,7 +26,8 @@
 ion-slides ion-thumbnail {
   width: 24vw;
   height: 13vh ;
-  margin: 5px auto;
+  margin: 0 auto;
+  margin-top: 5px;
 }
 
 .new-deals-header, .more-prod-header {

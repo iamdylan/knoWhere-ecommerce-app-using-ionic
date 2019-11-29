@@ -12,6 +12,7 @@ import { EmailValidator } from '../validators/email.validator';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import jQuery from 'jquery';
 import { finalize } from 'rxjs/operators';
+import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal/ngx';
 
 @Component({
   selector: 'app-checkout',
@@ -36,7 +37,7 @@ export class CheckoutPage implements OnInit {
 
   constructor(public fb: FormBuilder, public emailValidator: EmailValidator, public storage: Storage, private ngZone: NgZone,
     public alertCtrl: AlertController, private routingState: RoutingStateService, private router: Router,
-    public WooCom: WooCommerceService, public http: HttpClient, public loadingCtrl: LoadingController) {
+    public WooCom: WooCommerceService, public http: HttpClient, public loadingCtrl: LoadingController, public payPal: PayPal) {
 
     this.label_style = 'floating';
     this.billing_shipping_same = false;
@@ -106,6 +107,9 @@ export class CheckoutPage implements OnInit {
     const emptyCart: any[] = [];
     const loading = await this.loadingCtrl.create();
     this.validateAllFormFields(this.checkOutForm);
+    const header = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
 
     if (this.checkOutForm.valid) {
       await loading.present();
@@ -126,7 +130,61 @@ export class CheckoutPage implements OnInit {
       };
 
       if (paymentData.method_id === 'paypal') {
+        this.payPal.init({
+          PayPalEnvironmentProduction: 'YOUR_PRODUCTION_CLIENT_ID',
+          PayPalEnvironmentSandbox: 'AYkkS2ObeSpaObaCqA3bybQjRNRMKOw_2vNSha7gmxESpG4l4AhEyMfYwuzrUFKSbWGhCsN-Vhtl5FOG'
+        }).then(() => {
+          // Environments: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
+          this.payPal.prepareToRender('PayPalEnvironmentSandbox', new PayPalConfiguration({
+            // Only needed if you get an "Internal Service Error" after PayPal login!
+            // payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal
+          })).then(() => {
 
+            this.storage.get('cart').then((cart) => {
+
+              let total = 0.00;
+              cart.forEach((element, index) => {
+                orderItems.push({ product_id: element.product.id, quantity: element.qty });
+                total = total + (element.product.price * element.qty);
+              });
+
+              const payment = new PayPalPayment(total.toString(), 'USD', 'Description', 'sale');
+              this.payPal.renderSinglePaymentUI(payment).then((response) => {
+                // Successfully paid
+
+                alert(JSON.stringify(response));
+                details.line_items = orderItems;
+                // console.log(details);
+                const orderData: any = {};
+
+                orderData.order = details;
+
+                // this.WooCommerce.postAsync('orders', orderData).then((data) => {
+                //   alert('Order placed successfully!');
+                //   const res = (JSON.parse(data.body).order);
+                //   this.presentAlert(res);
+                // });
+
+                // tslint:disable-next-line: max-line-length
+                this.http.post(`${this.WooCom.url}/wp-json/wc/v3/orders?consumer_key=${this.WooCom.consumerKey}&consumer_secret=${this.WooCom.consumerSecret}`, jQuery.param(orderData), { headers: header })
+                .pipe(finalize(() => loading.dismiss()))
+                .subscribe(res => {
+                  console.log(res);
+                  this.storage.set('cart', emptyCart);
+                  this.presentAlert(res);
+                });
+
+              });
+
+            }, () => {
+              // Error or render dialog closed without being successful
+            });
+          }, () => {
+            // Error in configuration
+          });
+        }, () => {
+          // Error in initialization, maybe PayPal isn't supported or something else
+        });
       } else {
         this.storage.get('cart').then( (cart) => {
           cart.forEach( (element) => {
@@ -142,10 +200,6 @@ export class CheckoutPage implements OnInit {
           let orderData: any = {};
           orderData = details;
           console.log(orderData);
-
-          const header = new HttpHeaders({
-            'Content-Type': 'application/x-www-form-urlencoded'
-          });
 
           // tslint:disable-next-line: max-line-length
           this.http.post(`${this.WooCom.url}/wp-json/wc/v3/orders?consumer_key=${this.WooCom.consumerKey}&consumer_secret=${this.WooCom.consumerSecret}`, jQuery.param(orderData), { headers: header })
