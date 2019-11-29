@@ -24,6 +24,7 @@ import { RoutingStateService } from './services/routing-state.service';
 import { EmailValidator } from './validators/email.validator';
 import { UserValidator } from './validators/username.validator';
 import { HttpClientModule } from '@angular/common/http';
+import { PayPal } from '@ionic-native/paypal/ngx';
 
 @NgModule({
   declarations: [AppComponent, MenuPage],
@@ -52,7 +53,8 @@ import { HttpClientModule } from '@angular/common/http';
     UserValidator,
     NeedAuthGuard,
     RoutingStateService,
-    GetUserInfo
+    GetUserInfo,
+    PayPal
   ],
   bootstrap: [AppComponent]
 })

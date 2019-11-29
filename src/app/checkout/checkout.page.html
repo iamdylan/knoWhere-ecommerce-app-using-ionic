@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-      <ion-back-button slot="start" text="" defaultHref="home"></ion-back-button>
+      <ion-back-button slot="start" text="" defaultHref="home"  class="ion-no-margin"></ion-back-button>
     <ion-title>
       Checkout
     </ion-title>
@@ -16,18 +16,18 @@
       <mbsc-form-group formGroupName="billing" >
         <mbsc-form-group-title><b>Billing Details</b></mbsc-form-group-title>
         <mbsc-form-group-content>
-          <mbsc-input formControlName="first_name" [label-style]="label_style" [error]="checkOutForm.get('billing')['controls'].get('first_name')['controls'].touched && checkOutForm.get('billing')['controls'].get('first_name')['controls'].invalid" [errorMessage]="getErrorMessage('billing.first_name')">First Name</mbsc-input>
-          <mbsc-input formControlName="last_name" [label-style]="label_style" [error]="checkOutForm.get('billing')['controls'].get('last_name')['controls'].touched && checkOutForm.get('billing')['controls'].get('last_name')['controls'].invalid" [errorMessage]="getErrorMessage('billing.last_name')">Last Name</mbsc-input>
-          <mbsc-input formControlName="address_1" [label-style]="label_style" [error]="checkOutForm.get('billing')['controls'].get('first_name')['address_1'].touched && checkOutForm.get('billing')['controls'].get('address_1')['controls'].invalid" [errorMessage]="getErrorMessage('billing.address_1')">Address Line 1</mbsc-input>
-          <mbsc-input formControlName="address_2" [label-style]="label_style" [error]="checkOutForm.get('billing')['controls'].get('address_2')['controls'].touched && checkOutForm.get('billing')['controls'].get('address_2')['controls'].invalid" [errorMessage]="getErrorMessage('billing.address_2')">Address Line 2</mbsc-input>
-          <mbsc-dropdown formControlName="country" [error]="checkOutForm.get('billing')['controls'].get('country')['controls'].touched && checkOutForm.get('billing')['controls'].get('country')['controls'].invalid" [errorMessage]="getErrorMessage('billing.country')">
+          <mbsc-input formControlName="first_name" [label-style]="label_style" [error]="checkOutForm.controls['billing']['controls']['first_name'].touched && checkOutForm.controls['billing']['controls']['first_name'].invalid" [errorMessage]="getErrorMessage('billing.first_name')">First Name</mbsc-input>
+          <mbsc-input formControlName="last_name" [label-style]="label_style" [error]="checkOutForm.controls['billing']['controls']['last_name'].touched && checkOutForm.controls['billing']['controls']['last_name'].invalid" [errorMessage]="getErrorMessage('billing.last_name')">Last Name</mbsc-input>
+          <mbsc-input formControlName="address_1" [label-style]="label_style" [error]="checkOutForm.controls['billing']['controls']['address_1'].touched && checkOutForm.controls['billing']['controls']['address_1'].invalid" [errorMessage]="getErrorMessage('billing.address_1')">Address Line 1</mbsc-input>
+          <mbsc-input formControlName="address_2" [label-style]="label_style" [error]="checkOutForm.controls['billing']['controls']['address_2'].touched && checkOutForm.controls['billing']['controls']['address_2'].invalid" [errorMessage]="getErrorMessage('billing.address_2')">Address Line 2</mbsc-input>
+          <mbsc-dropdown formControlName="country" [error]="checkOutForm.controls['billing']['controls']['country'].touched && checkOutForm.controls['billing']['controls']['country'].invalid" [errorMessage]="getErrorMessage('billing.country')">
               <option value="" disabled selected hidden>Country</option>
               <option *ngFor = "let c of countries" value="{{c.country_id}}">{{c.country_title}}</option>
           </mbsc-dropdown>
-          <mbsc-input formControlName="state" [label-style]="label_style" [error]="checkOutForm.get('billing')['controls'].get('state')['controls'].touched && checkOutForm.get('billing')['controls'].get('state')['controls'].invalid" [errorMessage]="getErrorMessage('billing.state')">State</mbsc-input>
-          <mbsc-input formControlName="city" [label-style]="label_style" [error]="checkOutForm.get('billing')['controls'].get('first_name')['city'].touched && checkOutForm.get('billing')['controls'].get('city')['controls'].invalid" [errorMessage]="getErrorMessage('billing.city')">City</mbsc-input>
-          <mbsc-input formControlName="postcode" [label-style]="label_style" [error]="checkOutForm.get('billing')['controls'].get('postcode')['controls'].touched && checkOutForm.get('billing')['controls'].get('postcode')['controls'].invalid" [errorMessage]="getErrorMessage('billing.postcode')">Postal Code</mbsc-input>
-          <mbsc-input formControlName="phone" [label-style]="label_style" [error]="checkOutForm.get('billing')['controls'].get('phone')['controls'].touched && checkOutForm.get('billing')['controls'].get('phone')['controls'].invalid" [errorMessage]="getErrorMessage('billing.phone')">Phone No.</mbsc-input>
+          <mbsc-input formControlName="state" [label-style]="label_style" [error]="checkOutForm.controls['billing']['controls']['state'].touched && checkOutForm.controls['billing']['controls']['state'].invalid" [errorMessage]="getErrorMessage('billing.state')">State</mbsc-input>
+          <mbsc-input formControlName="city" [label-style]="label_style" [error]="checkOutForm.controls['billing']['controls']['city'].touched && checkOutForm.controls['billing']['controls']['city'].invalid" [errorMessage]="getErrorMessage('billing.city')">City</mbsc-input>
+          <mbsc-input formControlName="postcode" [label-style]="label_style" [error]="checkOutForm.controls['billing']['controls']['postcode'].touched && checkOutForm.controls['billing']['controls']['postcode'].invalid" [errorMessage]="getErrorMessage('billing.postcode')">Postal Code</mbsc-input>
+          <mbsc-input formControlName="phone" [label-style]="label_style" [error]="checkOutForm.controls['billing']['controls']['phone'].touched && checkOutForm.controls['billing']['controls']['phone'].invalid" [errorMessage]="getErrorMessage('billing.phone')">Phone No.</mbsc-input>
           <mbsc-switch color="primary" (change)="setBillingToShipping()"> 
             Billing Details same as Shipping Details?
           </mbsc-switch>
@@ -37,24 +37,24 @@
       <mbsc-form-group formGroupName="shipping" *ngIf="!billing_shipping_same">
         <mbsc-form-group-title><b>Shipping Details</b></mbsc-form-group-title>
         <mbsc-form-group-content>
-          <mbsc-input formControlName="first_name" [label-style]="label_style" [error]="checkOutForm.get('shipping')['controls'].get('first_name')['controls'].touched && checkOutForm.get('shipping')['controls'].get('first_name')['controls'].invalid" [errorMessage]="getErrorMessage('shipping.first_name')">First Name</mbsc-input>
-          <mbsc-input formControlName="last_name" [label-style]="label_style" [error]="checkOutForm.get('shipping')['controls'].get('last_name')['controls'].touched && checkOutForm.get('shipping')['controls'].get('last_name')['controls'].invalid" [errorMessage]="getErrorMessage('shipping.last_name')">Last Name</mbsc-input>
-          <mbsc-input formControlName="address_1" [label-style]="label_style" [error]="checkOutForm.get('shipping')['controls'].get('address_1')['controls'].touched && checkOutForm.get('shipping')['controls'].get('address_1')['controls'].invalid" [errorMessage]="getErrorMessage('shipping.address_1')">Address Line 1</mbsc-input>
-          <mbsc-input formControlName="address_2" [label-style]="label_style" [error]="checkOutForm.get('shipping')['controls'].get('address_2')['controls'].touched && checkOutForm.get('shipping')['controls'].get('address_2')['controls'].invalid" [errorMessage]="getErrorMessage('shipping.address_2')">Address Line 2</mbsc-input>
-          <mbsc-dropdown formControlName="country" [error]="checkOutForm.get('shipping')['controls'].get('country')['controls'].touched && checkOutForm.get('shipping')['controls'].get('country')['controls'].invalid" [errorMessage]="getErrorMessage('shipping.country')">
+          <mbsc-input formControlName="first_name" [label-style]="label_style" [error]="checkOutForm.controls['shipping']['controls']['first_name'].touched && checkOutForm.controls['shipping']['controls']['first_name'].invalid" [errorMessage]="getErrorMessage('shipping.first_name')">First Name</mbsc-input>
+          <mbsc-input formControlName="last_name" [label-style]="label_style" [error]="checkOutForm.controls['shipping']['controls']['last_name'].touched && checkOutForm.controls['shipping']['controls']['last_name'].invalid" [errorMessage]="getErrorMessage('shipping.last_name')">Last Name</mbsc-input>
+          <mbsc-input formControlName="address_1" [label-style]="label_style" [error]="checkOutForm.controls['shipping']['controls']['address_1'].touched && checkOutForm.controls['shipping']['controls']['address_1'].invalid" [errorMessage]="getErrorMessage('shipping.address_1')">Address Line 1</mbsc-input>
+          <mbsc-input formControlName="address_2" [label-style]="label_style" [error]="checkOutForm.controls['shipping']['controls']['address_2'].touched && checkOutForm.controls['shipping']['controls']['address_2'].invalid" [errorMessage]="getErrorMessage('shipping.address_2')">Address Line 2</mbsc-input>
+          <mbsc-dropdown formControlName="country" [error]="checkOutForm.controls['shipping']['controls']['country'].touched && checkOutForm.controls['shipping']['controls']['country'].invalid" [errorMessage]="getErrorMessage('shipping.country')">
             <option value="" disabled selected hidden>Country</option>
             <option *ngFor = "let c of countries" value="{{c.country_id}}">{{c.country_title}}</option>
           </mbsc-dropdown>
-          <mbsc-input formControlName="state" [label-style]="label_style" [error]="checkOutForm.get('shipping')['controls'].get('state')['controls'].touched && checkOutForm.get('shipping')['controls'].get('state')['controls'].invalid" [errorMessage]="getErrorMessage('shipping.state')">State</mbsc-input>
-          <mbsc-input formControlName="city" [label-style]="label_style" [error]="checkOutForm.get('shipping')['controls'].get('city')['controls'].touched && checkOutForm.get('shipping')['controls'].get('city')['controls'].invalid" [errorMessage]="getErrorMessage('shipping.city')">City</mbsc-input>
-          <mbsc-input formControlName="postcode" [label-style]="label_style" [error]="checkOutForm.get('shipping')['controls'].get('postcode')['controls'].touched && checkOutForm.get('shipping')['controls'].get('postcode')['controls'].invalid" [errorMessage]="getErrorMessage('shipping.postcode')">Postal Code</mbsc-input>
+          <mbsc-input formControlName="state" [label-style]="label_style" [error]="checkOutForm.controls['shipping']['controls']['state'].touched && checkOutForm.controls['shipping']['controls']['state'].invalid" [errorMessage]="getErrorMessage('shipping.state')">State</mbsc-input>
+          <mbsc-input formControlName="city" [label-style]="label_style" [error]="checkOutForm.controls['shipping']['controls']['city'].touched && checkOutForm.controls['shipping']['controls']['city'].invalid" [errorMessage]="getErrorMessage('shipping.city')">City</mbsc-input>
+          <mbsc-input formControlName="postcode" [label-style]="label_style" [error]="checkOutForm.controls['shipping']['controls']['postcode'].touched && checkOutForm.controls['shipping']['controls']['postcode'].invalid" [errorMessage]="getErrorMessage('shipping.postcode')">Postal Code</mbsc-input>
         </mbsc-form-group-content>
       </mbsc-form-group>
 
       <mbsc-form-group formGroupName="payment">
         <mbsc-form-group-title><b>Payment Details</b></mbsc-form-group-title>
           <mbsc-form-group-content>
-            <mbsc-dropdown formControlName="paymeth" [error]="checkOutForm.get('payment')['controls'].get('paymeth')['controls'].touched && checkOutForm.get('payment')['controls'].get('paymeth')['controls'].invalid" [errorMessage]="getErrorMessage('payment.paymeth')">
+            <mbsc-dropdown formControlName="paymeth" [error]="checkOutForm.controls['payment']['controls']['paymeth'].touched && checkOutForm.controls['payment']['controls']['paymeth'].invalid" [errorMessage]="getErrorMessage('payment.paymeth')">
               <option value="" disabled selected hidden>Payment Method</option>
               <option *ngFor="let p of paymentMethods" value="{{p.method_id}}">{{ p.method_title }}</option>
           </mbsc-dropdown>

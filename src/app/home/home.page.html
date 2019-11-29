@@ -34,7 +34,7 @@
         <ion-thumbnail class="ion-no-padding"> 
           <img [src]="product?.images[0].src"/>
         </ion-thumbnail>
-        <ion-label class="new-deals-label" >{{ product?.name }} </ion-label>
+        <ion-label class="new-deals-label ion-text-wrap" >{{ product?.name }} </ion-label>
         <p class="new-deals-price" [innerHTML]="product?.price_html"></p>
       </ion-slide>
     </ion-slides>

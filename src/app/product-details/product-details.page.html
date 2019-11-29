@@ -1,11 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <!-- <ion-fab-button slot="start" size="small"> -->
-      <ion-menu-button slot="start"></ion-menu-button>
-    <!-- </ion-fab-button>   -->
     <ion-buttons >
+      <ion-menu-button slot="start"></ion-menu-button>
     </ion-buttons>
-    <ion-back-button slot="start" text="" defaultHref="home"></ion-back-button>
+    <ion-back-button slot="start" text="" defaultHref="home" class="ion-no-margin"></ion-back-button>
     <ion-fab-button [routerDirection]="'root'" [routerLink]="['/cart']" slot="end" size="small">
       <ion-icon name="cart"></ion-icon>
     </ion-fab-button>
