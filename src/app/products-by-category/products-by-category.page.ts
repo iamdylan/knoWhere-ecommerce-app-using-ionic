@@ -18,6 +18,8 @@ export class ProductsByCategoryPage implements OnInit {
   page: number;
   catName: any;
   endMsg: boolean;
+  showSkel: boolean;
+  outOfStock: boolean;
 
   constructor(public toastCtrl: ToastController, private route: ActivatedRoute,
   private ngZone: NgZone, public WooCom: WooCommerceService, public http: HttpClient) {
@@ -25,6 +27,8 @@ export class ProductsByCategoryPage implements OnInit {
     this.products = [];
     this.catName = [{name: ''}];
     this.endMsg = false;
+    this.showSkel = true;
+    this.outOfStock = false;
 
     this.route.params.subscribe((params: Params) => {
       this.ngZone.run(() => {this.cat = params['category']; });
@@ -49,8 +53,11 @@ export class ProductsByCategoryPage implements OnInit {
     // tslint:disable-next-line: max-line-length
     this.http.get(`${this.WooCom.url}/wp-json/wc/v3/products?category=${this.cat}&consumer_key=${this.WooCom.consumerKey}&consumer_secret=${this.WooCom.consumerSecret}`)
     .subscribe(res => {
+      console.log(res);
+      this.showSkel = false;
       this.products = res;
-      console.log(this.products);
+      this.products.length > 0 ? this.outOfStock = false : this.outOfStock = true;
+      console.log ('out of stock = ', this.outOfStock);
     });
   }
 

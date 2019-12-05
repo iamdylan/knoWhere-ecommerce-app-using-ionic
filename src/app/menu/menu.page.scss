@@ -4,8 +4,12 @@
         text-align: right;
         margin: 0px !important;
         width: 100% !important;
-        background-color: var(--kw-secondary);
         border-radius: 0;
+        // background-color: var(--kw-secondary);
+        ion-img {
+            padding-top: 10px;
+            padding-right: 3px;
+        }
     }
 }
 
@@ -27,7 +31,7 @@ ion-list{
 }
 
 ion-list-header{
-    background-color: #727579;
+    background-color: #757575;
     color: white;
     font-size: medium;
     padding-left: 7%;

@@ -25,6 +25,7 @@ import { EmailValidator } from './validators/email.validator';
 import { UserValidator } from './validators/username.validator';
 import { HttpClientModule } from '@angular/common/http';
 import { PayPal } from '@ionic-native/paypal/ngx';
+import { NgxProgressiveImageLoaderModule, IImageLoaderOptions } from 'ngx-progressive-image-loader';
 
 @NgModule({
   declarations: [AppComponent, MenuPage],
@@ -42,7 +43,16 @@ import { PayPal } from '@ionic-native/paypal/ngx';
     HttpClientModule,
     NgxUsefulSwiperModule,
     IonicStorageModule.forRoot(),
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    NgxProgressiveImageLoaderModule.forRoot(<IImageLoaderOptions>{
+      // rootMargin must be specified in pixels or percent
+      rootMargin: '30px',
+      threshold: 0.1,
+      // css filter
+      filter: 'blur(6px)',
+      // image width / height ratio for image holder
+      imageRatio: 1 / 1
+    })
   ],
   providers: [
     StatusBar,

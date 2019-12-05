@@ -1,10 +1,16 @@
-ion-card{
+ion-card {
     margin: 0.5em;
+}
+
+ion-thumbnail {
+    height: 100%;
+    width: 100%;
 }
 
 ion-card-title {
     font-size: 1.1em;
     border-bottom: 1px solid black;
+    padding-bottom: 5px;
 }
 
 ion-chip {

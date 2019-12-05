@@ -18,7 +18,10 @@
         <ion-col size="6" *ngFor="let product of products" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
           <ion-card>
             <ion-thumbnail>
-              <ion-img [src]="product?.images[0].src"></ion-img>
+                <ngx-progressive-image-loader placeholderImageSrc="{{(product?.images[0].src).substring(0,(product?.images[0].src).length-4) + '-100x100' + (product?.images[0].src).substring((product?.images[0].src).length-4)}}">
+                  <img [src]="product?.images[0].src ? product?.images[0].src : ''" ngxProgressiveImage>
+                </ngx-progressive-image-loader>
+              <!-- <img [src]="product?.images[0].src"> -->
             </ion-thumbnail>
             <ion-card-header>
               <ion-card-title class="custom-label-style">{{ product?.name }}</ion-card-title>
@@ -34,7 +37,7 @@
   </div>
   
   <!-- Products Skeleton -->
-  <div *ngIf="!(products.length > 0)">
+  <div *ngIf="showSkel">
     <ion-grid style="--animation-order: 4.1;">
       <ion-row>
         <ion-col size="6" *ngFor="let product of [1,2,3,4,5,6]">
@@ -71,12 +74,18 @@
     </ion-item>
   </ion-list> -->
 
-  <ion-infinite-scroll threshold="10%" (ionInfinite)="loadMoreProducts($event)">
+  <ion-infinite-scroll *ngIf="products.length > 0" threshold="10%" (ionInfinite)="loadMoreProducts($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
   <div class="outr-endMsg">
     <ion-card *ngIf="endMsg" class="endMsg">
-      That's all for now. Please try again later!
+      --- That's all for now. Please try again later! ---
     </ion-card>
+  </div>
+
+  <div class="outofstock" *ngIf="outOfStock">
+    <ion-img src="./assets/images/outofstock.svg"></ion-img>
+    <ion-label>Out of Stock</ion-label>
+    <p>We'll have something up again soon.</p>
   </div>
 </ion-content>
