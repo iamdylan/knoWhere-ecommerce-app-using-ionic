@@ -6,13 +6,18 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngIf="cartItems?.length == 0">
+  <!-- <ion-card *ngIf="!(cartItems?.length > 0)">
     <ion-grid>
       <ion-row>
         <ion-col class="cartMsg">Cart Empty!</ion-col>
       </ion-row>
     </ion-grid>
-  </ion-card>
+  </ion-card> -->
+  <div class="empty" *ngIf="!(cartItems?.length > 0)">
+    <ion-img src="./assets/images/empty.svg"></ion-img>
+    <ion-label>Empty Cart</ion-label>
+    <p>Try adding an item to the Cart.</p>
+  </div>
 
   <ion-grid *ngIf="cartItems?.length > 0">
     <ion-row class="cartHeads">

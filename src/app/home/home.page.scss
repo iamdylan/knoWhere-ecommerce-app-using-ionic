@@ -10,6 +10,7 @@
 .new-deals-label {
   line-height: 2;
   letter-spacing: 0.02em;
+  font-size: 14px;
 }
 
 .new-deals {
@@ -26,8 +27,8 @@
 ion-slides ion-thumbnail {
   width: 24vw;
   height: 13vh ;
-  margin: 0 auto;
-  margin-top: 5px;
+  margin: 6px auto;
+  // margin-top: 5px;
 }
 
 .new-deals-header, .more-prod-header {
@@ -46,10 +47,10 @@ ion-slides ion-thumbnail {
 .new-deal-slides {
   display: block;
   font-size: 1em;
-  // padding-top: 5px;
-  // padding-bottom: 7px;
   font-weight: 500;
   letter-spacing: 0.04em;
+  // padding-top: 5px;
+  // padding-bottom: 7px;
   // top: 8px;
 }
 

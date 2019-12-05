@@ -18,7 +18,7 @@
     // border: 1px solid #c2c2c2;
     // box-shadow: 1px 1px 10px 1px rgba(0,0,0,.21);
     // margin-right: 0;
-    ion-img {
+    img {
         border-radius: 10px 10px 0 0;
     }
 }
@@ -45,11 +45,11 @@
     box-shadow: none;
     text-align: center;
     border: none;
-    font-size: 1em;
+    font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.02em;
     border-radius: 0;
-    color: #777777;
+    color: #90979e;
     opacity: 0;
     // bottom: 0;
     animation-name: fade-up;
@@ -57,6 +57,7 @@
     animation-fill-mode: forwards;
     animation-timing-function: ease;
     transform: translateY(10px);
+    margin: 5px auto !important;
 }
 
 @keyframes fade-up {
@@ -101,9 +102,10 @@
 }
 
 .home .custom-desc, .prodsByCat .custom-desc {
-    font-size: 0.85em;
+    font-size: 16px;
     font-weight: 400;
     letter-spacing: 0.2px;
+    font-family: serif;
     // text-align: center;
     // margin-top: 2%;
 }
@@ -117,7 +119,7 @@
     --inner-border-width: 0;
 }
 
-.carousel, .new-deals-header, .more-prod-header,ion-grid, ion-col, ion-thumbnail, ion-slide, mbsc-form-group {
+.carousel, .new-deals-header, .more-prod-header,ion-grid, ion-slide, .outofstock, .empty {
     opacity: 0;
     animation-name: fade;
     animation-duration: 600ms;
@@ -129,10 +131,6 @@
 @keyframes fade {
     0% {opacity: 0;}
     100% {opacity: 1;}
-}
-
-.home .swiper-container {
-    // height: 25vh;
 }
 //End of Styles for Home and Category pages.
 
@@ -249,5 +247,33 @@ mdb-carousel div .carousel-inner {
 //     margin-bottom: 5px;
 // }
 
+.outofstock, .empty {
+    margin: 10%;
+    position: absolute;
+    top: 15%;
+    ion-label {
+        text-align: center;
+        width: 100%;
+        display: block;
+        font-weight: 600;
+        font-size: 30px;
+        color: #444053;
+        margin-top: 5%;
+        letter-spacing: 0.02em;
+    }
+    p {
+        text-align: center;
+        letter-spacing: 0.02em;
+        color: #90979e;
+        font-weight: 500;
+    }
+}
+
 
 @import "~@mobiscroll/angular-lite/dist/css/mobiscroll.css";
+
+@import '~ngx-progressive-image-loader/ngx-progressive-image-loader';
+
+$scale: 1; // the scale of loading image in place holder
+$transition: opacity 0.5s linear; // the transition of loading image in place holder, you could try: opacity .3s ease
+@include progressive-image-loader($scale, $transition);

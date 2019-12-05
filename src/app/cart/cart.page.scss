@@ -31,6 +31,8 @@
 
 .cartItem ion-col:nth-child(1) ion-avatar{
     box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
+    width: fit-content;
+    height: fit-content;
 }
 
 .cartItem ion-col:nth-child(2) {
@@ -52,7 +54,7 @@
     height: 30px;
     --border-radius: 100%;
     position: absolute;
-    bottom: 16%; 
+    bottom: 20%; 
     right: 0%;
     margin-right: 0;
 }
