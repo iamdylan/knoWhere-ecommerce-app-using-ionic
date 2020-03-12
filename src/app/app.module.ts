@@ -26,6 +26,9 @@ import { UserValidator } from './validators/username.validator';
 import { HttpClientModule } from '@angular/common/http';
 import { PayPal } from '@ionic-native/paypal/ngx';
 import { NgxProgressiveImageLoaderModule, IImageLoaderOptions } from 'ngx-progressive-image-loader';
+// import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, MenuPage],
@@ -46,13 +49,15 @@ import { NgxProgressiveImageLoaderModule, IImageLoaderOptions } from 'ngx-progre
     MDBBootstrapModule.forRoot(),
     NgxProgressiveImageLoaderModule.forRoot(<IImageLoaderOptions>{
       // rootMargin must be specified in pixels or percent
-      rootMargin: '30px',
+      rootMargin: '0px',
       threshold: 0.1,
       // css filter
       filter: 'blur(6px)',
       // image width / height ratio for image holder
       imageRatio: 1 / 1
-    })
+    }),
+    SlickCarouselModule,
+    BrowserAnimationsModule
   ],
   providers: [
     StatusBar,
@@ -64,7 +69,8 @@ import { NgxProgressiveImageLoaderModule, IImageLoaderOptions } from 'ngx-progre
     NeedAuthGuard,
     RoutingStateService,
     GetUserInfo,
-    PayPal
+    PayPal,
+    // OneSignal
   ],
   bootstrap: [AppComponent]
 })

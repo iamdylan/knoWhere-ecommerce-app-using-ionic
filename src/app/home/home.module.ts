@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { CarouselModule, WavesModule } from 'angular-bootstrap-md';
 import { HomePage } from './home.page';
 import { NgxProgressiveImageLoaderModule, IImageLoaderOptions } from 'ngx-progressive-image-loader';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 const routes: Routes = [
   {
@@ -20,7 +21,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CarouselModule,
     WavesModule,
-    NgxProgressiveImageLoaderModule.forRoot()
+    NgxProgressiveImageLoaderModule.forRoot(),
+    SlickCarouselModule
   ],
   declarations: [HomePage],
 })

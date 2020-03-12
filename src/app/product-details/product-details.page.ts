@@ -5,6 +5,8 @@ import { Storage } from '@ionic/storage';
 import { CartPage } from '../cart/cart.page';
 import { WooCommerceService } from '../services/woo-commerce.service';
 import { HttpClient } from '@angular/common/http';
+import { ViewChild } from '@angular/core';
+import { IonSlides } from '@ionic/angular';
 
 @Component({
   selector: 'app-product-details',
@@ -13,16 +15,16 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class ProductDetailsPage implements OnInit {
+  @ViewChild('slides', {read: IonSlides, static: false}) slides: IonSlides;
+
   product: any;
   WooCommerce: any;
   productInfo: any;
   reviews: any;
+
   slideOpts = {
     effect: 'flip',
-    loop: true,
-    pagination: {
-      el: '.swiper-pagination',
-    }
+    loop: false,
   };
 
   constructor(private route: ActivatedRoute, private ngZone: NgZone, public storage: Storage,
@@ -38,6 +40,17 @@ export class ProductDetailsPage implements OnInit {
 
   }// Constructor close
 
+
+  nextSlide() {
+    this.slides.slideNext();
+  }
+
+
+  prevSlide() {
+    this.slides.slidePrev();
+  }
+
+
   getProdInfo() {
     // tslint:disable-next-line: max-line-length
     this.http.get(`${this.WooCom.url}/wp-json/wc/v3/products/${this.product}/?&consumer_key=${this.WooCom.consumerKey}&consumer_secret=${this.WooCom.consumerSecret}`)
@@ -47,6 +60,7 @@ export class ProductDetailsPage implements OnInit {
     });
   }
 
+
   getProdReviews() {
     // tslint:disable-next-line: max-line-length
     this.http.get(`${this.WooCom.url}/wp-json/wc/v2/products/${this.product}/reviews/?&consumer_key=${this.WooCom.consumerKey}&consumer_secret=${this.WooCom.consumerSecret}`)
@@ -55,6 +69,7 @@ export class ProductDetailsPage implements OnInit {
       console.log(this.reviews);
     });
   }
+
 
   async addToCart(prod) {
     const product = await prod;
@@ -106,6 +121,7 @@ export class ProductDetailsPage implements OnInit {
     });
   }// addToCart close
 
+
   async toast() {
     const tc = await this.toastCtrl.create({
       message: 'Added to Cart',
@@ -117,10 +133,12 @@ export class ProductDetailsPage implements OnInit {
     tc.present();
   }// toast close
 
+
   async openCart() {
     const modal = await this.modalCtrl.create({component: CartPage});
     return await modal.present();
   }
+
 
   ngOnInit() {
     // this.WC.WooCommerceV3.getAsync('products/' + this.product).then((data) => {
@@ -138,4 +156,5 @@ export class ProductDetailsPage implements OnInit {
     this.getProdInfo();
     this.getProdReviews();
   }
+
 }// class close

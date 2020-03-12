@@ -4,6 +4,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Platform } from '@ionic/angular';
 import { RoutingStateService } from './services/routing-state.service';
+// import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     public router: Router,
-    private routingState: RoutingStateService
+    private routingState: RoutingStateService,
+    // private oneSignal: OneSignal
   ) {
     this.initializeApp();
     routingState.loadRouting();
@@ -25,8 +27,22 @@ export class AppComponent implements OnInit {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      this.statusBar.styleLightContent();
       this.splashScreen.hide();
+
+      // this.oneSignal.startInit('7f203b9b-30fb-4466-9924-224163e0b51b', '423456359366');
+
+      // this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+
+      // this.oneSignal.handleNotificationReceived().subscribe(() => {
+      // // do something when notification is received
+      // });
+
+      // this.oneSignal.handleNotificationOpened().subscribe(() => {
+      //   // do something when a notification is opened
+      // });
+
+      // this.oneSignal.endInit();
     });
   }
 

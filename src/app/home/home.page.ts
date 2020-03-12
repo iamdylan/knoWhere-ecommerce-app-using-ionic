@@ -3,6 +3,7 @@ import { ToastController } from '@ionic/angular';
 import { CarouselComponent } from 'angular-bootstrap-md';
 import { WooCommerceService } from '../services/woo-commerce.service';
 import { HttpClient } from '@angular/common/http';
+// import 'progressive-image.js/dist/progressive-image';
 
 @Component({
   selector: 'app-home',
@@ -11,44 +12,59 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class HomePage implements OnInit {
-  @ViewChild('carousel', {read: CarouselComponent})carousel: CarouselComponent;
+  @ViewChild('carousel', {read: CarouselComponent, static: true})carousel: CarouselComponent;
 
   popProducts: any;
   moreProducts: any[];
   page: number;
   slideOpts: {};
-  slideOpts2: {};
-  // config: any;
+  config: any;
   endMsg: boolean;
+  offersConfig: {};
+  newDealsConfig: {};
 
   constructor(public toastCtrl: ToastController, private ngZone: NgZone, public WooCom: WooCommerceService, public http: HttpClient) {
     this.moreProducts = [];
     this.popProducts = [];
     this.endMsg = false;
 
+    this.offersConfig = {
+      'slidesToShow': 1,
+      'slidesToScroll': 1,
+      'arrows': true,
+      'accessibility': true,
+      'dots': true,
+      'infinite': true,
+      'autoplay': true,
+      'autoplaySpeed': 4000,
+      'fade': true,
+      'cssEase': 'linear',
+      'lazyLoad': 'ondemand',
+      'adaptiveHeight': true
+    };
+
+    this.newDealsConfig = {
+      'slidesToShow': 3,
+      'slidesToScroll': 1,
+      'infinite': true,
+      'arrows': true,
+      'accessibility': true,
+      'autoplay': true,
+      'autoplaySpeed': 3000,
+      'cssEase': 'ease',
+      'adaptiveHeight': false,
+    };
+
     // this.config =  {
-    //   effect: 'fade',
-    //   fadeEffect: {
-    //     crossFade: true
-    //   },
     //   autoplay: {
     //     delay: 3000,
     //     disableOnInteraction: false
     //   },
     //   loop: true,
     //   speed: 1500,
-    //   pagination: {
-    //     el: '.swiper-pagination',
-    //     },
-    //     paginationClickable: true,
-    //     navigation: {
-    //     nextEl: '.swiper-button-next',
-    //     prevEl: '.swiper-button-prev',
-    //     }
     // };
 
-    this.slideOpts2 = {
-      effect: 'flip',
+    this.slideOpts = {
       autoplay: {
         delay: 3000,
         disableOnInteraction: false
@@ -65,6 +81,7 @@ export class HomePage implements OnInit {
     this.page = 2;
 
   }
+
 
   getProducts() {
     // tslint:disable-next-line: max-line-length
@@ -113,9 +130,17 @@ export class HomePage implements OnInit {
   //   tc.present();
   // }
 
+  // slidesDidLoad(slides) {
+  //   slides.startAutoplay();
+  // }
+
+  trackByFn(index, item) {
+    return index; // or item.id
+  }
+
   ngOnInit() {
     this.getProducts();
     this.loadMoreProducts(null);
-    this.carousel.play();
+    // this.carousel.play();
   }
 }

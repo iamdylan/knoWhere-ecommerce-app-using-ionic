@@ -7,29 +7,56 @@
     <ion-fab-button [routerDirection]="'root'" [routerLink]="['/cart']" slot="end" size="small">
       <ion-icon name="cart"></ion-icon>
     </ion-fab-button>
-
     <ion-title> {{ productInfo.name }} </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <!-- Product Info Skeleton Begin-->
+  <div *ngIf="!(productInfo.name)">
+    <ion-card style="min-height: 90vh;">
+      <ion-slides [options]="slideOpts">
+        <ion-slide>
+            <ion-skeleton-text animated style="height: 50vh"></ion-skeleton-text>
+        </ion-slide>
+      </ion-slides>
+
+      <ion-card-content>
+        <ion-card-title>
+          <ion-skeleton-text animated style="margin-bottom: 10px;"></ion-skeleton-text>
+        </ion-card-title>
+        <ion-skeleton-text animated style="margin: 15px 0"></ion-skeleton-text>
+        <ion-skeleton-text animated style="margin: 15px 0"></ion-skeleton-text>
+        <ion-skeleton-text animated style="margin: 15px 0"></ion-skeleton-text>
+        <ion-skeleton-text animated style="margin: 15px 0"></ion-skeleton-text>
+        <ion-button expand="block" fill="outline" color="light" style="transform: translateY(150%);">
+          <ion-skeleton-text animated style="height: 100%; width: 100%; transform: scaleX(1.5);"></ion-skeleton-text>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <!-- Product Info Skeleton End-->
+
   <div *ngIf="productInfo.name">
-    <ion-card>
-      <ion-slides [options]="slideOpts" pager="true">
+    <ion-card class="outerCard">
+      <div class="slides-container">
+        <ion-slides #slides [options]="slideOpts" pager="true">
         <ion-slide *ngFor="let image of productInfo.images">
           <ion-thumbnail>
             <ngx-progressive-image-loader placeholderImageSrc="{{(image?.src).substring(0,(image?.src).length-4) + '-100x100' + (image?.src).substring((image?.src).length-4)}}">
               <img [src]="image?.src ? image?.src : ''" ngxProgressiveImage />
             </ngx-progressive-image-loader>
           </ion-thumbnail>
-            
-            
           <!-- <img [src]="image.src" /> -->
         </ion-slide>
-      </ion-slides>
+        </ion-slides>
+        <div class="sliderArrows">
+          <div class="swiper-button-prev swiper-button-black" color="light" (click)="prevSlide()"></div>
+          <div class="swiper-button-next swiper-button-black" color="light" (click)="nextSlide()"></div>
+        </div>
+      </div> 
 
       <ion-card-content *ngIf="productInfo.categories">
-        
         <ion-card-title>
           {{ productInfo.name }}
           <ion-chip *ngFor="let cat of productInfo.categories" style="margin-left: 5px;">
@@ -96,30 +123,5 @@
       </ion-card-content>
     </ion-card>
   </div>
-
-  <!-- Product Info Skeleton -->
-  <div *ngIf="!(productInfo.name)">
-    <ion-card style="min-height: 90vh;">
-      <ion-slides [options]="slideOpts">
-        <ion-slide>
-            <ion-skeleton-text animated style="height: 50vh"></ion-skeleton-text>
-        </ion-slide>
-      </ion-slides>
-
-      <ion-card-content>
-        <ion-card-title>
-          <ion-skeleton-text animated style="margin-bottom: 10px;"></ion-skeleton-text>
-        </ion-card-title>
-        <ion-skeleton-text animated style="margin: 15px 0"></ion-skeleton-text>
-        <ion-skeleton-text animated style="margin: 15px 0"></ion-skeleton-text>
-        <ion-skeleton-text animated style="margin: 15px 0"></ion-skeleton-text>
-        <ion-skeleton-text animated style="margin: 15px 0"></ion-skeleton-text>
-        <ion-button expand="block" fill="outline" color="light" style="transform: translateY(150%);">
-          <ion-skeleton-text animated style="height: 100%; width: 100%; transform: scaleX(1.5);"></ion-skeleton-text>
-        </ion-button>
-      </ion-card-content>
-    </ion-card>
-  </div>
-  <!-- Product Info Skeleton -->
   
 </ion-content>

@@ -41,3 +41,14 @@ ion-chip ion-label {
     color: #000;
 }
 
+.sliderArrows {
+    position: absolute;
+    height: 95vw; //width because need container to stretch along with image for diff screens
+    top: 0%;
+    width: 100%;
+}
+
+.outerCard {
+    margin: 0.5em;
+    min-height: calc(100vh - 70px);
+}
