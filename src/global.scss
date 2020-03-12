@@ -10,31 +10,36 @@
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
 
-//Styles for Home and Category pages.
-.home ion-grid ion-thumbnail, .prodsByCat ion-grid ion-thumbnail {
-    width: 100%;
-    height: 100% ;
-    border-radius: 10px;
-    // border: 1px solid #c2c2c2;
-    // box-shadow: 1px 1px 10px 1px rgba(0,0,0,.21);
-    // margin-right: 0;
-    img {
-        border-radius: 10px 10px 0 0;
-    }
+* {
+	outline:none;
 }
 
-.home ion-col, .prodsByCat ion-col {
-    --ion-grid-column-padding: 6px;
-    // border: 3px solid #ededed;
+//Begin Home and Category pages Styles//
+// .home ion-grid ion-thumbnail, .prodsByCat ion-grid ion-thumbnail {
+//     width: 100%;
+//     height: 100% ;
+//     border-radius: 10px;
+//     // border: 1px solid #c2c2c2;
+//     // box-shadow: 1px 1px 10px 1px rgba(0,0,0,.21);
+//     // margin-right: 0;
+//     img {
+//         border-radius: 10px 10px 0 0;
+//     }
+// }
+
+.home ion-card img, .prodsByCat ion-card img {
+    // width: 100%;
+    // height: 100%;
+    border-radius: 15px 15px 0 0;
 }
 
 .home ion-card, .prodsByCat ion-card {
     margin: 0 !important;
-    width: 100% !important;
-    padding-bottom: 1px;
-    box-shadow: 4px -4px 2px 0px #ededed;
-    border: 1px solid #363c4254;
+    border: 2px solid #363c4254;
     border-radius: 15px;
+    overflow: visible;
+    box-shadow: none;
+
 }
 
 .home .outr-endMsg, .prodsByCat .outr-endMsg{
@@ -51,7 +56,6 @@
     border-radius: 0;
     color: #90979e;
     opacity: 0;
-    // bottom: 0;
     animation-name: fade-up;
     animation-duration: 600ms;
     animation-fill-mode: forwards;
@@ -73,10 +77,12 @@
 }
 
 .home ion-card-content, .prodsByCat ion-card-content {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     padding-left: 10px;
     padding-right: 10px;
+    height: 100%;
+    overflow: visible;
 }
 
 .home .custom-label-style, .prodsByCat .custom-label-style {
@@ -87,8 +93,6 @@
     font-size: 1.3em;
     white-space: nowrap;
     text-align: center;
-    // margin-top: 6%;
-    // text-decoration: underline;
 }
 
 .home .custom-price-style, .prodsByCat .custom-price-style {
@@ -97,17 +101,16 @@
     letter-spacing: 0.8px;
     margin-bottom: 0;
     font-size: 1em;
-    margin-top: 10px;
+    margin-top: 5px;
     text-align: center;
 }
 
 .home .custom-desc, .prodsByCat .custom-desc {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.4px;
     font-family: serif;
-    // text-align: center;
-    // margin-top: 2%;
+    line-height: 1;
 }
 
 .home ion-item, .prodsByCat ion-item {
@@ -132,9 +135,10 @@
     0% {opacity: 0;}
     100% {opacity: 1;}
 }
-//End of Styles for Home and Category pages.
+//End Home and Category pages Styles//
 
-//Styles for Mobiscroll.
+
+//Begin Mobiscroll Styles//
 .md-login-form .mbsc-ios.mbsc-form {
     background: rgb(157,235,255) !important;
     background: radial-gradient(circle, rgba(157,235,255,1) 0%, rgba(102,223,255,1) 50%, rgba(17,154,191,1) 100%) !important;
@@ -219,14 +223,10 @@
 .checkOut mbsc-form-group-title {
     font-size: 1.1em;
 }
+//End MobiscrollStyles//
 
-// mbsc-dropdown label {
-//     padding-top: 15px;
-// }
 
-//End of Styles for Mobiscroll.
-
-//Styles for MDB Carousel.
+//Begin MDB Carousel Styles//
 mdb-carousel div .carousel-inner {
     background-color: #696969;
 }
@@ -238,14 +238,8 @@ mdb-carousel div .carousel-inner {
 // .more-prod-header, ion-grid {
 //     animation-delay: 1000ms;
 // }
-//End of Styles for MDB Carousel.
+//End MDB Carousel Styles//
 
-// .swiper-slide img { 
-//     // border: 1px solid #b1b1b1;
-//     border-radius: 15px;
-//     box-shadow: 0 0 2px 2px #d2d2d2;
-//     margin-bottom: 5px;
-// }
 
 .outofstock, .empty {
     margin: 10%;
@@ -270,10 +264,75 @@ mdb-carousel div .carousel-inner {
 }
 
 
+
+//Begin ngx-slick-carousel styles//
+.slick-prev {
+    left: 5px !important;
+    z-index: 1;
+  }
+  
+.slick-next {
+    right: 5px !important;
+}
+ 
+.slick-dotted.slick-slider {
+    margin-bottom: 0 !important;
+}
+
+.slick-dots {
+    bottom: 0px !important;
+}
+
+.slick-dots li button::before {
+    font-size: 10px !important;
+    color: #fff !important;
+    opacity: 0.7;
+}
+
+.slick-dots li.slick-active button::before {
+    color: #fff !important;
+    opacity: 1 !important;
+}
+
+.new-deals .slick-list .slick-slide img {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    margin-bottom: 5px !important;
+}
+
+// .offers .slick-list {
+//     min-height: calc(24vh - 18px) !important;
+// }
+
+.new-deals .slick-list { 
+    max-height: calc(33vw + 25px) !important;
+}
+
+.new-deals .slick-slide {
+    min-width: 33vw !important;
+    text-align: center;
+    font-weight: 500;
+}
+//End ngx-slick-carousel styles//
+
+
 @import "~@mobiscroll/angular-lite/dist/css/mobiscroll.css";
 
 @import '~ngx-progressive-image-loader/ngx-progressive-image-loader';
+// .ngx-image-placeholder .placeholder-loading-image {
+//     height: auto;
+// }
+
+// .slick-slider .slick-track, .slick-slider .slick-list {
+//     height: 200px;
+// }
+
+// .ngx-image-placeholder {
+//     padding-bottom: 200px;
+// }
+
 
 $scale: 1; // the scale of loading image in place holder
 $transition: opacity 0.5s linear; // the transition of loading image in place holder, you could try: opacity .3s ease
 @include progressive-image-loader($scale, $transition);
+

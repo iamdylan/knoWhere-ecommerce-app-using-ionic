@@ -12,17 +12,42 @@
 </ion-header>
 
 <ion-content class="prodsByCat">
+  <!-- Products Skeleton -->
+  <div *ngIf="showSkel">
+    <ion-grid style="--animation-order: 4.1;">
+      <ion-row>
+        <ion-col size="6" *ngFor="let product of [1,2,3,4,5,6]">
+          <ion-card>
+            <ion-thumbnail style="width: 100%; height: 12em;">
+              <ion-skeleton-text animated style="border-radius: 15px 15px 0 0;"></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-card-header>
+              <ion-card-title class="custom-label-style">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-skeleton-text animated></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 40%; margin: 5px auto;"></ion-skeleton-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <!-- Products Skeleton -->
+
   <div *ngIf="products.length > 0">
     <ion-grid>
       <ion-row>
         <ion-col size="6" *ngFor="let product of products" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
           <ion-card>
-            <ion-thumbnail>
+            <!-- <ion-thumbnail> -->
                 <ngx-progressive-image-loader placeholderImageSrc="{{(product?.images[0].src).substring(0,(product?.images[0].src).length-4) + '-100x100' + (product?.images[0].src).substring((product?.images[0].src).length-4)}}">
                   <img [src]="product?.images[0].src ? product?.images[0].src : ''" ngxProgressiveImage>
                 </ngx-progressive-image-loader>
               <!-- <img [src]="product?.images[0].src"> -->
-            </ion-thumbnail>
+            <!-- </ion-thumbnail> -->
             <ion-card-header>
               <ion-card-title class="custom-label-style">{{ product?.name }}</ion-card-title>
             </ion-card-header>
@@ -35,44 +60,6 @@
       </ion-row>
     </ion-grid>
   </div>
-  
-  <!-- Products Skeleton -->
-  <div *ngIf="showSkel">
-    <ion-grid style="--animation-order: 4.1;">
-      <ion-row>
-        <ion-col size="6" *ngFor="let product of [1,2,3,4,5,6]">
-          <ion-card>
-            <ion-thumbnail>
-                <ion-skeleton-text animated style="height: 180px"></ion-skeleton-text>
-            </ion-thumbnail>
-              <ion-card-header>
-                <ion-card-title class="custom-label-style">
-                  <ion-skeleton-text animated></ion-skeleton-text>
-                </ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <ion-skeleton-text animated></ion-skeleton-text>
-                <ion-skeleton-text animated style="width: 40%; margin: 5px auto;"></ion-skeleton-text>
-              </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-    <!-- Products Skeleton -->
-
-  <!-- <ion-list>
-    <ion-item *ngFor="let product of products" [routerDirection]="'forward'" [routerLink]="['/product-details/' + product.id]">
-      <ion-thumbnail slot="start">
-        <ion-img [src]="product?.images[0].src"></ion-img>
-      </ion-thumbnail>
-      <ion-text>
-        <ion-label class="custom-label-style">{{ product?.name }}</ion-label>
-        <p class="custom-desc">{{product?.short_description.substr(3, 50) + '...'}}</p>
-        <p class="custom-price-style" [innerHTML]="product?.price_html"></p>
-      </ion-text>
-    </ion-item>
-  </ion-list> -->
 
   <ion-infinite-scroll *ngIf="products.length > 0" threshold="10%" (ionInfinite)="loadMoreProducts($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>

@@ -45,9 +45,6 @@ export class SignupPage implements OnInit {
   countries: any[];
   formNotValid: boolean;
 
-  @ViewChild('thanks')
-  thanksPopup: any;
-
   popupSettings: any = {
     theme: 'ios',
     display: 'center',
