@@ -1,7 +1,7 @@
 .md-login-form .md-logo {
     text-align: center;
-    margin-top: 140px;
-    margin-bottom: 50px;
+    margin-top: 10em;
+    margin-bottom: 4em;
     margin-left: auto;
     margin-right: auto;
     display: block;
@@ -10,7 +10,7 @@
     transform-origin:center;
     animation-name: fade-in;
     animation-duration: 1500ms;
-    animation-delay: 500ms;
+    animation-delay: 150ms;
     animation-fill-mode: forwards;
     animation-timing-function: ease;
 }
@@ -27,7 +27,7 @@ mbsc-form-group{
 }
 
 .sign-up {
-    margin-top: 80px;
+    margin-top: 3em;
     text-align: center;
     font-weight: 500;
     letter-spacing: 0.02em;

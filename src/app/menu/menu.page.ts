@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, MenuController } from '@ionic/angular';
+import { AlertController} from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import 'rxjs/add/operator/bufferCount';
-import 'rxjs/add/operator/filter';
-import { RoutingStateService } from '../services/routing-state.service';
 import { WooCommerceService } from '../services/woo-commerce.service';
 import { GetUserInfo } from './getUserInfo.service';
 import { HttpClient } from '@angular/common/http';
@@ -23,8 +20,8 @@ export class MenuPage implements OnInit {
   name: any;
   previousRoute: string;
 
-  constructor(public menuCtrl: MenuController, public router: Router, public storage: Storage,
-    private routingState: RoutingStateService, public getUserInfo: GetUserInfo,
+  constructor(public router: Router, public storage: Storage,
+    public getUserInfo: GetUserInfo,
     public alertCtrl: AlertController, public WooCom: WooCommerceService, public http: HttpClient) {
     this.categories = [];
   }
@@ -136,6 +133,5 @@ export class MenuPage implements OnInit {
         }
       });
     });
-
-}
+  }
 }

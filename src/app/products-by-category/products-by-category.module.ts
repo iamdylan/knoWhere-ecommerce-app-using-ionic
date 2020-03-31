@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ProductsByCategoryPage } from './products-by-category.page';
-import { NgxProgressiveImageLoaderModule, IImageLoaderOptions } from 'ngx-progressive-image-loader';
+import { NgxProgressiveImageLoaderModule } from 'ngx-progressive-image-loader';
 
 const routes: Routes = [
   {
-    path: 'products/:category',
+    path: '',
     component: ProductsByCategoryPage
   }
 ];
@@ -18,6 +18,7 @@ const routes: Routes = [
     IonicModule,
     CommonModule,
     RouterModule.forChild(routes),
-    NgxProgressiveImageLoaderModule.forRoot()  ]
+    NgxProgressiveImageLoaderModule
+  ]
 })
 export class ProductsByCategoryModule { }

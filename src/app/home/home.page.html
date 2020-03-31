@@ -22,11 +22,24 @@
     </ion-slides> -->
   <!-- </ion-card> -->
   
-  <ngx-slick-carousel class="carousel offers" style="min-height: calc(50vw - 15px) !important;" [config]="offersConfig">
-    <div ngxSlickItem *ngFor="let number of [1,2,3,4]" class="slide">
-      <img src="./assets/images/{{number}}.jpg " alt="" width="100%">
+  <!-- <ngx-slick-carousel class="carousel offers" #slickModal="slick-carousel" [config]="offersConfig" style="min-height: calc(50vw - 15px) !important;">
+    <div ngxSlickItem *ngFor="let number of [1,2,3,4]" class="slide fade">
+      <div>
+        <img src="./assets/images/{{number}}.jpg " alt="" width="100%">
+      </div>
     </div>
-  </ngx-slick-carousel>
+  </ngx-slick-carousel> -->
+
+  <owl-carousel
+  [options]="offersConfig"
+  [carouselClasses]="['owl-theme', 'row', 'sliding', 'offers']"
+  [items]="offers">
+    <div class="item" *ngFor="let image of offers;let i = index">
+      <div class="image-wrapper">
+        <img src="./assets/images/{{image}}-small.jpg" srcset="./assets/images/{{image}}-small.jpg 205w, ./assets/images/{{image}}-large.jpg 587w" sizes="100vw">
+      </div>
+    </div>
+  </owl-carousel>
 
   <!-- <mdb-carousel style="--animation-order: 1;" #carousel class="carousel slide carousel-fade" [animation]="'fade'" >
     <mdb-carousel-item *ngFor="let number of [1,2,3,4]">
@@ -43,8 +56,8 @@
   <ion-header style="--animation-order: 2;" class="new-deals-header">New Deals</ion-header>
   <!-- New Deals Slider Skeleton Begin-->
   <div *ngIf="!(popProducts.length > 0)">
-    <ion-slides style="--animation-order: 3;" [options]="slideOpts" class="new-deals">
-      <ion-slide class="new-deal-slides" *ngFor="let product of [1,2,3,4,5,6] ">
+    <ion-slides style="--animation-order: 3;" [options]="{slidesPerView: 3}" class="new-deals">
+      <ion-slide class="new-deal-slides" *ngFor="let product of [1,2,3] ">
         <ion-thumbnail> 
           <ion-skeleton-text animated></ion-skeleton-text>
         </ion-thumbnail>
@@ -60,13 +73,27 @@
   <!-- New Deals Slider Skeleton End-->
   
   <div *ngIf="popProducts.length > 0">
-    <ngx-slick-carousel style="--animation-order: 3;" class="carousel new-deals" [config]="newDealsConfig">
+    <!-- <ngx-slick-carousel [config]="newDealsConfig" style="--animation-order: 3;" class="carousel new-deals">
       <div ngxSlickItem *ngFor="let product of popProducts;trackBy: trackByFn" class="slide"  [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
         <img [src]="product?.images[0].src" alt="">
         <ion-label class="new-deals-label ion-text-wrap" >{{ product?.name }} </ion-label>
         <p class="new-deals-price" [innerHTML]="product?.price_html"></p>
       </div>
-    </ngx-slick-carousel>
+    </ngx-slick-carousel> -->
+
+    <owl-carousel
+    [options]="newDealsConfig"
+    [carouselClasses]="['owl-theme', 'row', 'sliding', 'new-deals']"
+    [items]="popProducts">
+      <div class="item" *ngFor="let product of popProducts;let i = index" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
+        <div class="image-wrapper">
+          <img src="{{(product?.images[0].src).substring(0,(product?.images[0].src).length-4) + '-100x100' + (product?.images[0].src).substring((product?.images[0].src).length-4)}}">
+          <ion-label class="new-deals-label ion-text-wrap" >{{ product?.name }} </ion-label>
+          <p class="new-deals-price" [innerHTML]="product?.price_html"></p>
+        </div>
+        
+      </div>
+    </owl-carousel>
     
     <!-- <ion-slides style="--animation-order: 3;" [options]="slideOpts" class="new-deals">
       <ion-slide class="new-deal-slides" *ngFor="let product of popProducts" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
@@ -120,7 +147,7 @@
           <ion-card>
             <!-- <ion-thumbnail> -->
               <ngx-progressive-image-loader placeholderImageSrc="{{(product?.images[0].src).substring(0,(product?.images[0].src).length-4) + '-100x100' + (product?.images[0].src).substring((product?.images[0].src).length-4)}}">
-                <img [src]="product?.images[0].src ? product?.images[0].src : ''" ngxProgressiveImage/>
+                <img src="{{(product?.images[0].src).substring(0,(product?.images[0].src).length-4) + '-300x300' + (product?.images[0].src).substring((product?.images[0].src).length-4)}}" ngxProgressiveImage/>
               </ngx-progressive-image-loader>
               <!-- <img [src]="product?.images[0].src"/> -->
             <!-- </ion-thumbnail> -->

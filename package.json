@@ -44,6 +44,7 @@
     "crypto-js": "^4.0.0",
     "hammerjs": "^2.0.8",
     "jquery": "^3.4.1",
+    "ngx-owl-carousel": "^2.0.7",
     "ngx-progressive-image-loader": "^4.0.0",
     "ngx-slick-carousel": "^0.4.7",
     "ngx-useful-swiper": "^8.0.1-beta.2",

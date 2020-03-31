@@ -38,25 +38,15 @@
               {
                 "input": "src/global.scss"
               },
-              "./node_modules/@mobiscroll/angular-lite/dist/css/mobiscroll.min.css",
               "./node_modules/swiper/css/swiper.min.css",
-              "./node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
-              "./node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
-              "./node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
-              "./node_modules/@fortawesome/fontawesome-free/scss/brands.scss",
-              "./node_modules/angular-bootstrap-md/assets/scss/bootstrap/bootstrap.scss",
-              "./node_modules/angular-bootstrap-md/assets/scss/mdb.scss",
-              "./node_modules/animate.css/animate.css",
-              "./node_modules/slick-carousel/slick/slick.scss",
-              "./node_modules/slick-carousel/slick/slick-theme.scss"
+              "./node_modules/owl.carousel/dist/assets/owl.carousel.min.css",
+              "./node_modules/owl.carousel/dist/assets/owl.theme.default.min.css",
+              "./node_modules/@mobiscroll/angular-lite/dist/css/mobiscroll.min.css"
             ],
             "scripts": [
-              "./node_modules/swiper/js/swiper.js",
               "./node_modules/swiper/js/swiper.min.js",
-              "./node_modules/chart.js/dist/Chart.js",
-              "./node_modules/hammerjs/hammer.min.js",
               "./node_modules/jquery/dist/jquery.min.js",
-              "./node_modules/slick-carousel/slick/slick.min.js"
+              "./node_modules/owl.carousel/dist/owl.carousel.min.js"
             ]
           },
           "configurations": {
