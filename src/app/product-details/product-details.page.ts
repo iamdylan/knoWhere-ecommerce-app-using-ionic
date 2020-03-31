@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
@@ -27,7 +27,7 @@ export class ProductDetailsPage implements OnInit {
     loop: false,
   };
 
-  constructor(private route: ActivatedRoute, private ngZone: NgZone, public storage: Storage,
+  constructor(private route: ActivatedRoute, public storage: Storage,
     public toastCtrl: ToastController, public modalCtrl: ModalController, public WooCom: WooCommerceService, public http: HttpClient) {
 
     this.productInfo = [];

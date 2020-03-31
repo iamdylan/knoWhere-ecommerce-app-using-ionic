@@ -7,7 +7,7 @@ import { NgxProgressiveImageLoaderModule, IImageLoaderOptions } from 'ngx-progre
 
 const routes: Routes = [
     {
-      path: 'product-details/:product',
+      path: '',
       component: ProductDetailsPage
     }
 ];
@@ -18,7 +18,7 @@ const routes: Routes = [
     IonicModule,
     CommonModule,
     RouterModule.forChild(routes),
-    NgxProgressiveImageLoaderModule.forRoot()
+    NgxProgressiveImageLoaderModule
   ]
 })
 export class ProductDetailsModule { }

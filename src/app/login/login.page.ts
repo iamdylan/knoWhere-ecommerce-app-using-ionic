@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, Events, ToastController, LoadingController } from '@ionic/angular';
+import { AlertController, ToastController, LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { MbscFormOptions } from '@mobiscroll/angular-lite/src/js/forms.angular';
 import { GetUserInfo } from '../menu/getUserInfo.service';
@@ -22,7 +22,7 @@ export class LoginPage implements OnInit {
 
   constructor(private fb: FormBuilder, public http: HttpClient, private router: Router,
   public toastCtrl: ToastController, public storage: Storage, public alertCtrl: AlertController,
-  public events: Events, private routingState: RoutingStateService, public getUserInfo: GetUserInfo,
+  private routingState: RoutingStateService, public getUserInfo: GetUserInfo,
   public WooCom: WooCommerceService, public loadingCtrl: LoadingController) {
 
   }

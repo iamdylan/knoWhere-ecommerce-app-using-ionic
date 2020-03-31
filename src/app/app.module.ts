@@ -1,52 +1,45 @@
-import { NgModule } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { IonicStorageModule } from '@ionic/storage';
-import { MbscModule } from '@mobiscroll/angular-lite';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
+import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicStorageModule } from '@ionic/storage';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouteReuseStrategy } from '@angular/router';
+import { RoutingStateService } from './services/routing-state.service';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IImageLoaderOptions, NgxProgressiveImageLoaderModule } from 'ngx-progressive-image-loader';
 import { HomePageModule } from './home/home.module';
 import { HomePage } from './home/home.page';
-import { NeedAuthGuard } from './login/auth.guard';
-import { GetUserInfo } from './menu/getUserInfo.service';
 import { MenuPage } from './menu/menu.page';
+import { GetUserInfo } from './menu/getUserInfo.service';
+import { LoginPage } from './login/login.page';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PayPal } from '@ionic-native/paypal/ngx';
+import { MbscModule } from '@mobiscroll/angular-lite';
+import { AppComponent } from './app.component';
+// import { OwlModule } from 'ngx-owl-carousel';
+import { NeedAuthGuard } from './login/auth.guard';
+import { LoginPageModule } from './login/login.module';
+import { CartPageModule } from './cart/cart.module';
+import { CheckoutPageModule } from './checkout/checkout.module';
 import { ProductDetailsModule } from './product-details/product-details.module';
-import { ProductDetailsPage } from './product-details/product-details.page';
 import { ProductsByCategoryModule } from './products-by-category/products-by-category.module';
-import { ProductsByCategoryPage } from './products-by-category/products-by-category.page';
-import { RoutingStateService } from './services/routing-state.service';
+import { SignupPageModule } from './signup/signup.module';
 import { EmailValidator } from './validators/email.validator';
 import { UserValidator } from './validators/username.validator';
-import { HttpClientModule } from '@angular/common/http';
-import { PayPal } from '@ionic-native/paypal/ngx';
-import { NgxProgressiveImageLoaderModule, IImageLoaderOptions } from 'ngx-progressive-image-loader';
 // import { OneSignal } from '@ionic-native/onesignal/ngx';
-import { SlickCarouselModule } from 'ngx-slick-carousel';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, MenuPage],
-  entryComponents: [AppComponent, MenuPage, HomePage, ProductsByCategoryPage, ProductDetailsPage],
+  entryComponents: [AppComponent, HomePage, LoginPage],
   imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    MbscModule,
     BrowserModule,
     IonicModule.forRoot(),
-    ProductsByCategoryModule,
-    ProductDetailsModule,
-    HomePageModule,
-    AppRoutingModule,
     HttpClientModule,
-    NgxUsefulSwiperModule,
     IonicStorageModule.forRoot(),
-    MDBBootstrapModule.forRoot(),
+    BrowserAnimationsModule,
     NgxProgressiveImageLoaderModule.forRoot(<IImageLoaderOptions>{
       // rootMargin must be specified in pixels or percent
       rootMargin: '0px',
@@ -56,19 +49,30 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       // image width / height ratio for image holder
       imageRatio: 1 / 1
     }),
-    SlickCarouselModule,
-    BrowserAnimationsModule
+    // OwlModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MbscModule,
+    HomePageModule,
+    ProductsByCategoryModule,
+    ProductDetailsModule,
+    CartPageModule,
+    SignupPageModule,
+    LoginPageModule,
+    CheckoutPageModule,
+    // SlickCarouselModule,
   ],
   providers: [
-    StatusBar,
     SplashScreen,
+    StatusBar,
+    RoutingStateService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     FormBuilder,
+    GetUserInfo,
     EmailValidator,
     UserValidator,
     NeedAuthGuard,
-    RoutingStateService,
-    GetUserInfo,
     PayPal,
     // OneSignal
   ],

@@ -13,6 +13,10 @@ ion-card-title {
     padding-bottom: 5px;
 }
 
+ion-card-title.md.hydrated {
+    font-weight: bold !important;
+}
+
 ion-chip {
     height: 1.4em;
     margin-top: 0;

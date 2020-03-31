@@ -16,7 +16,6 @@ export class CartPage implements OnInit {
   total: any;
   // showEmptyCartMessage: boolean;
 
-
   constructor(public storage: Storage, public modalCtrl: ModalController, private location: Location,
     public toastCtrl: ToastController, private router: Router) {
     // this.showEmptyCartMessage = false;
@@ -65,7 +64,7 @@ export class CartPage implements OnInit {
         this.cartItems = data;
 
         if (this.cartItems != null && this.cartItems.length > 0) {
-          this.cartItems.forEach( (item, index) => {
+          this.cartItems.forEach( (item) => {
             this.total = this.total + (item.product.price * item.qty);
           });
         }

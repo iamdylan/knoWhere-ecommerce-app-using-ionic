@@ -70,7 +70,7 @@
 }
 
 .home ion-card-header, .prodsByCat ion-card-header {
-    padding-top: 10px;
+    padding-top: 5px;
     padding-bottom: 0px;
     padding-left: 10px;
     padding-right: 10px;
@@ -107,9 +107,10 @@
 
 .home .custom-desc, .prodsByCat .custom-desc {
     font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 0.4px;
-    font-family: serif;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    font-family: inherit;
+    word-spacing: 0.1em;
     line-height: 1;
 }
 
@@ -122,13 +123,9 @@
     --inner-border-width: 0;
 }
 
-.carousel, .new-deals-header, .more-prod-header,ion-grid, ion-slide, .outofstock, .empty {
+owl-carousel-child.offers, .new-deals-header, owl-carousel-child.new-deals, .more-prod-header,.home ion-grid, .outofstock, .empty{
     opacity: 0;
-    animation-name: fade;
-    animation-duration: 600ms;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease;
-    animation-delay: calc(var(--animation-order) * 160ms);
+    animation: fade 600ms ease calc(var(--animation-order) * 160ms) forwards;
 }
 
 @keyframes fade {
@@ -138,11 +135,74 @@
 //End Home and Category pages Styles//
 
 
+//Begin ngx-owl-carousel styles//
+owl-carousel-child {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.owl-theme .owl-dots {
+    position: absolute;
+    bottom: -3%;
+    width: 100%;
+}
+
+.owl-nav {
+    position: absolute;
+    width: 100%;
+    margin-top: 0 !important;
+    height: 0;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.owl-theme .owl-nav [class*='owl-'] {
+    font-size: 1.2em !important;
+    padding: 2px 13px !important;
+    background: #bebebe29 !important;
+    border-radius: 50px !important;
+    position: absolute !important;
+    margin: 0 !important;
+    font-weight: bold;
+}
+
+.owl-prev {
+    left: 0px;
+}
+
+.owl-next {
+    right: 0px;
+}
+
+owl-carousel-child.offers {
+    --animation-order: 1;
+}
+
+owl-carousel-child.new-deals {
+    background-color: #ededed;
+    text-align: center;
+    font-weight: 500;
+    --animation-order: 3;
+    .new-deals-label {
+        line-height: 2;
+        letter-spacing: 0.02em;
+        font-size: 14px;
+    }
+    img {
+        width: 76% !important;
+        margin: 0 auto;
+        margin-bottom: 5px;
+    }
+}
+//End ngx-owl-carousel styles//
+
+
 //Begin Mobiscroll Styles//
 .md-login-form .mbsc-ios.mbsc-form {
     background: rgb(157,235,255) !important;
-    background: radial-gradient(circle, rgba(157,235,255,1) 0%, rgba(102,223,255,1) 50%, rgba(17,154,191,1) 100%) !important;
-    background: radial-gradient(circle, rgba(0,102,129,1) 0%, rgba(0,131,164,1) 69%, rgba(0,167,210,1) 100%)!important;
+    background: radial-gradient(circle, #0090a7 0%, #15a8bf 69%, #35d5ef 100%) !important;
     min-height: 100%;
 }
 
@@ -166,29 +226,50 @@
     margin-top: 0 !important;
 }
 
-.mbsc-ios.mbsc-form a{
+.md-login-form .mbsc-input-wrap {
+    padding-right: 0 !important;
+}
+
+.mbsc-ios.mbsc-form a {
     color: white;
+    text-decoration: underline;
+    font-size: 1.05em;
 }
 
 .mbsc-ios .mbsc-btn {
-    color: var(--kw-primary) !important;
+    color: #006f89 !important;
     font-weight: 700;
     font-size: 1.1em;
 }
 
 .mbsc-form {
-    font-family: inter, sans-serif !important;
+    font-family: inherit;
 }
 
-.mbsc-input-wrap{
-    padding-right: 0 !important;
+.mbsc-material.mbsc-input {
+    margin-bottom: 2em !important;
+}
+
+.mbsc-material.mbsc-label-floating.mbsc-input .mbsc-label {
+    line-height: 3em !important;
 }
 
 .mbsc-err-msg {
-    font-size: .80em !important;
+    font-size: .90em !important;
     min-width: 100%;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    background-color: #ffc82e36;
+    padding-bottom: 0.2em;
+    padding-left: 0.2em;
+    letter-spacing: 0.04em;
+    opacity: 0;
+    animation: err 150ms linear forwards;
+}
+
+@keyframes err {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
 }
 
 .mbsc-material .mbsc-input input:focus {
@@ -196,7 +277,7 @@
 }
 
 .mbsc-material .mbsc-input .mbsc-label {
-    font-size: .80em !important;
+    font-size: 1em !important;
     letter-spacing: 0.02em;
 }
 
@@ -216,8 +297,12 @@
     margin-bottom: 2.5em !important;
 }
 
-.mbsc-material .mbsc-err-msg, .mbsc-material .mbsc-err .mbsc-label {
+.mbsc-material .mbsc-err-msg, .mbsc-material .mbsc-err {
     color: #FF5722 !important;
+}
+
+.mbsc-material .mbsc-label {
+    color: black !important;
 }
 
 .checkOut mbsc-form-group-title {
@@ -227,9 +312,9 @@
 
 
 //Begin MDB Carousel Styles//
-mdb-carousel div .carousel-inner {
-    background-color: #696969;
-}
+// mdb-carousel div .carousel-inner {
+//     background-color: #696969;
+// }
 
 // .new-deals-header, ion-slides {
 //     animation-delay: calc(var(--animation-order) * 200ms);
@@ -264,60 +349,58 @@ mdb-carousel div .carousel-inner {
 }
 
 
-
 //Begin ngx-slick-carousel styles//
-.slick-prev {
-    left: 5px !important;
-    z-index: 1;
-  }
+// .slick-prev {
+//     left: 5px !important;
+//     z-index: 1;
+//   }
   
-.slick-next {
-    right: 5px !important;
-}
+// .slick-next {
+//     right: 5px !important;
+// }
  
-.slick-dotted.slick-slider {
-    margin-bottom: 0 !important;
-}
-
-.slick-dots {
-    bottom: 0px !important;
-}
-
-.slick-dots li button::before {
-    font-size: 10px !important;
-    color: #fff !important;
-    opacity: 0.7;
-}
-
-.slick-dots li.slick-active button::before {
-    color: #fff !important;
-    opacity: 1 !important;
-}
-
-.new-deals .slick-list .slick-slide img {
-    padding-left: 18px !important;
-    padding-right: 18px !important;
-    margin-bottom: 5px !important;
-}
-
-// .offers .slick-list {
-//     min-height: calc(24vh - 18px) !important;
+// .slick-dotted.slick-slider {
+//     margin-bottom: 0 !important;
 // }
 
-.new-deals .slick-list { 
-    max-height: calc(33vw + 25px) !important;
-}
+// .slick-dots {
+//     bottom: 0px !important;
+// }
 
-.new-deals .slick-slide {
-    min-width: 33vw !important;
-    text-align: center;
-    font-weight: 500;
-}
+// .slick-dots li button::before {
+//     font-size: 10px !important;
+//     color: #fff !important;
+//     opacity: 0.7;
+// }
+
+// .slick-dots li.slick-active button::before {
+//     color: #fff !important;
+//     opacity: 1 !important;
+// }
+
+// .new-deals .slick-list .slick-slide img {
+//     padding-left: 18px !important;
+//     padding-right: 18px !important;
+//     margin-bottom: 5px !important;
+// }
+
+// // .offers .slick-list {
+// //     min-height: calc(24vh - 18px) !important;
+// // }
+
+// .new-deals .slick-list { 
+//     max-height: calc(33vw + 25px) !important;
+// }
+
+// .new-deals .slick-slide {
+//     min-width: 33vw !important;
+//     text-align: center;
+//     font-weight: 500;
+// }
 //End ngx-slick-carousel styles//
 
 
-@import "~@mobiscroll/angular-lite/dist/css/mobiscroll.css";
-
+@import "~@mobiscroll/angular-lite/dist/css/mobiscroll.min.css";
 @import '~ngx-progressive-image-loader/ngx-progressive-image-loader';
 // .ngx-image-placeholder .placeholder-loading-image {
 //     height: auto;
@@ -333,6 +416,6 @@ mdb-carousel div .carousel-inner {
 
 
 $scale: 1; // the scale of loading image in place holder
-$transition: opacity 0.5s linear; // the transition of loading image in place holder, you could try: opacity .3s ease
+$transition: opacity 1s ease; // the transition of loading image in place holder, you could try: opacity .3s ease
 @include progressive-image-loader($scale, $transition);
 

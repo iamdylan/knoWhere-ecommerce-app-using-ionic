@@ -6,7 +6,6 @@ import { Storage } from '@ionic/storage';
 import { MbscFormOptions } from '@mobiscroll/angular-lite';
 import countries from '../countries.json';
 import errorMessages from '../errorMessages.json';
-import { RoutingStateService } from '../services/routing-state.service.js';
 import { WooCommerceService } from '../services/woo-commerce.service';
 import { EmailValidator } from '../validators/email.validator';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -36,7 +35,7 @@ export class CheckoutPage implements OnInit {
   checkOutForm: FormGroup;
 
   constructor(public fb: FormBuilder, public emailValidator: EmailValidator, public storage: Storage, private ngZone: NgZone,
-    public alertCtrl: AlertController, private routingState: RoutingStateService, private router: Router,
+    public alertCtrl: AlertController, private router: Router,
     public WooCom: WooCommerceService, public http: HttpClient, public loadingCtrl: LoadingController, public payPal: PayPal) {
 
     this.label_style = 'floating';

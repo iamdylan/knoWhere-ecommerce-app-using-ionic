@@ -82,6 +82,10 @@
   --kw-price: #ff3d00;
 }
 
+html.ios, html.md {
+  --ion-default-font: Inter, sans-serif !important;
+}
+
 ion-menu-button {
   --color: var(--kw-primary-tint);
 }
@@ -95,9 +99,9 @@ ion-fab-button{
 
 ion-toolbar{
   --background: var(--kw-secondary);
-  // --background: #2F3C7E;
   --color: white;
   box-shadow: 0px 1px 6px 0px #000000;
+  // --background: #2F3C7E;
 }
 
 ion-title {
@@ -117,25 +121,16 @@ ion-title {
   width: 100%;
 }
 
-html.ios{
-  --ion-font-family: inter, sans-serif !important;
-  --ion-default-font: inter, sans-serif !important;
-}
-
-html.md{
-  --ion-font-family: inter, sans-serif !important;
-  --ion-default-font: inter, sans-serif !important;
-}
-
 body{
-  font-family: inter, sans-serif !important;
   font-weight: 400 !important;
 }
 
 ion-back-button {
   margin-left: 15px;
-  padding-left: 10px;
-  padding-right: 10px;
+  .ios {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
   --color: var(--kw-primary-tint) !important;
   --icon-font-size: 25px !important;
   z-index: 1;
@@ -167,40 +162,37 @@ ion-item .item-detail-icon {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
-  src: url('../assets/fonts/inter/Inter-Regular.ttf');
+  src:  url('../assets/fonts/inter/Inter-Regular.woff2'),
+        url('../assets/fonts/inter/Inter-Regular.ttf');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Inter';
   font-style: medium;
   font-weight: 500;
-  src: url('../assets/fonts/inter/Inter-Medium.ttf');
+  src:  local('Inter-Medium')
+        url('../assets/fonts/inter/Inter-Medium.woff2'),
+        url('../assets/fonts/inter/Inter-Medium.ttf');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Inter';
   font-style: semibold;
   font-weight: 600;
-  src: url('../assets/fonts/inter/Inter-SemiBold.ttf');
+  src:  local('Inter-SemiBold')
+        url('../assets/fonts/inter/Inter-SemiBold.woff2'),
+        url('../assets/fonts/inter/Inter-SemiBold.ttf');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Inter';
   font-style: bold;
   font-weight: 700;
-  src: url('../assets/fonts/inter/Inter-Bold.ttf');
-}
-
-@font-face {
-  font-family: 'Inter';
-  font-style: extra-bold;
-  font-weight: 800;
-  src: url('../assets/fonts/inter/Inter-ExtraBold.ttf');
-}
-
-@font-face {
-  font-family: 'Inter';
-  font-style: black;
-  font-weight: 900;
-  src: url('../assets/fonts/inter/Inter-Black.ttf');
+  src:  local('Inter-Bold')
+        url('../assets/fonts/inter/Inter-Bold.woff2'),
+        url('../assets/fonts/inter/Inter-Bold.ttf');
+  font-display: swap;
 }

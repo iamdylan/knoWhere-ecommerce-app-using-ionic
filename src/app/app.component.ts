@@ -30,19 +30,19 @@ export class AppComponent implements OnInit {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
 
-      // this.oneSignal.startInit('7f203b9b-30fb-4466-9924-224163e0b51b', '423456359366');
+    //   this.oneSignal.startInit('7f203b9b-30fb-4466-9924-224163e0b51b', '423456359366');
 
-      // this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+    //   this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
-      // this.oneSignal.handleNotificationReceived().subscribe(() => {
-      // // do something when notification is received
-      // });
+    //   this.oneSignal.handleNotificationReceived().subscribe(() => {
+    //   // do something when notification is received
+    //   });
 
-      // this.oneSignal.handleNotificationOpened().subscribe(() => {
-      //   // do something when a notification is opened
-      // });
+    //   this.oneSignal.handleNotificationOpened().subscribe(() => {
+    //     // do something when a notification is opened
+    //   });
 
-      // this.oneSignal.endInit();
+    //   this.oneSignal.endInit();
     });
   }
 

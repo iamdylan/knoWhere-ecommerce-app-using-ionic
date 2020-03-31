@@ -44,7 +44,7 @@
           <ion-card>
             <!-- <ion-thumbnail> -->
                 <ngx-progressive-image-loader placeholderImageSrc="{{(product?.images[0].src).substring(0,(product?.images[0].src).length-4) + '-100x100' + (product?.images[0].src).substring((product?.images[0].src).length-4)}}">
-                  <img [src]="product?.images[0].src ? product?.images[0].src : ''" ngxProgressiveImage>
+                  <img src="{{(product?.images[0].src).substring(0,(product?.images[0].src).length-4) + '-300x300' + (product?.images[0].src).substring((product?.images[0].src).length-4)}}" ngxProgressiveImage>
                 </ngx-progressive-image-loader>
               <!-- <img [src]="product?.images[0].src"> -->
             <!-- </ion-thumbnail> -->
