@@ -43,7 +43,7 @@
     "core-js": "^3.6.4",
     "crypto-js": "^4.0.0",
     "hammerjs": "^2.0.8",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "ngx-owl-carousel": "^2.0.7",
     "ngx-progressive-image-loader": "^4.0.0",
     "ngx-slick-carousel": "^0.4.7",
