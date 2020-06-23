@@ -3,10 +3,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { HomePage } from './home.page';
-// import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { OwlModule } from 'ngx-owl-carousel';
 import { NgxProgressiveImageLoaderModule } from 'ngx-progressive-image-loader';
-// import { CarouselModule, WavesModule } from 'angular-bootstrap-md';
+import { PipesModule } from '../pipes/pipes.module';
 
 const routes: Routes = [
   {
@@ -20,11 +19,9 @@ const routes: Routes = [
     CommonModule,
     IonicModule,
     RouterModule.forChild(routes),
+    PipesModule,
     OwlModule,
     NgxProgressiveImageLoaderModule,
-    // CarouselModule,
-    // WavesModule,
-    // SlickCarouselModule
   ],
   declarations: [HomePage]
 })

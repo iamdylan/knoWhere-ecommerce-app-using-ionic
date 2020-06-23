@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePage } from './home/home.page';
-import { NeedAuthGuard } from './login/auth.guard';
+// import { HomePage } from './home/home.page';
+import { CheckAuthGuard } from './cart/auth.guard';
 import { CheckoutGuard } from './checkout/checkout.guard';
-import { LoginPage } from './login/login.page';
+import { CheckLoggedIn } from './login/login.guard';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/home',
-    pathMatch: 'full'
-  },
+  // {
+  //   path: '',
+  //   redirectTo: '/home',
+  //   pathMatch: 'full'
+  // },
   {
     path: 'home',
-    component: HomePage
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
     path: 'products/:category',
@@ -25,7 +25,7 @@ const routes: Routes = [
   },
   {
     path: 'cart',
-    loadChildren: () => import('./cart/cart.module').then(m => m.CartPageModule), canActivate: [NeedAuthGuard]
+    loadChildren: () => import('./cart/cart.module').then(m => m.CartPageModule), canActivate: [CheckAuthGuard]
   },
   {
     path: 'signup',
@@ -33,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginPage
+    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule), canActivate: [CheckLoggedIn]
   },
   {
     path: 'checkout',

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ProductDetailsPage } from './product-details.page';
-import { NgxProgressiveImageLoaderModule, IImageLoaderOptions } from 'ngx-progressive-image-loader';
+import { NgxProgressiveImageLoaderModule } from 'ngx-progressive-image-loader';
 
 const routes: Routes = [
     {

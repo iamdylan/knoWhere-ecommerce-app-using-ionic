@@ -11,59 +11,333 @@
 </ion-header>
 
 <ion-content>
-  <mbsc-form class="checkOut" [options]="formSettings">
-    <form novalidate [formGroup]="checkOutForm">
-      <mbsc-form-group formGroupName="billing" >
-        <mbsc-form-group-title><b>Billing Details</b></mbsc-form-group-title>
-        <mbsc-form-group-content>
-          <mbsc-input formControlName="first_name" [label-style]="label_style" [error]="checkOutForm.controls['billing']['controls']['first_name'].touched && checkOutForm.controls['billing']['controls']['first_name'].invalid" [errorMessage]="getErrorMessage('billing.first_name')">First Name</mbsc-input>
-          <mbsc-input formControlName="last_name" [label-style]="label_style" [error]="checkOutForm.controls['billing']['controls']['last_name'].touched && checkOutForm.controls['billing']['controls']['last_name'].invalid" [errorMessage]="getErrorMessage('billing.last_name')">Last Name</mbsc-input>
-          <mbsc-input formControlName="address_1" [label-style]="label_style" [error]="checkOutForm.controls['billing']['controls']['address_1'].touched && checkOutForm.controls['billing']['controls']['address_1'].invalid" [errorMessage]="getErrorMessage('billing.address_1')">Address Line 1</mbsc-input>
-          <mbsc-input formControlName="address_2" [label-style]="label_style" [error]="checkOutForm.controls['billing']['controls']['address_2'].touched && checkOutForm.controls['billing']['controls']['address_2'].invalid" [errorMessage]="getErrorMessage('billing.address_2')">Address Line 2</mbsc-input>
-          <mbsc-dropdown formControlName="country" [error]="checkOutForm.controls['billing']['controls']['country'].touched && checkOutForm.controls['billing']['controls']['country'].invalid" [errorMessage]="getErrorMessage('billing.country')">
-              <option value="" disabled selected hidden>Country</option>
-              <option *ngFor = "let c of countries" value="{{c.country_id}}">{{c.country_title}}</option>
-          </mbsc-dropdown>
-          <mbsc-input formControlName="state" [label-style]="label_style" [error]="checkOutForm.controls['billing']['controls']['state'].touched && checkOutForm.controls['billing']['controls']['state'].invalid" [errorMessage]="getErrorMessage('billing.state')">State</mbsc-input>
-          <mbsc-input formControlName="city" [label-style]="label_style" [error]="checkOutForm.controls['billing']['controls']['city'].touched && checkOutForm.controls['billing']['controls']['city'].invalid" [errorMessage]="getErrorMessage('billing.city')">City</mbsc-input>
-          <mbsc-input formControlName="postcode" [label-style]="label_style" [error]="checkOutForm.controls['billing']['controls']['postcode'].touched && checkOutForm.controls['billing']['controls']['postcode'].invalid" [errorMessage]="getErrorMessage('billing.postcode')">Postal Code</mbsc-input>
-          <mbsc-input formControlName="phone" [label-style]="label_style" [error]="checkOutForm.controls['billing']['controls']['phone'].touched && checkOutForm.controls['billing']['controls']['phone'].invalid" [errorMessage]="getErrorMessage('billing.phone')">Phone No.</mbsc-input>
-          <mbsc-switch color="primary" (change)="setBillingToShipping()"> 
-            Billing Details same as Shipping Details?
-          </mbsc-switch>
-        </mbsc-form-group-content>
-      </mbsc-form-group>
+  
+  <ion-slides #checkOutSlider [options]="sliderConfig">
+    <!-- SHIPPING DETAILS BEGIN -->
+    <ion-slide>
+      <ion-header>
+        <ion-toolbar>
+          Shipping Details
+        </ion-toolbar>
+      </ion-header>
+      <form class="shipping" novalidate [formGroup]="shippingForm">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <!-- <ion-label position="floating">First Name</ion-label> -->
+                <ion-input formControlName="first_name" type="text" placeholder="First Name"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!shippingForm.controls['first_name'].valid && shippingForm.controls['first_name'].touched">
+                  {{this.shippingForm.controls['first_name'] | getError : this.shippingForm : 'first_name'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
 
-      <mbsc-form-group formGroupName="shipping" *ngIf="!billing_shipping_same">
-        <mbsc-form-group-title><b>Shipping Details</b></mbsc-form-group-title>
-        <mbsc-form-group-content>
-          <mbsc-input formControlName="first_name" [label-style]="label_style" [error]="checkOutForm.controls['shipping']['controls']['first_name'].touched && checkOutForm.controls['shipping']['controls']['first_name'].invalid" [errorMessage]="getErrorMessage('shipping.first_name')">First Name</mbsc-input>
-          <mbsc-input formControlName="last_name" [label-style]="label_style" [error]="checkOutForm.controls['shipping']['controls']['last_name'].touched && checkOutForm.controls['shipping']['controls']['last_name'].invalid" [errorMessage]="getErrorMessage('shipping.last_name')">Last Name</mbsc-input>
-          <mbsc-input formControlName="address_1" [label-style]="label_style" [error]="checkOutForm.controls['shipping']['controls']['address_1'].touched && checkOutForm.controls['shipping']['controls']['address_1'].invalid" [errorMessage]="getErrorMessage('shipping.address_1')">Address Line 1</mbsc-input>
-          <mbsc-input formControlName="address_2" [label-style]="label_style" [error]="checkOutForm.controls['shipping']['controls']['address_2'].touched && checkOutForm.controls['shipping']['controls']['address_2'].invalid" [errorMessage]="getErrorMessage('shipping.address_2')">Address Line 2</mbsc-input>
-          <mbsc-dropdown formControlName="country" [error]="checkOutForm.controls['shipping']['controls']['country'].touched && checkOutForm.controls['shipping']['controls']['country'].invalid" [errorMessage]="getErrorMessage('shipping.country')">
-            <option value="" disabled selected hidden>Country</option>
-            <option *ngFor = "let c of countries" value="{{c.country_id}}">{{c.country_title}}</option>
-          </mbsc-dropdown>
-          <mbsc-input formControlName="state" [label-style]="label_style" [error]="checkOutForm.controls['shipping']['controls']['state'].touched && checkOutForm.controls['shipping']['controls']['state'].invalid" [errorMessage]="getErrorMessage('shipping.state')">State</mbsc-input>
-          <mbsc-input formControlName="city" [label-style]="label_style" [error]="checkOutForm.controls['shipping']['controls']['city'].touched && checkOutForm.controls['shipping']['controls']['city'].invalid" [errorMessage]="getErrorMessage('shipping.city')">City</mbsc-input>
-          <mbsc-input formControlName="postcode" [label-style]="label_style" [error]="checkOutForm.controls['shipping']['controls']['postcode'].touched && checkOutForm.controls['shipping']['controls']['postcode'].invalid" [errorMessage]="getErrorMessage('shipping.postcode')">Postal Code</mbsc-input>
-        </mbsc-form-group-content>
-      </mbsc-form-group>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <!-- <ion-label position="floating">Last Name</ion-label> -->
+                <ion-input formControlName="last_name" type="text" placeholder="Last Name"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!shippingForm.controls['last_name'].valid && shippingForm.controls['last_name'].touched">
+                  {{this.shippingForm.controls['last_name'] | getError : this.shippingForm : 'last_name'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <!-- <ion-label position="floating">Address Line 1</ion-label> -->
+                <ion-input formControlName="address_1" type="text" placeholder="Address Line 1"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!shippingForm.controls['address_1'].valid && shippingForm.controls['address_1'].touched">
+                  {{this.shippingForm.controls['address_1'] | getError : this.shippingForm : 'address_1'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <!-- <ion-label position="floating">Address Line 2</ion-label> -->
+                <ion-input formControlName="address_2" type="text" placeholder="Address Line 2"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!shippingForm.controls['address_2'].valid && shippingForm.controls['address_2'].touched">
+                  {{this.shippingForm.controls['address_2'] | getError : this.shippingForm : 'address_2'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col size="7">
+              <ion-item>
+                <!-- <ion-label position="floating">Country</ion-label> -->
+                <ion-select class="ion-no-padding" formControlName="country" interface="action-sheet" placeholder="Country">
+                  <ion-select-option *ngFor = "let c of countries" value="{{c.country_id}}">{{c.country_title}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!shippingForm.controls['country'].valid && shippingForm.controls['country'].touched">
+                  {{this.shippingForm.controls['country'] | getError : this.shippingForm : 'country'}}
+                </p>
+              </div>
+            </ion-col>
 
-      <mbsc-form-group formGroupName="payment">
-        <mbsc-form-group-title><b>Payment Details</b></mbsc-form-group-title>
-          <mbsc-form-group-content>
-            <mbsc-dropdown formControlName="paymeth" [error]="checkOutForm.controls['payment']['controls']['paymeth'].touched && checkOutForm.controls['payment']['controls']['paymeth'].invalid" [errorMessage]="getErrorMessage('payment.paymeth')">
-              <option value="" disabled selected hidden>Payment Method</option>
-              <option *ngFor="let p of paymentMethods" value="{{p.method_id}}">{{ p.method_title }}</option>
-          </mbsc-dropdown>
-          </mbsc-form-group-content>
-        </mbsc-form-group>
-    </form>
-  </mbsc-form>
+            <ion-col size="5">
+              <ion-item>
+                <!-- <ion-label position="floating">State</ion-label> -->
+                <ion-input formControlName="state" type="text" placeholder="State"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!shippingForm.controls['state'].valid && shippingForm.controls['state'].touched">
+                  {{this.shippingForm.controls['state'] | getError : this.shippingForm : 'state'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col size="6">
+              <ion-item>
+                <!-- <ion-label position="floating">City</ion-label> -->
+                <ion-input formControlName="city" type="text" placeholder="City"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!shippingForm.controls['city'].valid && shippingForm.controls['city'].touched">
+                  {{this.shippingForm.controls['city'] | getError : this.shippingForm : 'city'}}
+                </p>
+              </div>
+            </ion-col>
 
-  <ion-footer>
-    <ion-button expand="block" color="danger" (click)="placeOrder()">Place Order</ion-button>
-  </ion-footer>
+            <ion-col size="6">
+              <ion-item>
+                <!-- <ion-label position="floating">Postal Code</ion-label> -->
+                <ion-input formControlName="postcode" type="text" placeholder="Postal Code"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!shippingForm.controls['postcode'].valid && shippingForm.controls['postcode'].touched">
+                  {{this.shippingForm.controls['postcode'] | getError : this.shippingForm : 'postcode'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row class="row-same">
+            <ion-col>
+              <ion-item class="same" lines="none">
+                <ion-label>Billing details same as Shipping details?</ion-label>
+                <ion-toggle color="primary" slot="end" (ionChange)="setShippingToBilling()"></ion-toggle>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row class="row-btns">
+            <ion-col>
+              <ion-button expand="default" (click)="nextSlide(shippingForm)">Next<ion-icon class="next" name="arrow-dropright"></ion-icon></ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>  
+      </form>
+      
+      <!-- <div class="err-wrapper">
+        <p class="finalerr" *ngIf="shipFormNotValid && !shippingForm.valid">Something's missing... Please check again.</p>
+      </div> -->
+      
+    </ion-slide>
+    <!-- SHIPPING DETAILS END -->
+      
+    <!-- BILLING DETAILS BEGIN -->
+    <ion-slide>
+      <ion-header>
+        <ion-toolbar>
+          Billing Details
+        </ion-toolbar>
+      </ion-header>
+      <form class="billing" novalidate [formGroup]="billingForm">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <!-- <ion-label position="floating">First Name</ion-label> -->
+                <ion-input formControlName="first_name" type="text" placeholder="First Name"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['first_name'].valid && billingForm.controls['first_name'].touched">
+                  {{this.billingForm.controls['first_name'] | getError : this.billingForm : 'first_name'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <!-- <ion-label position="floating">Last Name</ion-label> -->
+                <ion-input formControlName="last_name" type="text" placeholder="Last Name"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['last_name'].valid && billingForm.controls['last_name'].touched">
+                  {{this.billingForm.controls['last_name'] | getError : this.billingForm : 'last_name'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <!-- <ion-label position="floating">Address Line 1</ion-label> -->
+                <ion-input formControlName="address_1" type="text" placeholder="Address Line 1"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['address_1'].valid && billingForm.controls['address_1'].touched">
+                  {{this.billingForm.controls['address_1'] | getError : this.billingForm : 'address_1'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <!-- <ion-label position="floating">Address Line 2</ion-label> -->
+                <ion-input formControlName="address_2" type="text" placeholder="Address Line 2"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['address_2'].valid && billingForm.controls['address_2'].touched">
+                  {{this.billingForm.controls['address_2'] | getError : this.billingForm : 'address_2'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col size="7">
+              <ion-item>
+                <!-- <ion-label position="floating">Country</ion-label> -->
+                <ion-select class="ion-no-padding" formControlName="country" interface="action-sheet" placeholder="Country">
+                  <ion-select-option *ngFor = "let c of countries" value="{{c.country_id}}">{{c.country_title}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['country'].valid && billingForm.controls['country'].touched">
+                  {{this.billingForm.controls['country'] | getError : this.billingForm : 'country'}}
+                </p>
+              </div>
+            </ion-col>
+
+            <ion-col size="5">
+              <ion-item>
+                <!-- <ion-label position="floating">State</ion-label> -->
+                <ion-input formControlName="state" type="text" placeholder="State"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['state'].valid && billingForm.controls['state'].touched">
+                  {{this.billingForm.controls['state'] | getError : this.billingForm : 'state'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col size="6">
+              <ion-item>
+                <!-- <ion-label position="floating">City</ion-label> -->
+                <ion-input formControlName="city" type="text" placeholder="City"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['city'].valid && billingForm.controls['city'].touched">
+                  {{this.billingForm.controls['city'] | getError : this.billingForm : 'city'}}
+                </p>
+              </div>
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-item>
+                <!-- <ion-label position="floating">Postal Code</ion-label> -->
+                <ion-input formControlName="postcode" type="text" placeholder="Postal Code"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['postcode'].valid && billingForm.controls['postcode'].touched">
+                  {{this.billingForm.controls['postcode'] | getError : this.billingForm : 'postcode'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <!-- <ion-label position="floating">Phone No.</ion-label> -->
+                <ion-input formControlName="phone" type="number" placeholder="Phone No."></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['phone'].valid && billingForm.controls['phone'].touched">
+                  {{this.billingForm.controls['phone'] | getError : this.billingForm : 'phone'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="row-btns">
+            <ion-col size="6">
+              <ion-button expand="default" (click)="prevSlide()"><ion-icon class="prev" name="arrow-dropleft"></ion-icon>Prev</ion-button>
+            </ion-col>
+            <ion-col size="6">
+              <ion-button expand="default" (click)="nextSlide(billingForm)">Next<ion-icon class="next" name="arrow-dropright"></ion-icon></ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+      
+      <!-- <div class="err-wrapper">
+        <p class="finalerr" *ngIf="billFormNotValid && !billingForm.valid">Something's missing... Please check again.</p>
+      </div> -->
+
+    </ion-slide>
+    <!-- BILLING DETAILS END -->
+
+    <!-- PAYMENT DETAILS END -->
+    <ion-slide>
+      <ion-header>
+        <ion-toolbar>
+          Payment Method
+        </ion-toolbar>
+      </ion-header>
+      <!-- <form class="payment" novalidate [formGroup]="paymentForm"> -->
+        <!-- <ion-list> -->
+          <ion-radio-group class="payment" (ionChange)="radioGroupChange($event)">
+            <ion-item *ngFor="let p of paymentMethods">
+              <ion-label>{{ p.method_title }}</ion-label>
+              <ion-radio formcontrolname="paymeth" slot="start" color="success" value="{{p.method_id}}"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        <!-- </ion-list> -->
+      <!-- </form> -->
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="5">
+            <ion-button expand="default" (click)="prevSlide()"><ion-icon class="prev" name="arrow-dropleft"></ion-icon>Prev</ion-button>
+          </ion-col>
+          <ion-col size="7">
+            <ion-button class="order" expand="default" (click)="placeOrder()">Place Order</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      
+      
+    </ion-slide>
+    <!-- PAYMENT DETAILS END -->
+  </ion-slides>
 </ion-content>

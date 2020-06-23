@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
@@ -10,17 +10,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./cart.page.scss'],
 })
 
-export class CartPage implements OnInit {
+export class CartPage {
 
   cartItems: any[] = [];
   total: any;
-  // showEmptyCartMessage: boolean;
 
   constructor(public storage: Storage, public modalCtrl: ModalController, private location: Location,
-    public toastCtrl: ToastController, private router: Router) {
-    // this.showEmptyCartMessage = false;
+  public toastCtrl: ToastController, private router: Router) {
     this.total = 0.0;
   }
+
 
   removeFromCart(item, i) {
     const price = item.product.price;
@@ -30,19 +29,18 @@ export class CartPage implements OnInit {
     this.storage.set('cart', this.cartItems).then( () => {
       this.total = this.total - (price * qty);
     });
-
-    // if (this.cartItems.length === 0) {
-    //   this.showEmptyCartMessage = true;
-    // }
   }
+
 
   closeCart() {
     this.location.back();
   }
 
+
   checkOut() {
     this.router.navigateByUrl('/checkout');
   }
+
 
   async toast() {
     const tc = await this.toastCtrl.create({
@@ -55,8 +53,6 @@ export class CartPage implements OnInit {
     tc.present();
   }
 
-  ngOnInit() {
-  }
 
   ionViewWillEnter() {
     this.storage.ready().then(() => {
@@ -71,5 +67,4 @@ export class CartPage implements OnInit {
       });
     });
   }
-
 }

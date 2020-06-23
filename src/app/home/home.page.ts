@@ -1,20 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { WooCommerceService } from '../services/woo-commerce.service';
-// import { ToastController } from '@ionic/angular';
-// import { CarouselComponent } from 'angular-bootstrap-md';
-// import { SlickCarouselComponent } from 'ngx-slick-carousel';
-// import 'progressive-image.js/dist/progressive-image';
+import { OwlCarousel } from 'ngx-owl-carousel';
+import { Services } from '../services/services.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class HomePage implements OnInit {
-  // @ViewChild('carousel', {read: CarouselComponent, static: true})carousel: CarouselComponent;
-  // @ViewChild('slickModal', {read: SlickCarouselComponent, static: true})slickModal: SlickCarouselComponent;
 
   popProducts: any;
   moreProducts: any[];
@@ -23,14 +19,8 @@ export class HomePage implements OnInit {
   offersConfig: {};
   newDealsConfig: {};
   offers: Array<number>;
-  // slideOpts: {};
-  // config: any;
 
-  constructor(public WooCom: WooCommerceService, public http: HttpClient) {
-    this.popProducts = [];
-    this.pageNo = 2;
-    this.moreProducts = [];
-    this.endMsg = false;
+  constructor(public http: HttpClient, public services: Services) {
 
     this.offersConfig = {
       items: 1,
@@ -54,38 +44,26 @@ export class HomePage implements OnInit {
       autoplayTimeout: 3500
     };
 
-    // this.config =  {
-    //   autoplay: {
-    //     delay: 3000,
-    //     disableOnInteraction: false
-    //   },
-    //   loop: true,
-    //   speed: 1500,
-    // };
-
-    // this.slideOpts = {
-    //   autoplay: {
-    //     delay: 3000,
-    //     disableOnInteraction: false
-    //   },
-    //   loop: true,
-    //   speed: 1500,
-    //   slidesPerView: 3,
-    //   pagination: {
-    //     clickable: true
-    //   }
-    // };
+    this.popProducts = [];
+    this.pageNo = 2;
+    this.moreProducts = [];
+    this.endMsg = false;
+    this.offers = [1, 2, 3, 4];
   }
+
+  @ViewChild('mainSlider', {static: false}) mainSlider: OwlCarousel;
+  @ViewChild('newDealSlider', {static: false}) newDealSlider: OwlCarousel;
 
 
   getProducts() {
-    // tslint:disable-next-line: max-line-length
-    this.http.get(`${this.WooCom.url}/wp-json/wc/v3/products/?consumer_key=${this.WooCom.consumerKey}&consumer_secret=${this.WooCom.consumerSecret}`)
+      // tslint:disable-next-line: max-line-length
+    this.http.get(`${this.services.api_url}/wp-json/wc/v3/products/?consumer_key=${this.services.wooConsKey}&consumer_secret=${this.services.wooConsSecret}`)
     .subscribe(res => {
       this.popProducts = res;
-      console.log(this.popProducts);
+      // console.log(this.popProducts);
     });
   }
+
 
   loadMoreProducts(event) {
     if (event == null) {
@@ -95,8 +73,8 @@ export class HomePage implements OnInit {
       this.pageNo++;
     }
 
-    // tslint:disable-next-line: max-line-length
-    this.http.get(`${this.WooCom.url}/wp-json/wc/v3/products/?page=${this.pageNo}&consumer_key=${this.WooCom.consumerKey}&consumer_secret=${this.WooCom.consumerSecret}`)
+      // tslint:disable-next-line: max-line-length
+    this.http.get(`${this.services.api_url}/wp-json/wc/v3/products/?page=${this.pageNo}&consumer_key=${this.services.wooConsKey}&consumer_secret=${this.services.wooConsSecret}`)
     .subscribe(res => {
       const data: any = res;
       this.moreProducts = this.moreProducts.concat(res);
@@ -111,68 +89,29 @@ export class HomePage implements OnInit {
         this.endMsg = true;
       }
     });
-
   }
 
-  // async toast() {
-  //   const tc = await this.toastCtrl.create({
-  //         message: 'That\'s all for now. Please try again later.',
-  //         duration: 5000,
-  //         color: 'dark',
-  //         cssClass: 'home-toast'
-  //       });
 
-  //   tc.present();
-  // }
+  ionViewWillEnter() {
+    // console.log('enter');
+    if (this.mainSlider && this.newDealSlider) {
+      this.mainSlider.reInit();
+      this.newDealSlider.reInit();
+    }
+  }
 
-  // slidesDidLoad(slides) {
-  //   slides.startAutoplay();
-  // }
 
-  // trackByFn(index, item) {
-  //   return index; // or item.id
-  // }
+  ionViewDidLeave() {
+    // console.log('leave');
+    if (this.mainSlider && this.newDealSlider) {
+      this.mainSlider.trigger('destroy.owl.carousel');
+      this.newDealSlider.trigger('destroy.owl.carousel');
+    }
+  }
+
 
   ngOnInit() {
     this.getProducts();
     this.loadMoreProducts(null);
-    // this.carousel.play();
-  }
-
-  // ionViewDidLeave() {
-  //   this.slickModal.slickPause();
-  // }
-
-
-  ionViewDidEnter() {
-    this.offers = [1, 2, 3, 4];
-    // this.offersConfig = {
-    //   'slidesToShow': 1,
-    //   'slidesToScroll': 1,
-    //   'arrows': true,
-    //   'accessibility': true,
-    //   'dots': true,
-    //   'infinite': true,
-    //   'autoplay': true,
-    //   'speed': 4000,
-    //   'fade': true,
-    //   // 'cssEase': 'ease-in-out',
-    //   // 'lazyLoad': 'progressive',
-    //   'adaptiveHeight': true,
-    // };
-
-    // this.newDealsConfig = {
-    //   'slidesToShow': 3,
-    //   'slidesToScroll': 1,
-    //   'infinite': true,
-    //   'arrows': true,
-    //   'accessibility': true,
-    //   'autoplay': true,
-    //   'autoplaySpeed': 3000,
-    //   'cssEase': 'ease',
-    //   'adaptiveHeight': false,
-    // };
-
-    // this.slickModal.slickPlay();
   }
 }

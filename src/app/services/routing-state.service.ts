@@ -12,6 +12,7 @@ export class RoutingStateService {
 
   constructor(private router: Router) {}
 
+
   public loadRouting() {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
@@ -20,9 +21,11 @@ export class RoutingStateService {
       });
   }
 
+
   public getHistory(): string[] {
     return this.history;
   }
+
 
   public getPreviousUrl(): string {
     return this.history[this.history.length - 2] || '/home';

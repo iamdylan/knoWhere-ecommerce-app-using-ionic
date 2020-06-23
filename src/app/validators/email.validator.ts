@@ -1,52 +1,36 @@
 import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { WooCommerceService } from '../services/woo-commerce.service';
+import { AsyncValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Services } from '../services/services.service';
 
 @Injectable()
 export class EmailValidator {
+constructor(public services: Services, public http: HttpClient) {
+}
 
-    constructor(public WooCom: WooCommerceService, public http: HttpClient) {
-    }
-
-    debouncer: any;
-
-    checkEmail(fc: FormControl) {
-        clearTimeout(this.debouncer);
+    checkEmail(): AsyncValidatorFn {
+        return (control: AbstractControl): Observable<ValidationErrors | null> => {
 
         // tslint:disable-next-line: max-line-length
-        const pattern = new RegExp(/^(("[\w-+\s]+")|([\w-+]+(?:\.[\w-+]+)*)|("[\w-+\s]+")([\w-+]+(?:\.[\w-+]+)*))(@((?:[\w-+]+\.)*\w[\w-+]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][\d]\.|1[\d]{2}\.|[\d]{1,2}\.))((25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\.){2}(25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\]?$)/i);
+        const pattern = new RegExp('[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}');
         console.log('email validator');
 
-        return new Promise(resolve => {
-            if (pattern.test(fc.value) && fc.value !== '') {
-                this.debouncer = setTimeout(() => {
-
-                    // tslint:disable-next-line: max-line-length
-                    this.http.get(`${this.WooCom.url}/wp-json/wc/v3/customers/?email=${fc.value}&consumer_key=${this.WooCom.consumerKey}&consumer_secret=${this.WooCom.consumerSecret}`)
-                    .subscribe(res => {
+        console.log(this.http);
+            if (pattern.test(control.value) && control.value !== '') {
+                if ((control.value).toLowerCase() === 'dylan.marvel@gmail.com') {
+                    return of({match: true});
+                }
+                   return this.http.get(`${this.services.api_url}/wp-json/wc/v3/customers/?email=${(control.value).toLowerCase()}&consumer_key=${this.services.wooConsKey}&consumer_secret=${this.services.wooConsSecret}`)
+                    .pipe(map(res => {
                         console.log(res);
                         const response: any = res;
-                        if (response.length) {
-                            resolve({'match': true});
-                        } else {
-                            resolve(null);
-                        }
-                    });
-
-                    // this.WC.WooCommerceV3.get('customers/?email=' + fc.value, function(err, data, res) {
-
-                    //     if (JSON.parse(data.body).length) {
-                    //         resolve({'match': true});
-                    //     } else {
-                    //         resolve(null);
-                    //     }
-                    // });
-                }, 200);
+                        return response.length ? { match: true } : null;
+                    }));
             } else {
-                resolve(null);
+                return(null) ;
             }
-        });
+    };
     }
-
 }

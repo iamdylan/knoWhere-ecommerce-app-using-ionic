@@ -15,21 +15,7 @@
 }
 
 //Begin Home and Category pages Styles//
-// .home ion-grid ion-thumbnail, .prodsByCat ion-grid ion-thumbnail {
-//     width: 100%;
-//     height: 100% ;
-//     border-radius: 10px;
-//     // border: 1px solid #c2c2c2;
-//     // box-shadow: 1px 1px 10px 1px rgba(0,0,0,.21);
-//     // margin-right: 0;
-//     img {
-//         border-radius: 10px 10px 0 0;
-//     }
-// }
-
 .home ion-card img, .prodsByCat ion-card img {
-    // width: 100%;
-    // height: 100%;
     border-radius: 15px 15px 0 0;
 }
 
@@ -39,7 +25,6 @@
     border-radius: 15px;
     overflow: visible;
     box-shadow: none;
-
 }
 
 .home .outr-endMsg, .prodsByCat .outr-endMsg{
@@ -54,7 +39,7 @@
     font-weight: 500;
     letter-spacing: 0.02em;
     border-radius: 0;
-    color: #90979e;
+    color: #737373;
     opacity: 0;
     animation-name: fade-up;
     animation-duration: 600ms;
@@ -89,7 +74,7 @@
     font-weight: 600;
     margin-left: 0;
     color: #1a1c1d;
-    letter-spacing: 0.2px;
+    letter-spacing: -0.02em;
     font-size: 1.3em;
     white-space: nowrap;
     text-align: center;
@@ -98,20 +83,21 @@
 .home .custom-price-style, .prodsByCat .custom-price-style {
     font-weight: 600;
     color: var(--kw-price);
-    letter-spacing: 0.8px;
+    // letter-spacing: 0.8px;
     margin-bottom: 0;
-    font-size: 1em;
+    font-size: 16px;
     margin-top: 5px;
     text-align: center;
+    padding: 5px;
 }
 
 .home .custom-desc, .prodsByCat .custom-desc {
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.2px;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
     font-family: inherit;
-    word-spacing: 0.1em;
-    line-height: 1;
+    // word-spacing: 0.1em;
+    line-height: 20px;
 }
 
 .home ion-item, .prodsByCat ion-item {
@@ -123,208 +109,10 @@
     --inner-border-width: 0;
 }
 
-owl-carousel-child.offers, .new-deals-header, owl-carousel-child.new-deals, .more-prod-header,.home ion-grid, .outofstock, .empty{
+.offers, .new-deals-header, .new-deals, .more-prod-header, .more-prod {
     opacity: 0;
-    animation: fade 600ms ease calc(var(--animation-order) * 160ms) forwards;
+    animation: staggered 400ms ease calc(var(--animation-order) * 150ms) forwards;
 }
-
-@keyframes fade {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
-}
-//End Home and Category pages Styles//
-
-
-//Begin ngx-owl-carousel styles//
-owl-carousel-child {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-}
-
-.owl-theme .owl-dots {
-    position: absolute;
-    bottom: -3%;
-    width: 100%;
-}
-
-.owl-nav {
-    position: absolute;
-    width: 100%;
-    margin-top: 0 !important;
-    height: 0;
-    display: flex !important;
-    align-items: center !important;
-}
-
-.owl-theme .owl-nav [class*='owl-'] {
-    font-size: 1.2em !important;
-    padding: 2px 13px !important;
-    background: #bebebe29 !important;
-    border-radius: 50px !important;
-    position: absolute !important;
-    margin: 0 !important;
-    font-weight: bold;
-}
-
-.owl-prev {
-    left: 0px;
-}
-
-.owl-next {
-    right: 0px;
-}
-
-owl-carousel-child.offers {
-    --animation-order: 1;
-}
-
-owl-carousel-child.new-deals {
-    background-color: #ededed;
-    text-align: center;
-    font-weight: 500;
-    --animation-order: 3;
-    .new-deals-label {
-        line-height: 2;
-        letter-spacing: 0.02em;
-        font-size: 14px;
-    }
-    img {
-        width: 76% !important;
-        margin: 0 auto;
-        margin-bottom: 5px;
-    }
-}
-//End ngx-owl-carousel styles//
-
-
-//Begin Mobiscroll Styles//
-.md-login-form .mbsc-ios.mbsc-form {
-    background: rgb(157,235,255) !important;
-    background: radial-gradient(circle, #0090a7 0%, #15a8bf 69%, #35d5ef 100%) !important;
-    min-height: 100%;
-}
-
-.signUp .mbsc-material.mbsc-form {
-    background: white !important;
-}
-
-.checkOut .mbsc-material.mbsc-form {
-    background: white !important;
-}
-
-.mbsc-form-group-title {
-    color: #ffffff !important;
-    letter-spacing: 0.04em;
-    word-spacing: 1px;
-    background: var(--kw-secondary);
-}
-
-.mbsc-form-group {
-    margin-bottom: 0 !important;
-    margin-top: 0 !important;
-}
-
-.md-login-form .mbsc-input-wrap {
-    padding-right: 0 !important;
-}
-
-.mbsc-ios.mbsc-form a {
-    color: white;
-    text-decoration: underline;
-    font-size: 1.05em;
-}
-
-.mbsc-ios .mbsc-btn {
-    color: #006f89 !important;
-    font-weight: 700;
-    font-size: 1.1em;
-}
-
-.mbsc-form {
-    font-family: inherit;
-}
-
-.mbsc-material.mbsc-input {
-    margin-bottom: 2em !important;
-}
-
-.mbsc-material.mbsc-label-floating.mbsc-input .mbsc-label {
-    line-height: 3em !important;
-}
-
-.mbsc-err-msg {
-    font-size: .90em !important;
-    min-width: 100%;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    background-color: #ffc82e36;
-    padding-bottom: 0.2em;
-    padding-left: 0.2em;
-    letter-spacing: 0.04em;
-    opacity: 0;
-    animation: err 150ms linear forwards;
-}
-
-@keyframes err {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
-}
-
-.mbsc-material .mbsc-input input:focus {
-    border-bottom: 2px solid var(--kw-primary-tint) !important;
-}
-
-.mbsc-material .mbsc-input .mbsc-label {
-    font-size: 1em !important;
-    letter-spacing: 0.02em;
-}
-
-.mbsc-material .mbsc-input input, .mbsc-material .mbsc-input textarea {
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    border-bottom: 1px solid var(--kw-primary) !important;
-    font-size: 1.1em !important;
-}
-
-// .mbsc-ios .mbsc-err-msg {
-//     color: #e13600;
-//     background-color: #ffe991;
-// }
-
-[_nghost-c4] {
-    margin-bottom: 2.5em !important;
-}
-
-.mbsc-material .mbsc-err-msg, .mbsc-material .mbsc-err {
-    color: #FF5722 !important;
-}
-
-.mbsc-material .mbsc-label {
-    color: black !important;
-}
-
-.checkOut mbsc-form-group-title {
-    font-size: 1.1em;
-}
-//End MobiscrollStyles//
-
-
-//Begin MDB Carousel Styles//
-// mdb-carousel div .carousel-inner {
-//     background-color: #696969;
-// }
-
-// .new-deals-header, ion-slides {
-//     animation-delay: calc(var(--animation-order) * 200ms);
-// }
-
-// .more-prod-header, ion-grid {
-//     animation-delay: 1000ms;
-// }
-//End MDB Carousel Styles//
-
 
 .outofstock, .empty {
     margin: 10%;
@@ -346,76 +134,85 @@ owl-carousel-child.new-deals {
         color: #90979e;
         font-weight: 500;
     }
+    opacity: 0;
+    animation: staggered 200ms ease 150ms forwards;
 }
 
-
-//Begin ngx-slick-carousel styles//
-// .slick-prev {
-//     left: 5px !important;
-//     z-index: 1;
-//   }
-  
-// .slick-next {
-//     right: 5px !important;
-// }
- 
-// .slick-dotted.slick-slider {
-//     margin-bottom: 0 !important;
-// }
-
-// .slick-dots {
-//     bottom: 0px !important;
-// }
-
-// .slick-dots li button::before {
-//     font-size: 10px !important;
-//     color: #fff !important;
-//     opacity: 0.7;
-// }
-
-// .slick-dots li.slick-active button::before {
-//     color: #fff !important;
-//     opacity: 1 !important;
-// }
-
-// .new-deals .slick-list .slick-slide img {
-//     padding-left: 18px !important;
-//     padding-right: 18px !important;
-//     margin-bottom: 5px !important;
-// }
-
-// // .offers .slick-list {
-// //     min-height: calc(24vh - 18px) !important;
-// // }
-
-// .new-deals .slick-list { 
-//     max-height: calc(33vw + 25px) !important;
-// }
-
-// .new-deals .slick-slide {
-//     min-width: 33vw !important;
-//     text-align: center;
-//     font-weight: 500;
-// }
-//End ngx-slick-carousel styles//
+@keyframes staggered {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+//End Home and Category pages Styles//
 
 
-@import "~@mobiscroll/angular-lite/dist/css/mobiscroll.min.css";
+//Begin ngx-owl-carousel styles//
+
+.owl-theme .owl-dots {
+    position: absolute;
+    bottom: -3%;
+    width: 100%;
+}
+
+.owl-nav {
+    pointer-events: none;
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin-top: 0 !important;
+    align-items: center !important;
+    top: 0;
+}
+
+.owl-prev, .owl-next {
+    pointer-events: auto;
+    font-size: 30px !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    padding-bottom: 5px !important;
+    background: #bebebe29 !important;
+    border-radius: 50px !important;
+    position: absolute !important;
+    margin: auto 2px !important;
+    font-weight: 500;
+}
+
+.owl-prev {
+    left: 0px;
+}
+
+.owl-next {
+    right: 0px;
+}
+
+.offers owl-carousel-child {
+    overflow: hidden !important;
+    max-height: 205px;
+}
+
+.new-deals owl-carousel-child {
+    text-align: center;
+    font-weight: 500;
+    .new-deals-label {
+        line-height: 20px;
+        font-size: 16px;
+        padding-top: 10px;
+        // letter-spacing: 0.01em;
+    }
+    .image-wrapper {
+        min-height: 105px;
+        margin-top: 10px;
+      }
+    img {
+        width: 76% !important;
+        margin: 0 auto;
+    }
+}
+//End ngx-owl-carousel styles//
+
+
 @import '~ngx-progressive-image-loader/ngx-progressive-image-loader';
-// .ngx-image-placeholder .placeholder-loading-image {
-//     height: auto;
-// }
-
-// .slick-slider .slick-track, .slick-slider .slick-list {
-//     height: 200px;
-// }
-
-// .ngx-image-placeholder {
-//     padding-bottom: 200px;
-// }
-
 
 $scale: 1; // the scale of loading image in place holder
 $transition: opacity 1s ease; // the transition of loading image in place holder, you could try: opacity .3s ease
 @include progressive-image-loader($scale, $transition);
-

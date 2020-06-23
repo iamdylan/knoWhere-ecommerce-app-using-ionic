@@ -43,8 +43,8 @@
         <ion-slides #slides [options]="slideOpts" pager="true">
         <ion-slide *ngFor="let image of productInfo.images">
           <ion-thumbnail>
-            <ngx-progressive-image-loader placeholderImageSrc="{{(image?.src).substring(0,(image?.src).length-4) + '-100x100' + (image?.src).substring((image?.src).length-4)}}">
-              <img [src]="image?.src ? image?.src : ''" ngxProgressiveImage />
+            <ngx-progressive-image-loader [placeholderImageSrc]="(image?.src).slice(0, -4) + '-100x100' + (image?.src).slice(-4)">
+              <img [src]="(image?.src).slice(0, -4) + '-600x600' + (image?.src).slice(-4)" ngxProgressiveImage />
             </ngx-progressive-image-loader>
           </ion-thumbnail>
           <!-- <img [src]="image.src" /> -->
@@ -90,7 +90,7 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card *ngIf="reviews.length > 0">
+    <!-- <ion-card *ngIf="reviews.length > 0">
       <ion-card-content>
         <ion-card-title>
           Reviews
@@ -121,7 +121,7 @@
           </ion-row>
         </ion-grid>
       </ion-card-content>
-    </ion-card>
+    </ion-card> -->
   </div>
   
 </ion-content>
