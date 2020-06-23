@@ -9,29 +9,77 @@
 </ion-header>
 
 <ion-content>
-  <mbsc-form class="md-login-form" [options]="formSettings">
-    <div class="md-logo">
+  <!-- <form [formGroup]="loginForm" novalidate>
+    <div class="logo">
       <ion-img src="./assets/images/Logo_2.png"></ion-img>
     </div>
-    <form [formGroup]="loginForm" novalidate>
-      <mbsc-form-group inset>
-        <mbsc-input formControlName="username" name="username" placeholder="Username"
-          [error]="loginForm.controls['username'].invalid && loginForm.controls['username'].dirty"
-          [errorMessage]="errorFor('username')">
-        </mbsc-input>
-        <mbsc-input formControlName="password" name="password" type="password" placeholder="Password" password-toggle="true"
-          icon="none" icon-align="right"
-          [error]="loginForm.controls['password'].invalid && loginForm.controls['password'].dirty"
-          [errorMessage]="errorFor('password')"></mbsc-input>
-      </mbsc-form-group>
-      <div class="sign-up">
-        <a [routerDirection]="'root'" [routerLink]="['/signup']">Don't have an account yet? Sign up.</a>
-      </div>
-  
-      <mbsc-form-group inset class="mbsc-padding">
-        <mbsc-button block [disabled]="loginForm.invalid && attemptedSubmit" (click)="logIn()">Sign in
-        </mbsc-button>
-      </mbsc-form-group>
-    </form>
-  </mbsc-form>
+    <div class="fields">
+      <ion-item>
+        <ion-label position="floating">Username</ion-label>
+        <ion-input formControlName="username" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input formControlName="password" type="password"></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="sign-up">
+      <a style="color: white;" [routerDirection]="'root'" [routerLink]="['/signup']">Don't have an account yet? Sign up.</a>
+    </div>
+
+    <div class="sign-in">
+      <ion-button [disabled]="loginForm.invalid && attemptedSubmit" class="signup" expand="default" (click)="logIn()">Sign in</ion-button>
+    </div>
+  </form> -->
+
+  <div class="log-in">
+    <ion-grid>
+      <ion-row class="row-logo ion-align-items-end">
+        <ion-col size="12" class="ion-text-center">
+          <div class="logo">
+            <ion-img src="./assets/images/Logo_2.png"></ion-img>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="row-err ion-align-items-end">
+        <ion-col size="12" class="ion-text-center">
+          <div class="err-wrapper" *ngIf="!loginForm.valid && !this.validAfterSubmit">
+            <p class="err">Please enter a valid Email-ID and Password</p>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="row-fields ion-align-items-start">
+        <ion-col size="12" class="ion-text-center">
+          <form [formGroup]="loginForm" novalidate>
+            <ion-item>
+              <!-- <ion-label position="floating">E-mail</ion-label> -->
+              <ion-input formControlName="email" placeholder="Email-ID" type="text"></ion-input>
+            </ion-item>
+            <ion-item>
+              <!-- <ion-label position="floating">Password</ion-label> -->
+              <ion-input formControlName="password" placeholder="Password" type="password"></ion-input>
+            </ion-item>
+          </form>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="row-sign-up ion-align-items-center">
+        <ion-col size="12" class="ion-text-center">
+          <div class="sign-up">
+            <a style="color: white;" [routerDirection]="'root'" [routerLink]="['/signup']">Don't have an account yet? Sign up.</a>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="row-login ion-align-items-start">
+        <ion-col size="12" class="ion-text-center">
+          <ion-button expand="block" (click)="logIn()">Login</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
 </ion-content>

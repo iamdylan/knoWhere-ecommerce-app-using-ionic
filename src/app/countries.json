@@ -1,11 +1,9 @@
 {
    "countries": [
-        {"country_id": "AUS", "country_title": "Australia"},
-        {"country_id": "CAN", "country_title": "Canada"},
-        {"country_id": "IND", "country_title": "India"},
-        {"country_id": "JAP", "country_title": "Japan"},
-        {"country_id": "NZ", "country_title": "New Zealand"},
-        {"country_id": "UK", "country_title": "United Kingdom"},
-        {"country_id": "USA", "country_title": "United States of America"}
+        {"country_id": "AUS", "country_title": "Australia (AUS)"},
+        {"country_id": "CAN", "country_title": "Canada (CA)"},
+        {"country_id": "IND", "country_title": "India (IN)"},
+        {"country_id": "UK", "country_title": "United Kingdom (UK)"},
+        {"country_id": "USA", "country_title": "United States of America (US)"}
     ]
 }

@@ -20,7 +20,7 @@
   </div>
 
   <ion-grid *ngIf="cartItems?.length > 0">
-    <ion-row class="cartHeads">
+    <!-- <ion-row class="cartHeads">
       <ion-col class="ion-align-self-center" size="6">
         <ion-label>Product</ion-label>
       </ion-col>
@@ -30,7 +30,7 @@
       <ion-col class="ion-align-self-center" size="3">
         <ion-label>Price</ion-label>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
 
     <ion-row class="cartItem" *ngFor="let item of cartItems; let i = index">
       <ion-col size="2" class="ion-align-self-center">
@@ -38,15 +38,14 @@
           <img [src]="item.product.images[0].src"/>
         </ion-avatar>
       </ion-col>
-      <ion-col size="4" class="ion-align-self-center">
+      <ion-col size="5" class="ion-align-self-center">
         <ion-label>{{ item.product.name }}</ion-label>
       </ion-col>
-      <ion-col size="3" class="ion-align-self-center">
+      <ion-col size="2" class="ion-align-self-center">
         <ion-label>{{ item.qty }}</ion-label>
       </ion-col>
       <ion-col size="3" class="ion-align-self-center">
         <ion-label>${{ item.product.price }}</ion-label>
-        
       </ion-col>
         <ion-button class="removeBtn" clear="true" color="danger" (click)="removeFromCart(item, i)">
           <ion-icon name="close-circle"></ion-icon>

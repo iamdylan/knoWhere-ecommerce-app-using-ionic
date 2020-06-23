@@ -11,11 +11,14 @@
   </ion-header>
 
   <ion-content class="card-background-page">
-    <ion-card>
+    <div>
       <ion-img src="./assets/images/shop-small.svg" ></ion-img>
-    </ion-card>
+    </div>
 
     <ion-list class="categories">
+      <ion-list-header>
+        <ion-label>CATEGORIES</ion-label>
+      </ion-list-header>
       <ion-menu-toggle auto-hide="false">
         <ion-item  detail="false" [routerDirection]="'root'" [routerLink]="['/home']"  routerLinkActive="active">
           <ion-icon name="home" slot="start"></ion-icon>
@@ -26,45 +29,40 @@
         <ion-item  detail="false" [routerDirection]="'forward'" [routerLink]="['/products/' + category.id]"  routerLinkActive="active">
           <ion-icon [name]="category.icon" slot="start"></ion-icon>
           <ion-label> {{ category.name }} </ion-label>
-          <p> {{ category.description }} </p>
         </ion-item>
       </ion-menu-toggle>
-<!-- 
-      <ion-menu-toggle auto-hide="false">
-      
-      </ion-menu-toggle> -->
     </ion-list>
 
     <ion-list class="navi">
-        <ion-list-header>
-            <ion-label>Account</ion-label>
-        </ion-list-header>
-        <ion-menu-toggle auto-hide="false">
-          <ion-item  detail="false" [routerDirection]="'forward'" [routerLink]="['/signup']"  routerLinkActive="active" *ngIf="!(getUserInfo.loggedIn | async)">
-            <ion-icon name="clipboard" slot="start"></ion-icon>
-            <ion-label> Sign Up </ion-label>
-          </ion-item>
-          <ion-item  detail="false" [routerDirection]="'forward'" [routerLink]="['/login']"   routerLinkActive="active" *ngIf="!(getUserInfo.loggedIn | async)">
-            <ion-icon name="log-in" slot="start"></ion-icon>
-            <ion-label> Log In </ion-label>
-          </ion-item>
+      <ion-list-header>
+          <ion-label>ACCOUNT</ion-label>
+      </ion-list-header>
+      <ion-menu-toggle auto-hide="false">
+        <ion-item  detail="false" [routerDirection]="'forward'" [routerLink]="['/signup']"  routerLinkActive="active" *ngIf="!(services.user | async)">
+          <ion-icon name="clipboard" slot="start"></ion-icon>
+          <ion-label> Sign Up </ion-label>
+        </ion-item>
+        <ion-item  detail="false" [routerDirection]="'forward'" [routerLink]="['/login']"   routerLinkActive="active" *ngIf="!(services.user | async)">
+          <ion-icon name="log-in" slot="start"></ion-icon>
+          <ion-label> Log In </ion-label>
+        </ion-item>
+
+        <ion-item  detail="false" *ngIf="services.user | async">
+          <ion-icon name="contact" slot="start" large></ion-icon>
+          <ion-label>{{ services.userDetails['firstname']}}</ion-label>
+        </ion-item>
   
-          <ion-item  detail="false" *ngIf="getUserInfo.loggedIn | async">
-              <ion-icon name="contact" slot="start" large></ion-icon>
-              <ion-label>{{ (this.getUserInfo.user.firstname) || "" }}</ion-label>
-            </ion-item>
-      
-            <ion-item  detail="false" *ngIf="getUserInfo.loggedIn | async" [routerDirection]="'root'" [routerLink]="['/cart']" menuClose>
-              <ion-icon name="cart" slot="start" large></ion-icon>
-              <ion-label>Cart</ion-label>
-            </ion-item>
-      
-            <ion-item  detail="false" *ngIf="getUserInfo.loggedIn | async" (click)="logOut()" menuClose>
-              <ion-icon name="log-out" slot="start" large></ion-icon>
-              <ion-label>Log Out</ion-label>
-            </ion-item>
-        </ion-menu-toggle>
-      </ion-list>
+        <ion-item  detail="false" *ngIf="services.user | async" [routerDirection]="'root'" [routerLink]="['/cart']" menuClose>
+          <ion-icon name="cart" slot="start" large></ion-icon>
+          <ion-label>Cart</ion-label>
+        </ion-item>
+  
+        <ion-item  detail="false" *ngIf="services.user | async" (click)="logOut()" menuClose>
+          <ion-icon name="log-out" slot="start" large></ion-icon>
+          <ion-label>Log Out</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+    </ion-list>
   </ion-content>
 </ion-menu>
 

@@ -1,11 +1,77 @@
-.md-login-form .md-logo {
-    text-align: center;
-    margin-top: 10em;
-    margin-bottom: 4em;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    width: 50%;
+// form {
+//     background: rgb(157,235,255) !important;
+//     background: radial-gradient(circle, #0090a7 0%, #15a8bf 69%, #35d5ef 100%) !important;
+//     min-height: 100%;
+//     position: absolute;
+// }
+
+ion-grid {
+    height: 100%;
+}
+
+.row-logo {
+    height: 25vh;
+}
+
+.row-err {
+    height: 10vh;
+    padding: 0 30px;
+    ion-col {
+        padding-bottom: 0;
+    }
+}
+
+.row-fields {
+    height: 20vh;
+    padding: 0 30px;
+    ion-col {
+        padding-top: 0;
+    }
+}
+
+.row-sign-up {
+    height: 10vh;
+}
+
+.row-login {
+    height: 15vh;
+    margin: 0 30px;
+}
+
+.log-in {
+    background: rgb(157,235,255) !important;
+    background: radial-gradient(circle, #0090a7 0%, #15a8bf 69%, #35d5ef 100%) !important;
+    height: 100%;
+    // position: absolute;
+    // display: flex;
+    // align-items: center;
+}
+
+// .logo {
+//     text-align: center;
+//     margin-top: 12em;
+//     margin-bottom: 4em;
+//     margin-left: auto;
+//     margin-right: auto;
+//     display: block;
+//     width: 50%;
+//     opacity: 0;
+//     transform-origin:center;
+//     animation-name: fade-in;
+//     animation-duration: 1500ms;
+//     animation-delay: 150ms;
+//     animation-fill-mode: forwards;
+//     animation-timing-function: ease;
+// }
+
+// @keyframes fade-in {
+//     // 0% {opacity: 0; width: 50%;}
+//     // 100% {opacity: 1; width: 80%;}
+//     0% {opacity: 0;}
+//     100% {opacity:1; transform: scale(1.6);}
+// }
+
+.logo {
     opacity: 0;
     transform-origin:center;
     animation-name: fade-in;
@@ -13,22 +79,79 @@
     animation-delay: 150ms;
     animation-fill-mode: forwards;
     animation-timing-function: ease;
+    ion-img {
+        width: 65%;
+        margin: 0 auto;
+    }
 }
 
 @keyframes fade-in {
     // 0% {opacity: 0; width: 50%;}
     // 100% {opacity: 1; width: 80%;}
     0% {opacity: 0;}
-    100% {opacity:1; transform: scale(1.6);}
+    100% {opacity:1; transform: scale(1.2);}
 }
 
-mbsc-form-group{
-    padding: 1em;
+.err-wrapper {
+    background-color: #fffacd;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin: auto 3px;
+    padding: 5px;
+    color: red;
+    animation: error 200ms ease forwards;
+    .err {
+        margin: 0;
+        font-size: 15px;
+        letter-spacing: -0.02em;
+    }
 }
+
+@keyframes error {
+    0% {opacity: 0; transform: translateY(10%);}
+    100% {opacity: 1; transform: translateY(0%);}
+}
+
+.fields {
+    margin: 0 30px;
+}
+
+ion-item {
+    font-weight: 600;
+    border-radius: 5px;
+    margin: 3px;
+    color: #424242;
+}
+
+.item-interactive.item-has-focus {
+    --highlight-background: none;
+}
+
+ion-button {
+    // --background: #3fb8be;
+    --background: salmon;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    font-size: 22px;
+}
+// mbsc-form-group{
+//     padding: 1em;
+// }
 
 .sign-up {
-    margin-top: 3em;
-    text-align: center;
-    font-weight: 500;
-    letter-spacing: 0.02em;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    // a {
+    //     text-decoration: none;
+    // }
+    // margin-top: 5em;
+    // text-align: center;
+    // letter-spacing: 0.02em;
 }
+
+// .sign-in {
+//     width: 100%;
+//     margin-top: 35px;
+//     text-align: center;
+// }

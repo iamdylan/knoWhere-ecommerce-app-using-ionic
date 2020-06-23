@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage';
 import { RoutingStateService } from '../services/routing-state.service';
 
 @Injectable()
-export class NeedAuthGuard implements CanActivate {
+export class CheckAuthGuard implements CanActivate {
 
   constructor(private router: Router, public storage: Storage, private routingState: RoutingStateService) {
   }
@@ -15,18 +15,17 @@ export class NeedAuthGuard implements CanActivate {
 
     return new Promise(resolve => {
       this.storage.ready().then( () => {
-        this.storage.get('userLoginInfo').then( (userLoginInfo) => {
-
-            if (userLoginInfo != null) {
-              console.log(userLoginInfo);
-                resolve (true);
-            } else {
-                this.router.navigateByUrl('/login');
-                resolve (false);
-            }
+        this.storage.get('userInfo').then( (userInfo) => {
+          console.log(userInfo);
+          if (userInfo != null) {
+            console.log(userInfo);
+              resolve (true);
+          } else {
+              this.router.navigateByUrl('/login');
+              resolve (false);
+          }
         });
       });
     });
   }
-
 }

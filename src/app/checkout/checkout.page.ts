@@ -1,44 +1,41 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, IonSlides } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { MbscFormOptions } from '@mobiscroll/angular-lite';
 import countries from '../countries.json';
-import errorMessages from '../errorMessages.json';
-import { WooCommerceService } from '../services/woo-commerce.service';
 import { EmailValidator } from '../validators/email.validator';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import jQuery from 'jquery';
+import jQuery from 'jquery/dist/jquery.slim.min';
 import { finalize } from 'rxjs/operators';
 import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal/ngx';
+import { Services } from '../services/services.service';
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.page.html',
   styleUrls: ['./checkout.page.scss'],
 })
+
 export class CheckoutPage implements OnInit {
-  formSettings: MbscFormOptions = {
-    theme: 'material'
+  @ViewChild('checkOutSlider', {read: IonSlides, static: false}) slides: IonSlides;
+
+  sliderConfig = {
+    autoHeight: true
   };
 
   WooCommerce: any;
   custInfo: any;
   paymentMethods: any[];
-  paymentMethod: any;
   billing_shipping_same: boolean;
   userInfo: any;
-  label_style: string;
   countries: any[];
+  selectedPayMeth: any;
 
-  checkOutForm: FormGroup;
+  constructor(public fb: FormBuilder, public emailValidator: EmailValidator, public storage: Storage,
+  public alertCtrl: AlertController, private router: Router, public http: HttpClient, public loadingCtrl: LoadingController,
+  public payPal: PayPal, public services: Services) {
 
-  constructor(public fb: FormBuilder, public emailValidator: EmailValidator, public storage: Storage, private ngZone: NgZone,
-    public alertCtrl: AlertController, private router: Router,
-    public WooCom: WooCommerceService, public http: HttpClient, public loadingCtrl: LoadingController, public payPal: PayPal) {
-
-    this.label_style = 'floating';
     this.billing_shipping_same = false;
     this.paymentMethods = [
       { method_id: 'bacs', method_title: 'Direct Bank Transfer' },
@@ -50,43 +47,30 @@ export class CheckoutPage implements OnInit {
 
   }
 
-  getErrorMessage(field: any) {
-    const formCtrl = this.checkOutForm;
-    let message = '';
+  billingForm: FormGroup;
+  shippingForm: FormGroup;
+  billFormNotValid: boolean;
+  shipFormNotValid: boolean;
 
-    if (formCtrl) {
-      const ctrl = formCtrl.get(field);
-      if (ctrl && ctrl.errors) {
-          for (const err in ctrl.errors) {
-              if (!message && ctrl.errors[err]) {
-                const errField = field.replace('.', '_');
-                  return message = errorMessages[errField][err];
-              }
-          }
-      }
-    }
-    return message;
-  }
 
-  setBillingToShipping() {
+  setShippingToBilling() {
     this.billing_shipping_same = !this.billing_shipping_same;
     if (this.billing_shipping_same === true) {
-      this.ngZone.run(() => {this.label_style = 'stacked'; });
-      this.checkOutForm.patchValue({
-        shipping: {
-          first_name: this.checkOutForm.value.billing.first_name,
-          last_name: this.checkOutForm.value.billing.last_name,
-          address_1: this.checkOutForm.value.billing.address_1,
-          address_2: this.checkOutForm.value.billing.address_2,
-          country: this.checkOutForm.value.billing.country,
-          state: this.checkOutForm.value.billing.state,
-          city: this.checkOutForm.value.billing.city,
-          postcode: this.checkOutForm.value.billing.postcode
-        }
+      this.billingForm.patchValue({
+          first_name: this.shippingForm.value.first_name,
+          last_name: this.shippingForm.value.last_name,
+          address_1: this.shippingForm.value.address_1,
+          address_2: this.shippingForm.value.address_2,
+          country: this.shippingForm.value.country,
+          state: this.shippingForm.value.state,
+          city: this.shippingForm.value.city,
+          postcode: this.shippingForm.value.postcode
       });
-
+    } else {
+      this.billingForm.reset();
     }
   }
+
 
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
@@ -99,31 +83,68 @@ export class CheckoutPage implements OnInit {
     });
   }
 
+
+  nextSlide(form: FormGroup) {
+    this.validateAllFormFields(form);
+
+    if (form.valid) {
+      this.slides.slideNext();
+    } else if (form === this.shippingForm) {
+      this.shipFormNotValid = true;
+    } else {
+      this.billFormNotValid = true;
+    }
+  }
+
+
+  prevSlide() {
+    this.slides.slidePrev();
+  }
+
+
+  radioGroupChange(event) {
+    // console.log('radioGroupChange', event.detail.value);
+    this.selectedPayMeth = event.detail.value;
+  }
+
+
   async placeOrder() {
     const orderItems: any[] = [];
     let details: any = {};
     let paymentData: any = {};
     const emptyCart: any[] = [];
+
     const loading = await this.loadingCtrl.create();
-    this.validateAllFormFields(this.checkOutForm);
+
     const header = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded'
     });
 
-    if (this.checkOutForm.valid) {
+    const postData = (data: any, headers: HttpHeaders) => {
+      this.http.post(`${this.services.api_url}/wp-json/wc/v3/orders?consumer_key=${this.services.wooConsKey}&consumer_secret=${this.services.wooConsSecret}`, jQuery.param(data), { headers: headers })
+      .pipe(finalize(() => loading.dismiss()))
+      .subscribe(res => {
+        // console.log(res);
+        this.storage.set('cart', emptyCart);
+        this.presentAlert(res);
+      });
+    };
+
+    if (this.selectedPayMeth) {
       await loading.present();
+
       this.paymentMethods.forEach( (element) => {
-        if (element.method_id === this.checkOutForm.value.payment.paymeth) {
+        if (element.method_id === this.selectedPayMeth) {
           paymentData = element;
-          console.log(paymentData);
+          // console.log(paymentData);
         }
       });
 
       details = {
         payment_method: paymentData.method_id,
         payment_method_title: paymentData.method_title,
-        billing: this.checkOutForm.value.billing,
-        shipping: this.checkOutForm.value.shipping,
+        shipping: this.shippingForm.value,
+        billing: this.billingForm.value,
         customer_id: this.userInfo.id,
         line_items: orderItems
       };
@@ -158,20 +179,7 @@ export class CheckoutPage implements OnInit {
 
                 orderData.order = details;
 
-                // this.WooCommerce.postAsync('orders', orderData).then((data) => {
-                //   alert('Order placed successfully!');
-                //   const res = (JSON.parse(data.body).order);
-                //   this.presentAlert(res);
-                // });
-
-                // tslint:disable-next-line: max-line-length
-                this.http.post(`${this.WooCom.url}/wp-json/wc/v3/orders?consumer_key=${this.WooCom.consumerKey}&consumer_secret=${this.WooCom.consumerSecret}`, jQuery.param(orderData), { headers: header })
-                .pipe(finalize(() => loading.dismiss()))
-                .subscribe(res => {
-                  console.log(res);
-                  this.storage.set('cart', emptyCart);
-                  this.presentAlert(res);
-                });
+                postData(orderData, header);
 
               });
 
@@ -192,111 +200,78 @@ export class CheckoutPage implements OnInit {
               quantity: element.qty
             });
           });
-
-          console.log(orderItems);
+          // console.log(orderItems);
 
           details.line_items = orderItems;
           let orderData: any = {};
           orderData = details;
-          console.log(orderData);
+          // console.log(orderData);
 
-          // tslint:disable-next-line: max-line-length
-          this.http.post(`${this.WooCom.url}/wp-json/wc/v3/orders?consumer_key=${this.WooCom.consumerKey}&consumer_secret=${this.WooCom.consumerSecret}`, jQuery.param(orderData), { headers: header })
-          .pipe(finalize(() => loading.dismiss()))
-          .subscribe(res => {
-            console.log(res);
-            this.storage.set('cart', emptyCart);
-            this.presentAlert(res);
-          });
-
-          // this.WC.WooCommerceV3.postAsync('orders', orderData).then( (data) => {
-          //   console.log(data);
-          //   console.log(JSON.parse(data.body));
-          //   const response = (JSON.parse(data.body));
-          //   this.presentAlert(response);
-
-          // });
+          postData(orderData, header);
         });
       }
     }
   }
+
 
   async presentAlert(response) {
     const alert = await this.alertCtrl.create({
       header: 'Successful!',
       message: 'Your order has been placed and the Order Number is ' + response.number + '.',
       cssClass: 'checkout-alert',
-      buttons: [
-        {
+      buttons: [{
           text: 'OK',
 
           handler: () => {
-            console.log('routing');
-              this.router.navigateByUrl('/home');
+            // console.log('routing');
+            this.router.navigateByUrl('/home');
           }
-        }
-      ],
+
+      }],
       backdropDismiss: false
     });
 
     await alert.present();
   }
 
+
   ngOnInit() {
-    this.checkOutForm = this.fb.group({
-      billing: this.fb.group({
+    this.shippingForm = this.fb.group({
         first_name: ['', [Validators.required, Validators.minLength(3)]],
-        last_name: ['', [Validators.required, Validators.minLength(3)]],
-        address_1: ['', [Validators.required, Validators.minLength(5)]],
-        address_2: ['', [Validators.required, Validators.minLength(2)]],
-        country: ['', Validators.required],
-        state: ['', [Validators.required, Validators.minLength(2)]],
-        city: ['', [Validators.required, Validators.minLength(3)]],
-        postcode: ['', [Validators.required, Validators.minLength(4)]],
-        phone: ['', [Validators.required, Validators.minLength(10)]],
-      }),
-      shipping: this.fb.group({
-        first_name: ['', [Validators.required, Validators.minLength(3)]],
-        last_name: ['', [Validators.required, Validators.minLength(3)]],
+        last_name: ['', [Validators.required, Validators.minLength(1)]],
         address_1: ['', [Validators.required, Validators.minLength(5)]],
         address_2: ['', [Validators.required, Validators.minLength(2)]],
         country: ['', Validators.required],
         state: ['', [Validators.required, Validators.minLength(2)]],
         city: ['', [Validators.required, Validators.minLength(3)]],
         postcode: ['', [Validators.required, Validators.minLength(4)]]
-      }),
-      payment: this.fb.group({
-        paymeth: ['', Validators.required],
-      })
-    }
-    );
+    });
 
-    this.storage.get('userLoginInfo').then( (userLoginInfo) => {
-      this.userInfo = userLoginInfo.user;
-      console.log(this.userInfo);
+    this.billingForm = this.fb.group({
+      first_name: ['', [Validators.required, Validators.minLength(3)]],
+      last_name: ['', [Validators.required, Validators.minLength(1)]],
+      address_1: ['', [Validators.required, Validators.minLength(5)]],
+      address_2: ['', [Validators.required, Validators.minLength(2)]],
+      country: ['', Validators.required],
+      state: ['', [Validators.required, Validators.minLength(2)]],
+      city: ['', [Validators.required, Validators.minLength(3)]],
+      postcode: ['', [Validators.required, Validators.minLength(4)]],
+      phone: ['', [Validators.required, Validators.minLength(10)]]
+    });
+
+    this.storage.get('userInfo').then( (userInfo) => {
+      this.userInfo = userInfo;
+      // console.log(this.userInfo);
       const id = this.userInfo.id;
 
       // tslint:disable-next-line: max-line-length
-      this.http.get(`${this.WooCom.url}/wp-json/wc/v3/customers/${id}?consumer_key=${this.WooCom.consumerKey}&consumer_secret=${this.WooCom.consumerSecret}`)
+      this.http.get(`${this.services.api_url}/wp-json/wc/v3/customers/${id}?consumer_key=${this.services.wooConsKey}&consumer_secret=${this.services.wooConsSecret}`)
       .subscribe(res => {
-        console.log(res);
+        // console.log(res);
         this.custInfo = res;
-        this.label_style = 'stacked';
-        this.checkOutForm.patchValue({
-          billing: this.custInfo.billing,
-          shipping: this.custInfo.shipping
-        });
+        this.shippingForm.patchValue(this.custInfo.shipping);
+        this.billingForm.patchValue(this.custInfo.billing);
       });
-
-      // this.WC.WooCommerceV3.getAsync('customers/' + id).then( (data) => {
-      //   this.custInfo = JSON.parse(data.body);
-      //   console.log(this.custInfo);
-      //   this.ngZone.run(() => {this.label_style = 'stacked'; });
-      //   this.checkOutForm.patchValue({
-      //     billing: this.custInfo.billing,
-      //     shipping: this.custInfo.shipping
-      //   });
-      // });
     });
   }
 
