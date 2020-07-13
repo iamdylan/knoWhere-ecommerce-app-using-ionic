@@ -10,23 +10,24 @@ import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { FormBuilder } from '@angular/forms';
 import { IImageLoaderOptions, NgxProgressiveImageLoaderModule } from 'ngx-progressive-image-loader';
-import { HomePageModule } from './home/home.module';
-import { HomePage } from './home/home.page';
-import { MenuPage } from './menu/menu.page';
+import { HomePageModule } from './pages/home/home.module';
+import { HomePage } from './pages/home/home.page';
+import { MenuPage } from './pages/menu/menu.page';
 import { PayPal } from '@ionic-native/paypal/ngx';
-import { CheckAuthGuard } from './cart/auth.guard';
-import { LoginPageModule } from './login/login.module';
-import { CartPageModule } from './cart/cart.module';
-import { CheckoutPageModule } from './checkout/checkout.module';
-import { ProductDetailsModule } from './product-details/product-details.module';
-import { ProductsByCategoryModule } from './products-by-category/products-by-category.module';
-import { SignupPageModule } from './signup/signup.module';
+import { CheckAuthGuard } from './pages/cart/auth.guard';
+import { LoginPageModule } from './pages/login/login.module';
+import { CartPageModule } from './pages/cart/cart.module';
+import { CheckoutPageModule } from './pages/checkout/checkout.module';
+import { ProductDetailsModule } from './pages/product-details/product-details.module';
+import { ProductsByCategoryModule } from './pages/products-by-category/products-by-category.module';
+import { SignupPageModule } from './pages/signup/signup.module';
 import { EmailValidator } from './validators/email.validator';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { PipesModule } from './pipes/pipes.module';
-import { Services } from './services/services.service';
-import { CheckLoggedIn } from './login/login.guard';
+import { Services } from './services/api-userState.service';
+import { CheckLoggedIn } from './pages/login/login.guard';
+import { Network } from '@ionic-native/network/ngx';
 // import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @NgModule({
@@ -47,8 +48,6 @@ import { CheckLoggedIn } from './login/login.guard';
       // image width / height ratio for image holder
       imageRatio: 1 / 1
     }),
-    // FormsModule,
-    // ReactiveFormsModule,
     HomePageModule,
     ProductsByCategoryModule,
     ProductDetailsModule,
@@ -63,6 +62,7 @@ import { CheckLoggedIn } from './login/login.guard';
   providers: [
     StatusBar,
     SplashScreen,
+    Network,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     FormBuilder,
     Services,

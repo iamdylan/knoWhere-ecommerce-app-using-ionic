@@ -1,0 +1,315 @@
+<ion-header>
+  <ion-toolbar class="main-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+      <ion-back-button slot="start" text="" defaultHref="home"  class="ion-no-margin"></ion-back-button>
+    <ion-title>
+      Checkout
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <ion-slides #checkOutSlider [options]="sliderConfig">
+    <!-- SHIPPING DETAILS BEGIN -->
+    <ion-slide>
+      <ion-header>
+        <ion-toolbar class="form-toolbar">
+          Shipping Details
+        </ion-toolbar>
+      </ion-header>
+      <form class="shipping" novalidate [formGroup]="shippingForm">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-input formControlName="first_name" type="text" placeholder="First Name"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!shippingForm.controls['first_name'].valid && shippingForm.controls['first_name'].touched">
+                  {{this.shippingForm.controls['first_name'] | getError : this.shippingForm : 'first_name'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-input formControlName="last_name" type="text" placeholder="Last Name"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!shippingForm.controls['last_name'].valid && shippingForm.controls['last_name'].touched">
+                  {{this.shippingForm.controls['last_name'] | getError : this.shippingForm : 'last_name'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-input formControlName="address_1" type="text" placeholder="Address Line 1"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!shippingForm.controls['address_1'].valid && shippingForm.controls['address_1'].touched">
+                  {{this.shippingForm.controls['address_1'] | getError : this.shippingForm : 'address_1'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-input formControlName="address_2" type="text" placeholder="Address Line 2"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!shippingForm.controls['address_2'].valid && shippingForm.controls['address_2'].touched">
+                  {{this.shippingForm.controls['address_2'] | getError : this.shippingForm : 'address_2'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col size="7">
+              <ion-item>
+                <ion-select class="ion-no-padding" formControlName="country" interface="action-sheet" placeholder="Country">
+                  <ion-select-option *ngFor = "let c of countries" value="{{c.country_id}}">{{c.country_title}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!shippingForm.controls['country'].valid && shippingForm.controls['country'].touched">
+                  {{this.shippingForm.controls['country'] | getError : this.shippingForm : 'country'}}
+                </p>
+              </div>
+            </ion-col>
+
+            <ion-col size="5">
+              <ion-item>
+                <ion-input formControlName="state" type="text" placeholder="State"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!shippingForm.controls['state'].valid && shippingForm.controls['state'].touched">
+                  {{this.shippingForm.controls['state'] | getError : this.shippingForm : 'state'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col size="6">
+              <ion-item>
+                <ion-input formControlName="city" type="text" placeholder="City"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!shippingForm.controls['city'].valid && shippingForm.controls['city'].touched">
+                  {{this.shippingForm.controls['city'] | getError : this.shippingForm : 'city'}}
+                </p>
+              </div>
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-item>
+                <ion-input formControlName="postcode" type="text" placeholder="Postal Code"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!shippingForm.controls['postcode'].valid && shippingForm.controls['postcode'].touched">
+                  {{this.shippingForm.controls['postcode'] | getError : this.shippingForm : 'postcode'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row class="row-same">
+            <ion-col>
+              <ion-item class="same" lines="none">
+                <ion-label>Billing details same as Shipping details?</ion-label>
+                <ion-toggle color="primary" slot="end" (ionChange)="setShippingToBilling()"></ion-toggle>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row class="row-btns">
+            <ion-col>
+              <ion-button expand="default" (click)="nextSlide(shippingForm)">Next<ion-icon class="next" name="arrow-dropright"></ion-icon></ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>  
+      </form>
+
+    </ion-slide>
+    <!-- SHIPPING DETAILS END -->
+      
+    <!-- BILLING DETAILS BEGIN -->
+    <ion-slide>
+      <ion-header>
+        <ion-toolbar class="form-toolbar">
+          Billing Details
+        </ion-toolbar>
+      </ion-header>
+      <form class="billing" novalidate [formGroup]="billingForm">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-input formControlName="first_name" type="text" placeholder="First Name"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['first_name'].valid && billingForm.controls['first_name'].touched">
+                  {{this.billingForm.controls['first_name'] | getError : this.billingForm : 'first_name'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-input formControlName="last_name" type="text" placeholder="Last Name"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['last_name'].valid && billingForm.controls['last_name'].touched">
+                  {{this.billingForm.controls['last_name'] | getError : this.billingForm : 'last_name'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-input formControlName="address_1" type="text" placeholder="Address Line 1"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['address_1'].valid && billingForm.controls['address_1'].touched">
+                  {{this.billingForm.controls['address_1'] | getError : this.billingForm : 'address_1'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-input formControlName="address_2" type="text" placeholder="Address Line 2"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['address_2'].valid && billingForm.controls['address_2'].touched">
+                  {{this.billingForm.controls['address_2'] | getError : this.billingForm : 'address_2'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col size="7">
+              <ion-item>
+                <ion-select class="ion-no-padding" formControlName="country" interface="action-sheet" placeholder="Country">
+                  <ion-select-option *ngFor = "let c of countries" value="{{c.country_id}}">{{c.country_title}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['country'].valid && billingForm.controls['country'].touched">
+                  {{this.billingForm.controls['country'] | getError : this.billingForm : 'country'}}
+                </p>
+              </div>
+            </ion-col>
+
+            <ion-col size="5">
+              <ion-item>
+                <ion-input formControlName="state" type="text" placeholder="State"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['state'].valid && billingForm.controls['state'].touched">
+                  {{this.billingForm.controls['state'] | getError : this.billingForm : 'state'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col size="6">
+              <ion-item>
+                <ion-input formControlName="city" type="text" placeholder="City"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['city'].valid && billingForm.controls['city'].touched">
+                  {{this.billingForm.controls['city'] | getError : this.billingForm : 'city'}}
+                </p>
+              </div>
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-item>
+                <ion-input formControlName="postcode" type="text" placeholder="Postal Code"></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['postcode'].valid && billingForm.controls['postcode'].touched">
+                  {{this.billingForm.controls['postcode'] | getError : this.billingForm : 'postcode'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-input formControlName="phone" type="number" placeholder="Phone No."></ion-input>
+              </ion-item>
+              <div class="err-wrapper">
+                <p class="err" *ngIf="!billingForm.controls['phone'].valid && billingForm.controls['phone'].touched">
+                  {{this.billingForm.controls['phone'] | getError : this.billingForm : 'phone'}}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="row-btns">
+            <ion-col size="6">
+              <ion-button expand="default" (click)="prevSlide()"><ion-icon class="prev" name="arrow-dropleft"></ion-icon>Prev</ion-button>
+            </ion-col>
+            <ion-col size="6">
+              <ion-button expand="default" (click)="nextSlide(billingForm)">Next<ion-icon class="next" name="arrow-dropright"></ion-icon></ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+
+    </ion-slide>
+    <!-- BILLING DETAILS END -->
+
+    <!-- PAYMENT DETAILS END -->
+    <ion-slide>
+      <ion-header>
+        <ion-toolbar class="form-toolbar">
+          Payment Method
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-radio-group class="payment" (ionChange)="radioGroupChange($event)">
+        <ion-item *ngFor="let p of paymentMethods">
+          <ion-label>{{ p.method_title }}</ion-label>
+          <ion-radio formcontrolname="paymeth" slot="start" color="success" value="{{p.method_id}}"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="5">
+            <ion-button expand="default" (click)="prevSlide()"><ion-icon class="prev" name="arrow-dropleft"></ion-icon>Prev</ion-button>
+          </ion-col>
+          <ion-col size="7">
+            <ion-button class="order" expand="default" (click)="placeOrder()">Place Order</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      
+      
+    </ion-slide>
+    <!-- PAYMENT DETAILS END -->
+  </ion-slides>
+</ion-content>

@@ -1,0 +1,52 @@
+ion-grid {
+    padding-top: 20px;
+}
+
+.cartItem {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.cartItem ion-col:nth-child(1) ion-avatar{
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
+}
+
+.cartItem ion-col:nth-child(2) {
+    text-align: center;
+}
+
+.cartItem ion-col:nth-child(3) {
+    text-align: center;
+}
+
+.cartItem ion-col:nth-child(4) {
+    letter-spacing: 1px;
+}
+
+.removeBtn {
+    height: 30px;
+    --border-radius: 50px;
+    ion-icon {
+        position: absolute;
+    }
+} 
+
+.total {
+    color: black; 
+    font-weight: 500; 
+    letter-spacing: 1px; 
+    font-size: large;
+}
+
+.total ion-col:nth-child(1) {
+    text-align: left;
+}
+
+.total ion-col:nth-child(3) {
+    text-align: right;
+}
+
+.btns ion-button {
+    letter-spacing: 0.5px;
+    font-weight: 700;
+}
