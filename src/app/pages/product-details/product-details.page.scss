@@ -1,0 +1,41 @@
+ion-thumbnail {
+    height: 100%;
+    width: 100%;
+}
+
+ion-card-title {
+    border-bottom: 1px solid black;
+    display: flex;
+    align-items: center;
+    .prodName {
+        font-weight: bold !important;
+        flex-grow: 2;
+    }
+}
+
+ion-chip {
+    margin-right: 0;
+}
+
+.desc {
+    word-spacing: 1.5px;
+    color: black;
+    padding: 15px 0;
+    font-size: 1em;
+}
+
+.add-to-cart-btn {
+    letter-spacing: 0.02em;
+    margin-top: 25px;
+}
+
+.sliderArrows {
+    position: absolute;
+    height: 95vw; //width because need container to stretch along with image for diff screens
+    top: 0%;
+    width: 100%;
+}
+
+.outerCard {
+    min-height: calc(100vh - 10vh);
+}

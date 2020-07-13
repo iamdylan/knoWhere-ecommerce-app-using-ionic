@@ -4,6 +4,8 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Platform } from '@ionic/angular';
 import { RoutingStateService } from './services/routing-state.service';
+import { Network } from '@ionic-native/network/ngx';
+import { AlertsToastsService } from './services/alerts-toasts.service';
 // import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @Component({
@@ -19,34 +21,45 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     public router: Router,
     private routingState: RoutingStateService,
+    public network: Network,
+    public alertstoasts: AlertsToastsService,
     // private oneSignal: OneSignal
   ) {
     this.initializeApp();
-    routingState.loadRouting();
+    this.routingState.loadRouting();
+
   }
+
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleLightContent();
+      this.statusBar.overlaysWebView(true);
       this.splashScreen.hide();
 
-    //   this.oneSignal.startInit('7f203b9b-30fb-4466-9924-224163e0b51b', '423456359366');
+      //   this.oneSignal.startInit('7f203b9b-30fb-4466-9924-224163e0b51b', '423456359366');
 
-    //   this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+      //   this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
-    //   this.oneSignal.handleNotificationReceived().subscribe(() => {
-    //   // do something when notification is received
-    //   });
+      //   this.oneSignal.handleNotificationReceived().subscribe(() => {
+      //   // do something when notification is received
+      //   });
 
-    //   this.oneSignal.handleNotificationOpened().subscribe(() => {
-    //     // do something when a notification is opened
-    //   });
+      //   this.oneSignal.handleNotificationOpened().subscribe(() => {
+      //     // do something when a notification is opened
+      //   });
 
-    //   this.oneSignal.endInit();
-    });
-  }
+      //   this.oneSignal.endInit();
+      });
+    }
+
 
   ngOnInit() {
-  }
+    this.network.onDisconnect().subscribe(() => {
+      this.alertstoasts.presentNoNetAlert();
+    });
 
+    this.network.onConnect().subscribe(() => {
+      this.alertstoasts.dismissNoNetAlert();
+    });
+  }
 }

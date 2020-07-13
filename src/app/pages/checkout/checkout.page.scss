@@ -1,0 +1,137 @@
+ion-slides ion-header {
+    padding: 0 1em;
+    background-color: darkturquoise;
+    color: white;
+    text-align: left;
+    font-weight: 600;
+    ion-toolbar {
+        --background: darkturquoise;
+    }
+}
+
+ion-slide {
+    display: block;
+}
+
+.payment ion-item {
+    margin: 25px 0
+}
+
+a {
+    font-weight: 500;
+    word-spacing: 0.05em;
+    letter-spacing: 0.01em;
+    margin: 42px auto;
+    display: block;
+    text-align: center;
+    color: #3b93a1;
+}
+
+ion-button {
+    --background: darkturquoise;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    font-size: 22px;
+}
+
+ion-grid {
+    padding: 0;
+    ion-row {
+        margin: 5px 0;
+    }
+    ion-col {
+        padding: 0px 5px;
+    }
+}
+
+form {
+    margin-top: 25px;
+}
+
+ion-item {
+    --padding-start: 10px;
+    ion-label {
+        color: #5b5b5b;
+        letter-spacing: -0.02em;
+    }
+}
+
+.item-interactive.item-has-focus {
+    --highlight-background: darkturquoise;
+}
+
+ion-input {
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+ion-select {
+    max-width: 100%;
+    font-weight: 600;
+}
+
+.same {
+    ion-label {
+        color: black;
+        font-weight: 500;
+    }
+}
+
+.row-same, .row-btns {
+    padding: 15px 0;
+}
+
+.correct {
+    color: #43be5f;
+    animation: valid 400ms ease forwards;
+    font-size: 28px;
+    
+}
+
+.correct, ion-spinner {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+@keyframes valid {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+.err-wrapper {
+    min-height: 25px;
+}
+
+.err {
+    background-color: #fffacdd9;
+    animation: error 400ms ease forwards;
+}
+
+.err {
+    color: #dd4c4c;
+    padding: 2px;
+    padding-left: 12px;
+    padding-bottom: 5px;
+    margin: 0;
+    font-size: 14px;
+    text-align: left;
+}
+
+@keyframes error {
+    0% {opacity: 0; transform: translateY(-10%);}
+    100% {opacity: 1; transform: translateY(0%);}
+}
+
+.next {
+    font-size: 36px;
+    margin-right: -16px;
+}
+
+.prev {
+    font-size: 36px;
+    margin-left: -16px;
+}
+
+.order {
+    --background: salmon;
+}

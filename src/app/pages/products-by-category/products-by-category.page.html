@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar class="main-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-back-button slot="start" text="" defaultHref="home" class="ion-no-margin"></ion-back-button>
+    <ion-fab-button router-direction="'root'" [routerLink]="['/cart']" slot="end" size="small" fill="outline">
+      <ion-icon name="cart"></ion-icon>
+    </ion-fab-button>
+    <ion-title *ngIf="products">{{this.products[0]?.categories[0]['name']}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="prodsByCat">
+  <!-- Begin Products Skeleton -->
+  <div *ngIf="!(products.length > 0) && !outOfStock">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" *ngFor="let product of [1,2,3,4,5,6]">
+          <ion-card class="ion-no-margin">
+              <ion-skeleton-text class="ion-no-margin" style="height: 200px;"></ion-skeleton-text>
+            <ion-card-header>
+              <ion-card-title class="custom-label-style">
+                <ion-skeleton-text></ion-skeleton-text>
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-skeleton-text></ion-skeleton-text>
+              <ion-skeleton-text style="width: 40%; margin: 5px auto;"></ion-skeleton-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <!-- End Products Skeleton -->
+
+  <div *ngIf="products.length > 0">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" *ngFor="let product of products" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
+          <ion-card class="ion-no-margin">
+            <ngx-progressive-image-loader [placeholderImageSrc]="(product?.images[0].src) | imgSize : '100x100' | async">
+              <img [src]="(product?.images[0].src) | imgSize : '300x300' | async" [alt]="product?.name" ngxProgressiveImage>
+            </ngx-progressive-image-loader>
+            <ion-card-header>
+              <ion-card-title class="custom-label-style">{{ product?.name }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p class="custom-desc">{{product?.short_description.substr(3, 70) + '...'}}</p>
+            </ion-card-content>
+            <ion-footer>
+              <p class="custom-price-style ion-no-margin" [innerHTML]="product?.price_html"></p>
+            </ion-footer>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <ion-infinite-scroll *ngIf="products?.length > 0" (ionInfinite)="loadMoreProducts($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  
+  <div class="outr-endMsg">
+    <ion-card *ngIf="endMsg" class="endMsg">
+      --- That's all for now. Please try again later! ---
+    </ion-card>
+  </div>
+
+  <div class="outofstock" *ngIf="outOfStock">
+    <ion-img src="./assets/images/outofstock.svg" alt="Out of Stock"></ion-img>
+    <ion-label>Out of Stock</ion-label>
+    <p>We'll have something up again soon.</p>
+  </div>
+</ion-content>

@@ -15,42 +15,22 @@
 }
 
 //Begin Home and Category pages Styles//
-.home ion-card img, .prodsByCat ion-card img {
-    border-radius: 15px 15px 0 0;
-}
-
-.home ion-card, .prodsByCat ion-card {
-    margin: 0 !important;
-    border: 2px solid #363c4254;
-    border-radius: 15px;
-    overflow: visible;
-    box-shadow: none;
-}
-
-.home .outr-endMsg, .prodsByCat .outr-endMsg{
-    margin-bottom: 10px;
-}
-
 .home .endMsg, .prodsByCat .endMsg {
     box-shadow: none;
     text-align: center;
-    border: none;
     font-size: 14px;
     font-weight: 500;
-    letter-spacing: 0.02em;
-    border-radius: 0;
+    letter-spacing: 0.2px;
     color: #737373;
     opacity: 0;
     animation-name: fade-up;
     animation-duration: 600ms;
     animation-fill-mode: forwards;
     animation-timing-function: ease;
-    transform: translateY(10px);
-    margin: 5px auto !important;
 }
 
 @keyframes fade-up {
-    0% {opacity: 0; transform: translateY(10px);}
+    0% {opacity: 0; transform: translateY(5px);}
     100% {opacity: 1; transform: translateY(0);}
 }
 
@@ -62,51 +42,33 @@
 }
 
 .home ion-card-content, .prodsByCat ion-card-content {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 100%;
-    overflow: visible;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .home .custom-label-style, .prodsByCat .custom-label-style {
     font-weight: 600;
-    margin-left: 0;
     color: #1a1c1d;
-    letter-spacing: -0.02em;
-    font-size: 1.3em;
+    font-size: 16px;
     white-space: nowrap;
     text-align: center;
+    line-height: 2;
 }
 
 .home .custom-price-style, .prodsByCat .custom-price-style {
     font-weight: 600;
     color: var(--kw-price);
-    // letter-spacing: 0.8px;
-    margin-bottom: 0;
-    font-size: 16px;
-    margin-top: 5px;
+    font-size: 14px;
     text-align: center;
-    padding: 5px;
+    line-height: 2;
+    letter-spacing: 1px;
 }
 
 .home .custom-desc, .prodsByCat .custom-desc {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 400;
-    letter-spacing: -0.02em;
     font-family: inherit;
-    // word-spacing: 0.1em;
-    line-height: 20px;
-}
-
-.home ion-item, .prodsByCat ion-item {
-    --padding-start: 10px !important;
-    background: #ffffff !important;
-    box-shadow: 0px 0px 2px darkgrey;
-    padding-top: 3%;
-    padding-bottom: 3%;
-    --inner-border-width: 0;
+    line-height: 18px;
 }
 
 .offers, .new-deals-header, .new-deals, .more-prod-header, .more-prod {
@@ -114,43 +76,64 @@
     animation: staggered 400ms ease calc(var(--animation-order) * 150ms) forwards;
 }
 
+@keyframes staggered {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
 .outofstock, .empty {
-    margin: 10%;
-    position: absolute;
-    top: 15%;
+    opacity: 0;
+    animation: pop 200ms ease 150ms forwards;
     ion-label {
         text-align: center;
-        width: 100%;
         display: block;
         font-weight: 600;
         font-size: 30px;
         color: #444053;
-        margin-top: 5%;
-        letter-spacing: 0.02em;
+        padding-top: 5%;
     }
     p {
         text-align: center;
-        letter-spacing: 0.02em;
+        letter-spacing: 0.4px;
         color: #90979e;
         font-weight: 500;
+        font-size: 18px;
     }
-    opacity: 0;
-    animation: staggered 200ms ease 150ms forwards;
 }
 
-@keyframes staggered {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
+@keyframes pop {
+    0% {opacity: 0; transform: scale(0.7) translateY(20vh);}
+    100% {opacity: 1; transform: scale(0.9) translateY(20vh);}
 }
 //End Home and Category pages Styles//
 
 
 //Begin ngx-owl-carousel styles//
+.offers owl-carousel-child {
+    overflow: hidden !important;
+    max-height: 205px;
+    display: flex !important;
+    justify-content: center;
+}
 
-.owl-theme .owl-dots {
+.new-deals owl-carousel-child {
+    text-align: center;
+    font-weight: 500;
+    display: flex !important;
+    .image-wrapper {
+        min-height: 137px;
+        display: flex;
+        justify-content: center;
+      }
+    img {
+        transform: scale(0.8);
+        height: 100%;
+    }
+}
+
+.owl-dots {
     position: absolute;
-    bottom: -3%;
-    width: 100%;
+    align-self: flex-end;
 }
 
 .owl-nav {
@@ -161,7 +144,8 @@
     height: 100%;
     margin-top: 0 !important;
     align-items: center !important;
-    top: 0;
+    align-self: center;
+    justify-self: center;
 }
 
 .owl-prev, .owl-next {
@@ -183,30 +167,6 @@
 
 .owl-next {
     right: 0px;
-}
-
-.offers owl-carousel-child {
-    overflow: hidden !important;
-    max-height: 205px;
-}
-
-.new-deals owl-carousel-child {
-    text-align: center;
-    font-weight: 500;
-    .new-deals-label {
-        line-height: 20px;
-        font-size: 16px;
-        padding-top: 10px;
-        // letter-spacing: 0.01em;
-    }
-    .image-wrapper {
-        min-height: 105px;
-        margin-top: 10px;
-      }
-    img {
-        width: 76% !important;
-        margin: 0 auto;
-    }
 }
 //End ngx-owl-carousel styles//
 

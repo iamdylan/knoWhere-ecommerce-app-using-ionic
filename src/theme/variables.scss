@@ -5,75 +5,18 @@
 :root {
   /** primary **/
   --ion-color-primary: #3880ff;
-  // --ion-color-primary-rgb: 56, 128, 255;
-  // --ion-color-primary-contrast: #ffffff;
-  // --ion-color-primary-contrast-rgb: 255, 255, 255;
-  // --ion-color-primary-shade: #3171e0;
-  // --ion-color-primary-tint: #4c8dff;
-
-  /** secondary **/
-  // --ion-color-secondary: #0cd1e8;
-  // --ion-color-secondary-rgb: 12, 209, 232;
-  // --ion-color-secondary-contrast: #ffffff;
-  // --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  // --ion-color-secondary-shade: #0bb8cc;
-  // --ion-color-secondary-tint: #24d6ea;
-
-  /** tertiary **/
-  // --ion-color-tertiary: #7044ff;
-  // --ion-color-tertiary-rgb: 112, 68, 255;
-  // --ion-color-tertiary-contrast: #ffffff;
-  // --ion-color-tertiary-contrast-rgb: 255, 255, 255;
-  // --ion-color-tertiary-shade: #633ce0;
-  // --ion-color-tertiary-tint: #7e57ff;
 
   /** success **/
   --ion-color-success: #10dc60;
-  // --ion-color-success-rgb: 16, 220, 96;
-  // --ion-color-success-contrast: #ffffff;
-  // --ion-color-success-contrast-rgb: 255, 255, 255;
-  // --ion-color-success-shade: #0ec254;
-  // --ion-color-success-tint: #28e070;
 
   /** warning **/
   --ion-color-warning: #ffce00;
-  // --ion-color-warning-rgb: 255, 206, 0;
-  // --ion-color-warning-contrast: #ffffff;
-  // --ion-color-warning-contrast-rgb: 255, 255, 255;
-  // --ion-color-warning-shade: #e0b500;
-  // --ion-color-warning-tint: #ffd31a;
 
   /** danger **/
   --ion-color-danger: #f04141;
-  // --ion-color-danger-rgb: 245, 61, 61;
-  // --ion-color-danger-contrast: #ffffff;
-  // --ion-color-danger-contrast-rgb: 255, 255, 255;
-  // --ion-color-danger-shade: #d33939;
-  // --ion-color-danger-tint: #f25454;
-
-  /** dark **/
-  // --ion-color-dark: #222428;
-  // --ion-color-dark-rgb: 34, 34, 34;
-  // --ion-color-dark-contrast: #ffffff;
-  // --ion-color-dark-contrast-rgb: 255, 255, 255;
-  // --ion-color-dark-shade: #1e2023;
-  // --ion-color-dark-tint: #383a3e;
-
-  /** medium **/
-  // --ion-color-medium: #989aa2;
-  // --ion-color-medium-rgb: 152, 154, 162;
-  // --ion-color-medium-contrast: #ffffff;
-  // --ion-color-medium-contrast-rgb: 255, 255, 255;
-  // --ion-color-medium-shade: #86888f;
-  // --ion-color-medium-tint: #a2a4ab;
 
   /** light **/
   --ion-color-light: #ffffff;
-  // --ion-color-light-rgb: 244, 244, 244;
-  // --ion-color-light-contrast: #000000;
-  // --ion-color-light-contrast-rgb: 0, 0, 0;
-  // --ion-color-light-shade: #d7d8da;
-  // --ion-color-light-tint: #f5f6f9;
 
   //custom colors
   --kw-primary: #00c3da;
@@ -86,8 +29,49 @@ html.ios, html.md {
   --ion-default-font: Inter, sans-serif !important;
 }
 
-ion-select {
-  font-weight: 500;
+.noInternetAlert {
+  text-align: center;
+}
+
+.signup-alert {
+  .alert-title {
+    text-align: center;
+    font-size: 16px;
+    color: #2aa45a;
+  }
+  .alert-message {
+    text-align: center;
+    font-size: 14px;
+  }
+  .alert-button-group {
+    justify-content: center;
+    background-color: #5d9cdb;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    .alert-button {
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+}
+
+.checkout-alert {
+  .alert-title {
+    color: #4CAF50;
+    font-size: 16px;
+  }
+  .alert-message {
+    margin-top: 5%;
+    font-size: 14px;
+  }
+  .alert-button {
+    font-size: 18px;
+  }
+}
+
+ion-buttons {
+  position: absolute;
 }
 
 ion-menu-button {
@@ -99,72 +83,42 @@ ion-fab-button {
   --background: var(--kw-secondary);
   --color: #64dcf3;
   --background-activated: var(--kw-primary);
-  margin: 8px;
   --box-shadow: none;
   ion-icon {
     font-size: 28px;
   }
+  position: absolute;
+  transform: translateX(86vw) translateY(-19%);
 }
 
-ion-toolbar{
+.main-toolbar {
   --background: var(--kw-secondary);
   --color: white;
-  // box-shadow: 0px 1px 6px 0px #000000;
-  // --background: #2F3C7E;
+  padding-top: 20px !important;
+}
+
+.form-toolbar {
+  --color: white;
 }
 
 ion-title {
-  letter-spacing: .02em;
-  font-weight: 600;
-  font-size: 1.2em;
-  position: absolute;
-  padding-inline-start: 30%;
-  padding-inline-end: 30%;
-  transform: translateZ(0px);
-  padding-top: 0;
-  padding-bottom: 0;
-  height: 100%;
-  top: 0;
-  left: 0;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  font-size: 18px;
   text-align: center;
-  width: 100%;
-}
-
-body{
-  font-weight: 400 !important;
 }
 
 ion-back-button {
-  margin-left: 15px;
-  .ios {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
+  position: absolute;
+  transform: translateX(15vw);
   --color: var(--kw-primary-tint) !important;
-  --icon-font-size: 25px !important;
   z-index: 1;
 }
 
-.checkout-alert {
-  .alert-title {
-    color: #4CAF50;
-    font-size: 1.3em;
-  }
-  .alert-message {
-    margin-top: 5%;
-      font-size: 1em;
-  }
-  .alert-button {
-      font-size: 1.3em;
-  }
-}
-  
-.home-toast, .addToCart-toast, .login-toast, .cart-toast {
-  text-align: center;
-}
 
-ion-item .item-detail-icon {
-  display: none;
+  
+.toast {
+  text-align: center;
 }
 
 @font-face {

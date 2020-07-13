@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import errorMessages from '../errorMessages.json';
+import errorMessages from '../../assets/data/errorMessages.json';
 
 @Pipe({
   name: 'getError',
