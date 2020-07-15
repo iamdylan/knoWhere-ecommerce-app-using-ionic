@@ -11,7 +11,7 @@
 }
 
 .new-deals-label {
-  line-height: 14px;
+  line-height: 16px;
   font-size: 14px;
 }
 
@@ -32,6 +32,7 @@
   line-height: 22px;
   font-weight: 600;
   letter-spacing: 0.2px;
+  z-index: 0;
 }
 
 .more-prod-header {
@@ -39,5 +40,6 @@
 }
 
 .more-prod {
+  background-color: white;
   --animation-order: 3;
 }

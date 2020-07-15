@@ -15,7 +15,7 @@
 }
 
 //Begin Home and Category pages Styles//
-.home .endMsg, .prodsByCat .endMsg {
+.endMsg {
     box-shadow: none;
     text-align: center;
     font-size: 14px;
@@ -81,9 +81,9 @@
     100% {opacity: 1;}
 }
 
-.outofstock, .empty {
+.outofstock, .empty, .noResults {
     opacity: 0;
-    animation: pop 200ms ease 150ms forwards;
+    animation: pop 500ms ease 150ms forwards;
     ion-label {
         text-align: center;
         display: block;
@@ -102,8 +102,8 @@
 }
 
 @keyframes pop {
-    0% {opacity: 0; transform: scale(0.7) translateY(20vh);}
-    100% {opacity: 1; transform: scale(0.9) translateY(20vh);}
+    0% {opacity: 0; transform: scale(0.9) translateY(15vh);}
+    100% {opacity: 1; transform: scale(0.9) translateY(15vh);}
 }
 //End Home and Category pages Styles//
 

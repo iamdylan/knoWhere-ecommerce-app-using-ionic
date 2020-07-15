@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { OwlCarousel } from 'ngx-owl-carousel';
 import { Services } from '../../services/api-userState.service';
-import { Network } from '@ionic-native/network/ngx';
 import { catchError, retryWhen, delay } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { Router } from '@angular/router';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +26,8 @@ export class HomePage implements OnInit {
   constructor(
     public http: HttpClient,
     public services: Services,
-    public network: Network
+    public router: Router,
+    public searchService: SearchService
   ) {
 
     this.offersConfig = {
@@ -94,15 +96,14 @@ export class HomePage implements OnInit {
       }),
       retryWhen((error) => error.pipe(delay(1000)))
     )
-    .subscribe(res => {
-      const data: any = res;
+    .subscribe((res: any) => {
       this.moreProducts = this.moreProducts.concat(res);
 
       if (event != null) {
         event.target.complete();
       }
 
-      if (data.length === 0) {
+      if (res.length === 0) {
         event.target.disabled = true;
         this.endMsg = true;
       }

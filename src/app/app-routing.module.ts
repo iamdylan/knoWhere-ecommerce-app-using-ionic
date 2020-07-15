@@ -38,6 +38,10 @@ const routes: Routes = [
   {
     path: 'checkout',
     loadChildren: () => import('./pages/checkout/checkout.module').then(m => m.CheckoutPageModule), canActivate: [CheckoutGuard]
+  },
+  {
+    path: 'search/:query',
+    loadChildren: () => import('./pages/search/search.module').then( m => m.SearchPageModule)
   }
 ];
 

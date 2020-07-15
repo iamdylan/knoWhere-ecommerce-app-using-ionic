@@ -28,7 +28,10 @@ import { PipesModule } from './pipes/pipes.module';
 import { Services } from './services/api-userState.service';
 import { CheckLoggedIn } from './pages/login/login.guard';
 import { Network } from '@ionic-native/network/ngx';
-// import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { SearchPageModule } from './pages/search/search.module';
+import { SearchService } from './services/search.service';
+import { DirectivesModule } from './directives/directives.module';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @NgModule({
   declarations: [AppComponent, MenuPage],
@@ -41,7 +44,7 @@ import { Network } from '@ionic-native/network/ngx';
     IonicStorageModule.forRoot(),
     NgxProgressiveImageLoaderModule.forRoot(<IImageLoaderOptions>{
       // rootMargin must be specified in pixels or percent
-      rootMargin: '0px',
+      rootMargin: '30px',
       threshold: 0.1,
       // css filter
       filter: 'blur(6px)',
@@ -55,7 +58,9 @@ import { Network } from '@ionic-native/network/ngx';
     SignupPageModule,
     LoginPageModule,
     CheckoutPageModule,
+    SearchPageModule,
     PipesModule,
+    DirectivesModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production,
       registrationStrategy: 'registerImmediately' }),
   ],
@@ -66,11 +71,12 @@ import { Network } from '@ionic-native/network/ngx';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     FormBuilder,
     Services,
+    SearchService,
     EmailValidator,
     CheckAuthGuard,
     CheckLoggedIn,
-    PayPal
-    // OneSignal
+    PayPal,
+    OneSignal
   ],
   bootstrap: [AppComponent]
 })
