@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="main-header">
   <ion-toolbar class="main-toolbar">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -11,8 +11,15 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-toolbar class="search-toolbar" [appScrollVanish]="scrollArea">
+  <ion-searchbar 
+    [(ngModel)]="searchService.searchQuery"
+    inputmode="search"
+    (search)="searchService.onSearch($event)">
+  </ion-searchbar>
+</ion-toolbar>
 
-<ion-content class="home ion-no-padding">
+<ion-content class="home" #scrollArea scrollEvents="true">
   <!-- MAIN SLIDER BEGIN -->
   <div class="offers">
     <owl-carousel #mainSlider

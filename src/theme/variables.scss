@@ -29,6 +29,25 @@ html.ios, html.md {
   --ion-default-font: Inter, sans-serif !important;
 }
 
+.main-header {
+  background-color: var(--kw-secondary);
+}
+
+.main-toolbar {
+  --background: var(--kw-secondary);
+  --color: white;
+  padding-top: 20px !important;
+}
+
+.search-toolbar {
+  --background: var(--kw-secondary);
+}
+
+.home, .search {
+  --offset-top: 56px !important;
+  --background: linear-gradient(var(--kw-secondary) 56px, #ffffff 56px);
+}
+
 .noInternetAlert {
   text-align: center;
 }
@@ -91,11 +110,6 @@ ion-fab-button {
   transform: translateX(86vw) translateY(-19%);
 }
 
-.main-toolbar {
-  --background: var(--kw-secondary);
-  --color: white;
-  padding-top: 20px !important;
-}
 
 .form-toolbar {
   --color: white;
@@ -114,8 +128,6 @@ ion-back-button {
   --color: var(--kw-primary-tint) !important;
   z-index: 1;
 }
-
-
   
 .toast {
   text-align: center;

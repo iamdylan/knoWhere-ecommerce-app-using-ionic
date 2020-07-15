@@ -50,7 +50,6 @@ export class ProductsByCategoryPage implements OnInit {
     )
     .subscribe(res => {
       this.products = res;
-      console.log(this.products.length);
       this.products.length > 0 ? this.outOfStock = false : this.outOfStock = true;
 
     });

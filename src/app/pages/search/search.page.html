@@ -1,0 +1,49 @@
+<ion-header class="main-header">
+  <ion-toolbar class="main-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-back-button slot="start" text="" defaultHref="home" class="ion-no-margin"></ion-back-button>
+    <ion-fab-button router-direction="'root'" [routerLink]="['/cart']" slot="end" size="small" fill="outline">
+      <ion-icon name="cart"></ion-icon>
+    </ion-fab-button>
+    <ion-title>
+      {{this.query}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-toolbar class="search-toolbar" [appScrollVanish]="scrollArea">
+  <ion-searchbar [(ngModel)]="searchService.searchQuery" (search)="searchService.onSearch($event)" inputmode="search"></ion-searchbar>
+</ion-toolbar>
+
+<ion-content class="search" #scrollArea scrollEvents="true">
+  <ion-list>
+    <ion-item *ngFor="let product of results" [routerLink]="['/product-details/' + product.id]" [routerDirection]="'forward'">
+      <ion-thumbnail class="thumbnail" slot="start">
+        <ion-img [src]="(product?.images[0].src) | imgSize : '300x300' | async" [alt]="product?.name"></ion-img>
+      </ion-thumbnail>
+
+      <ion-text>
+        <ion-label class="custom-label-style">{{ product?.name }}</ion-label>
+        <p class="custom-desc">{{product?.short_description.substr(3, 50) + '...'}}</p>
+        <p class="custom-price-style" [innerHTML]="product?.price_html"></p>
+      </ion-text>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll *ngIf="results?.length > 0" (ionInfinite)="loadMoreResults($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <div class="outr-endMsg">
+    <ion-card *ngIf="endMsg" class="endMsg">
+      --- That's all for now. Please try again later! ---
+    </ion-card>
+  </div>
+
+  <div class="noResults" *ngIf="noResults">
+    <ion-img src="./assets/images/outofstock.svg" alt="Nothing"></ion-img>
+    <ion-label>No Results Found.</ion-label>
+    <p>Try serching for another term.</p>
+  </div>
+</ion-content>
