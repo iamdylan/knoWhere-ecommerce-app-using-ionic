@@ -6,9 +6,11 @@
 
 # testing
 /coverage
+e2e
 
 # production
 /build
+dist
 
 # misc
 .env.local
