@@ -1,7 +1,7 @@
 
 <h1 align="center">KnoWhere E-Commerce App</h1>
 
-KnoWhere was built using Ionic v4 and Angular 8. On the backend, it makes use of Wordpress with Woo-commerce. Please try it out using the Play Store link at the bottom, which is an Android App Bundle (.aab) and optimized to be have a smaller download size depending on your device. If you prefer the .apk file, then you can download that too from the link below.
+KnoWhere was built using Ionic v4 and Angular 8. On the backend, it makes use of Wordpress with Woo-commerce. Please try it out using the Play Store link at the bottom, which is an Android App Bundle (.aab) and optimized to have a smaller download size depending on your device. If you prefer the .apk file, then you can download that too from the link below.
 
 ## Screenshots
 
