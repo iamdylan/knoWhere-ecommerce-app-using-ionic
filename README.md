@@ -26,6 +26,8 @@ KnoWhere was built using Ionic v4 and Angular 8. On the backend, it makes use of
 - Ionic 4
 - Wordpress 5.4
 - Node.js
+- Adobe Photoshop (banners, logos, etc)
+- GIMP (icons and feature art)
 
 ## Try it out
 
