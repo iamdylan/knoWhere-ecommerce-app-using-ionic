@@ -15,6 +15,8 @@ KnoWhere was built using Ionic v4 and Angular 8. On the backend, it makes use of
 - Push Notifications
 - Retry requests on failure
 - Product Search
+- Custom Form Validation
+- Auth Guards
 - Detect device's Internet Status
 - & More
 
