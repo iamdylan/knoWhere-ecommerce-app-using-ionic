@@ -32,6 +32,6 @@ KnoWhere was built using Ionic v4 and Angular 8. On the backend, it makes use of
 - GIMP (on Linux, for icons and feature art)
 
 ## Try it out
-
+(It's been 2 years since I've built this and I haven't had the time to maintain/upgrade, so you won't be able to see a fully functional app because several packages need upgrading, the play store link doesn't work anymore and hosting/domain has expired as well.)
 - [Play Store Link](https://play.google.com/store/apps/details?id=com.dylan.knowhere) ( Recommended, 4.75 to 8.18 MB )
 - [APK file](https://github.com/iamdylan/knoWhere-ecommerce-app-using-ionic/raw/master/Play_Store_Assets/Builds/KnoWhere.apk) (16.8 MB)
